@@ -1,6 +1,6 @@
 package br.com.bsitecnologia.dashboard.model;
 
-// Generated 01/09/2012 11:28:22 by Hibernate Tools 3.4.0.CR1
+// Generated 01/09/2012 15:14:43 by Hibernate Tools 3.4.0.CR1
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -24,7 +24,7 @@ import javax.persistence.Table;
 @Table(name = "Alerta", catalog = "dashboard")
 public class Alerta implements java.io.Serializable {
 
-	private static final long serialVersionUID = -42646393538951083L;
+	private static final long serialVersionUID = 4497726783203383623L;
 	
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -79,7 +79,7 @@ public class Alerta implements java.io.Serializable {
 		return this.id;
 	}
 
-	public void ListId(Integer id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -87,7 +87,7 @@ public class Alerta implements java.io.Serializable {
 		return this.status;
 	}
 
-	public void ListStatus(Status status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
@@ -95,16 +95,15 @@ public class Alerta implements java.io.Serializable {
 		return this.transicaoStatus;
 	}
 
-	public void ListTransicaoStatus(TransicaoStatus transicaoStatus) {
+	public void setTransicaoStatus(TransicaoStatus transicaoStatus) {
 		this.transicaoStatus = transicaoStatus;
 	}
 
-	
 	public Integer getMinutosDuracaoStatus() {
 		return this.minutosDuracaoStatus;
 	}
 
-	public void ListMinutosDuracaoStatus(Integer minutosDuracaoStatus) {
+	public void setMinutosDuracaoStatus(Integer minutosDuracaoStatus) {
 		this.minutosDuracaoStatus = minutosDuracaoStatus;
 	}
 
@@ -112,7 +111,7 @@ public class Alerta implements java.io.Serializable {
 		return this.minutosAntesDataPrevisaoConclusao;
 	}
 
-	public void ListMinutosAntesDataPrevisaoConclusao(
+	public void setMinutosAntesDataPrevisaoConclusao(
 			Integer minutosAntesDataPrevisaoConclusao) {
 		this.minutosAntesDataPrevisaoConclusao = minutosAntesDataPrevisaoConclusao;
 	}
@@ -121,7 +120,7 @@ public class Alerta implements java.io.Serializable {
 		return this.minutosAntesDataFim;
 	}
 
-	public void ListMinutosAntesDataFim(Integer minutosAntesDataFim) {
+	public void setMinutosAntesDataFim(Integer minutosAntesDataFim) {
 		this.minutosAntesDataFim = minutosAntesDataFim;
 	}
 
@@ -129,7 +128,7 @@ public class Alerta implements java.io.Serializable {
 		return this.corProjetoDashboard;
 	}
 
-	public void ListCorProjetoDashboard(Integer corProjetoDashboard) {
+	public void setCorProjetoDashboard(Integer corProjetoDashboard) {
 		this.corProjetoDashboard = corProjetoDashboard;
 	}
 
@@ -137,7 +136,7 @@ public class Alerta implements java.io.Serializable {
 		return this.emailTemplates;
 	}
 
-	public void ListEmailTemplates(List<EmailTemplate> emailTemplates) {
+	public void setEmailTemplates(List<EmailTemplate> emailTemplates) {
 		this.emailTemplates = emailTemplates;
 	}
 
@@ -145,7 +144,7 @@ public class Alerta implements java.io.Serializable {
 		return this.alertaProjetos;
 	}
 
-	public void ListAlertaProjetos(List<AlertaProjeto> alertaProjetos) {
+	public void setAlertaProjetos(List<AlertaProjeto> alertaProjetos) {
 		this.alertaProjetos = alertaProjetos;
 	}
 

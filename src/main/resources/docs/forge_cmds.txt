@@ -1,0 +1,23 @@
+[dashboard] dashboard $ generate-entities --datasource dashboard-ds
+ ? Enter the password for JDBC connection. ****
+ ? In which package you'd like to generate the entities, or enter for default: [com.example.dashboard.model] br.com.bsitecnologia.dashboard.model
+Found 18 tables in datasource
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/AlertaProjeto.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Impedimento.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/ColaboradorProjeto.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/EmailTemplate.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Artefato.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/TransicaoStatus.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Alerta.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/EmailTemplateColaboradores.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Equipe.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Comentario.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Status.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/AtorExternoTransicaoStatus.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/EquipeProjeto.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Colaborador.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/HistoricoProjeto.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Cargo.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Projeto.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/AtorExterno.java
+Generated 18 java files.

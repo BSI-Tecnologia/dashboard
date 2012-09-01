@@ -1,14 +1,16 @@
 package br.com.bsitecnologia.dashboard.model;
-// Generated 01/09/2012 11:28:22 by Hibernate Tools 3.4.0.CR1
+// Generated 01/09/2012 15:14:43 by Hibernate Tools 3.4.0.CR1
 
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -24,21 +26,35 @@ import javax.persistence.UniqueConstraint;
 )
 public class Status  implements java.io.Serializable {
 
-
-     private Integer id;
-     private String nome;
-     private Set<Alerta> alertas = new HashSet<Alerta>(0);
-     private Set<TransicaoStatus> transicaoStatusesForStatusTo = new HashSet<TransicaoStatus>(0);
-     private Set<Projeto> projetos = new HashSet<Projeto>(0);
-     private Set<TransicaoStatus> transicaoStatusesForStatusFrom = new HashSet<TransicaoStatus>(0);
+	private static final long serialVersionUID = 5841009786425793336L;
+	
+	@Id 
+    @GeneratedValue(strategy=IDENTITY)
+    @Column(name="id", unique=true, nullable=false)
+	private Integer id;
+    
+	@Column(name="nome", unique=true, nullable=false, length=45)
+	private String nome;
+    
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="status")
+	private Set<Alerta> alertas = new HashSet<Alerta>(0);
+    
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="statusByStatusTo")
+	private Set<TransicaoStatus> transicaoStatusesForStatusTo = new HashSet<TransicaoStatus>(0);
+    
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="status")
+	private Set<Projeto> projetos = new HashSet<Projeto>(0);
+    
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="statusByStatusFrom")
+	private Set<TransicaoStatus> transicaoStatusesForStatusFrom = new HashSet<TransicaoStatus>(0);
 
     public Status() {
     }
-
 	
     public Status(String nome) {
         this.nome = nome;
     }
+    
     public Status(String nome, Set<Alerta> alertas, Set<TransicaoStatus> transicaoStatusesForStatusTo, Set<Projeto> projetos, Set<TransicaoStatus> transicaoStatusesForStatusFrom) {
        this.nome = nome;
        this.alertas = alertas;
@@ -47,10 +63,6 @@ public class Status  implements java.io.Serializable {
        this.transicaoStatusesForStatusFrom = transicaoStatusesForStatusFrom;
     }
    
-     @Id @GeneratedValue(strategy=IDENTITY)
-
-    
-    @Column(name="id", unique=true, nullable=false)
     public Integer getId() {
         return this.id;
     }
@@ -59,8 +71,6 @@ public class Status  implements java.io.Serializable {
         this.id = id;
     }
 
-    
-    @Column(name="nome", unique=true, nullable=false, length=45)
     public String getNome() {
         return this.nome;
     }
@@ -69,7 +79,6 @@ public class Status  implements java.io.Serializable {
         this.nome = nome;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="status")
     public Set<Alerta> getAlertas() {
         return this.alertas;
     }
@@ -78,7 +87,6 @@ public class Status  implements java.io.Serializable {
         this.alertas = alertas;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="statusByStatusTo")
     public Set<TransicaoStatus> getTransicaoStatusesForStatusTo() {
         return this.transicaoStatusesForStatusTo;
     }
@@ -87,7 +95,6 @@ public class Status  implements java.io.Serializable {
         this.transicaoStatusesForStatusTo = transicaoStatusesForStatusTo;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="status")
     public Set<Projeto> getProjetos() {
         return this.projetos;
     }
@@ -96,7 +103,6 @@ public class Status  implements java.io.Serializable {
         this.projetos = projetos;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="statusByStatusFrom")
     public Set<TransicaoStatus> getTransicaoStatusesForStatusFrom() {
         return this.transicaoStatusesForStatusFrom;
     }
@@ -104,9 +110,6 @@ public class Status  implements java.io.Serializable {
     public void setTransicaoStatusesForStatusFrom(Set<TransicaoStatus> transicaoStatusesForStatusFrom) {
         this.transicaoStatusesForStatusFrom = transicaoStatusesForStatusFrom;
     }
-
-
-
 
 }
 
