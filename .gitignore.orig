@@ -1,0 +1,10 @@
+<<<<<<< HEAD
+target/
+target
+.settings/*
+!.settings/.jsdtscope
+.project
+.classpath
+=======
+target
+>>>>>>> bc53de590a7a336c193a2c1a32adea88b6e679ae

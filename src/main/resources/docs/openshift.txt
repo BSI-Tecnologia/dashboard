@@ -13,3 +13,4 @@ You can manage your new MySQL database by also embedding phpmyadmin-3.4.
 Connection URL: mysql://127.6.121.1:3306/
 
 
+curl -k -X POST https://openshift.redhat.com/broker/rest/domains/devdashboard/applications/Devdashboard/events --user "x:123" --data "event=stop"
