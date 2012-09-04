@@ -1,0 +1,15 @@
+mysql-5.1
+---------------------------------
+Added mysql-5.1 to application devdashboard
+MySQL 5.1 database added.  Please make note of these credentials:
+
+   Root User: admin
+   Root Password: hKdXmYgXFTBT
+   Database Name: devdashboard
+
+Connection URL: mysql://127.6.121.1:3306/
+
+You can manage your new MySQL database by also embedding phpmyadmin-3.4.
+Connection URL: mysql://127.6.121.1:3306/
+
+

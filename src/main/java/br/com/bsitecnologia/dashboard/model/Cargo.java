@@ -21,64 +21,74 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "Cargo", catalog = "dashboard", uniqueConstraints = @UniqueConstraint(columnNames = "nome"))
-public class Cargo implements java.io.Serializable {
+public class Cargo implements java.io.Serializable
+{
 
-	private static final long serialVersionUID = -2079581154129221126L;
-	
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
-	private Integer id;
-	
-	@Column(name = "nome", unique = true, length = 45)
-	private String nome;
+   private static final long serialVersionUID = -2079581154129221126L;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cargo")
-	private List<Colaborador> colaboradores = new ArrayList<Colaborador>(0);
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cargo")
-	private List<EmailTemplateColaboradores> emailTemplateColaboradoreses = new ArrayList<EmailTemplateColaboradores>(0);
+   @Id
+   @GeneratedValue(strategy = IDENTITY)
+   @Column(name = "id", unique = true, nullable = false)
+   private Integer id;
 
-	public Cargo() {
-	}
+   @Column(name = "nome", unique = true, length = 45)
+   private String nome;
 
-	public Cargo(String nome, List<Colaborador> colaboradores,
-			List<EmailTemplateColaboradores> emailTemplateColaboradoreses) {
-		this.nome = nome;
-		this.colaboradores = colaboradores;
-		this.emailTemplateColaboradoreses = emailTemplateColaboradoreses;
-	}
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "cargo")
+   private List<Colaborador> colaboradores = new ArrayList<Colaborador>(0);
 
-	public Integer getId() {
-		return this.id;
-	}
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "cargo")
+   private List<EmailTemplateColaboradores> emailTemplateColaboradoreses = new ArrayList<EmailTemplateColaboradores>(0);
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+   public Cargo()
+   {
+   }
 
-	public String getNome() {
-		return this.nome;
-	}
+   public Cargo(String nome, List<Colaborador> colaboradores, List<EmailTemplateColaboradores> emailTemplateColaboradoreses)
+   {
+      this.nome = nome;
+      this.colaboradores = colaboradores;
+      this.emailTemplateColaboradoreses = emailTemplateColaboradoreses;
+   }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+   public Integer getId()
+   {
+      return this.id;
+   }
 
-	public List<Colaborador> getColaboradores() {
-		return this.colaboradores;
-	}
+   public void setId(Integer id)
+   {
+      this.id = id;
+   }
 
-	public void setColaboradores(List<Colaborador> colaboradors) {
-		this.colaboradores = colaboradors;
-	}
+   public String getNome()
+   {
+      return this.nome;
+   }
 
-	public List<EmailTemplateColaboradores> getEmailTemplateColaboradoreses() {
-		return this.emailTemplateColaboradoreses;
-	}
+   public void setNome(String nome)
+   {
+      this.nome = nome;
+   }
 
-	public void setEmailTemplateColaboradoreses(List<EmailTemplateColaboradores> emailTemplateColaboradoreses) {
-		this.emailTemplateColaboradoreses = emailTemplateColaboradoreses;
-	}
+   public List<Colaborador> getColaboradores()
+   {
+      return this.colaboradores;
+   }
+
+   public void setColaboradores(List<Colaborador> colaboradors)
+   {
+      this.colaboradores = colaboradors;
+   }
+
+   public List<EmailTemplateColaboradores> getEmailTemplateColaboradoreses()
+   {
+      return this.emailTemplateColaboradoreses;
+   }
+
+   public void setEmailTemplateColaboradoreses(List<EmailTemplateColaboradores> emailTemplateColaboradoreses)
+   {
+      this.emailTemplateColaboradoreses = emailTemplateColaboradoreses;
+   }
 
 }
