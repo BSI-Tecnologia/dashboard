@@ -27,20 +27,33 @@ public class RichBean implements Serializable {
     @Inject
     CargoDao cargoDao;
     
-    @Inject
+    private Cargo cargo;
+    
+    public Cargo getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
+	}
+
+	@Inject
     Conversation conversation;
     
     @PostConstruct
     public void teste(){
-    	conversation.begin();
-    	 System.out.println("post construct: initialize");
-         createMeterGaugeModel(speed);  
-         name = "John Bruno";
+		cargo = new Cargo();
+		cargo.setNome("nome teste");
+		System.out.println("post construct: initialize");
+		createMeterGaugeModel(speed);
+		name = "John Bruno";
+    }
+    
+    public void salvar() throws Exception{
+    	cargoDao.save(cargo);
     }
     
     public String getName() throws Exception {
-    	Cargo cargo = new Cargo();
-    	cargo.setNome("insert select e update teste");
     	System.out.println("teste save " + cargoDao.save(cargo).getId());
     	Cargo cargoLido = cargoDao.findAll().get(0);
     	System.out.println("TESTE CARGO DAO: " + cargoLido.getNome());

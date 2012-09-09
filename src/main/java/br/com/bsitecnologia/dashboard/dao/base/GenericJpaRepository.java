@@ -5,6 +5,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
 
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.NotSupportedException;
@@ -15,6 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Projections;
+import org.jboss.solder.exception.control.ExceptionToCatch;
 
 import br.com.bsitecnologia.dashboard.util.DashboardDB;
 
@@ -51,7 +53,7 @@ public class GenericJpaRepository<T, ID extends Serializable> implements Generic
 	private EntityManager entityManager;
 	
 	@Inject
-    UserTransaction userTransaction;
+    Event<ExceptionToCatch> catchEvent;
 
 	// ~ Constructors
 	// -----------------------------------------------------------
@@ -209,12 +211,9 @@ public class GenericJpaRepository<T, ID extends Serializable> implements Generic
 	 * @see be.bzbit.framework.domain.repository.GenericRepository#delete(java.lang.Object)
 	 */
 	@Override
-	public void delete(T entity) throws Exception {
-		userTransaction.begin();
-        entityManager.joinTransaction();
+	public void delete(T entity) {
 		entityManager.remove(entity);
 		entityManager.flush();
-        userTransaction.commit();
 		entityManager.clear();
 	}
 
@@ -224,13 +223,15 @@ public class GenericJpaRepository<T, ID extends Serializable> implements Generic
 	 * @see be.bzbit.framework.domain.repository.GenericRepository#save(java.lang.Object)
 	 */
 	@Override
-	public T save(T entity) throws Exception {
-		userTransaction.begin();
-        entityManager.joinTransaction();
-        final T savedEntity = entityManager.merge(entity);
-        entityManager.flush();
-        userTransaction.commit();
-		entityManager.clear();
+	public T save(T entity) {
+		T savedEntity = null;
+		try {
+			savedEntity = entityManager.merge(entity);
+			entityManager.flush();
+			entityManager.clear();
+		} catch (Exception e) {
+			catchEvent.fire(new ExceptionToCatch(e));
+		}
 		return savedEntity;
 	}
 }

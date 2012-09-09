@@ -4,61 +4,76 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.inject.New;
+import javax.enterprise.inject.Produces;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.Conversation;
+import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ConversationScoped;
+import org.primefaces.event.SelectEvent;
+
+import br.com.bsitecnologia.dashboard.controller.BaseBean;
+import br.com.bsitecnologia.dashboard.controller.datamodel.CargoDataModel;
 import br.com.bsitecnologia.dashboard.dao.CargoDao;
 import br.com.bsitecnologia.dashboard.model.Cargo;
+import br.com.bsitecnologia.dashboard.util.Breadcrumb;
 
 @SuppressWarnings("unused")
 @Named
 @ConversationScoped
-public class CargoBean implements Serializable {
+public class CargoBean extends BaseBean implements Serializable {
 	
 	private static final long serialVersionUID = -563351669224686839L;
-
+	
+	@Inject
+	Conversation conversation;
+	
 	@Inject
     private CargoDao cargoDao;
 	
 	@Inject
-	private Conversation conversation;
-	
+	@New
 	private Cargo cargoForm;
-	
-	private String tituloAccordion = "Incluir_não_funfa";
 	
 	private List<Cargo> cargosList;
 	
+	@Inject
+	private CargoDataModel dataModel;
+	
+	@Named
+	@Produces
+	private final String title = "Cargo"; //TITULO DO CONTENT HEADER !!! 
+	
+	@Named
+	@Produces
+	private final Breadcrumb[] breadcrumb = {Breadcrumb.HOME, Breadcrumb.CARGO}; //SERA O BREADCRUMB? nao sei ...
+	
 	@PostConstruct
-	private void init(){
-		conversation.begin();
+	public void init(){
 		loadCargosList();
-		cargoForm = new Cargo();
+		dataModel.setCargoList(cargosList);
 	}
 	
 	private void loadCargosList(){
 		cargosList = cargoDao.findAll();
 	}
 
-	public String salvar() throws Exception{
+	public void salvar(){
 		cargoDao.save(cargoForm);
-		System.out.println("SALVOUUUUUUUUUUU !!!");
-		cargoForm = new Cargo();
-		return "";
+		loadCargosList();
+		addMessage(FacesMessage.SEVERITY_INFO, String.format("Cargo: %s", cargoForm.getNome()), "Cargo salvo com sucesso.");
 	}
+	
+	public void onRowSelect(SelectEvent event) {  
+        cargoForm = ((Cargo) event.getObject());  
+    }  
+	
+	/* get&set */
 	
 	public List<Cargo> getCargosList(){
 		return cargosList;
-	}
-	
-	public String getTituloAccordion() {
-		return tituloAccordion;
-	}
-
-	public void setTituloAccordion(String tituloAccordion) {
-		this.tituloAccordion = tituloAccordion;
 	}
 	
 	public Cargo getCargoForm() {
@@ -69,5 +84,8 @@ public class CargoBean implements Serializable {
 		this.cargoForm = cargoForm;
 	}
 	
+	public CargoDataModel getDataModel() {
+		return dataModel;
+	}
 	
 }

@@ -94,7 +94,7 @@ public interface GenericRepository<T, ID extends Serializable> {
      * 
      * @return the saved entity
      */
-    T save(final T entity) throws Exception;
+    T save(final T entity);
 
     /**
      * delete an entity from the database
@@ -102,5 +102,5 @@ public interface GenericRepository<T, ID extends Serializable> {
      * @param entity the entity to delete
      * @throws Exception 
      */
-    void delete(final T entity) throws Exception;
+    void delete(final T entity);
 }
