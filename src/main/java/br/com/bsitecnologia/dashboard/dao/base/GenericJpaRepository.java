@@ -9,7 +9,6 @@ import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.NotSupportedException;
-import javax.transaction.UserTransaction;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -212,6 +211,7 @@ public class GenericJpaRepository<T, ID extends Serializable> implements Generic
 	 */
 	@Override
 	public void delete(T entity) {
+		entity = entityManager.merge(entity);
 		entityManager.remove(entity);
 		entityManager.flush();
 		entityManager.clear();

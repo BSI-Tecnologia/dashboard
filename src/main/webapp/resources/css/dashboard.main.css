@@ -3,6 +3,24 @@
 	-moz-outline: none !important;
 }
 
+.ui-paginator{
+	font-size: 10px;
+}
+
+tr.ui-state-highlight{
+	cursor:pointer;
+	font-weight:normal;
+	border:0 none;
+	border: 1px solid #666;
+	background: #AAA;
+	background: #AAA linear-gradient(top, rgba(0, 0, 0, 0.25), transparent);
+	background: #AAA -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.25)), to(transparent));
+	background: #AAA -moz-linear-gradient(top, rgba(0, 0, 0, 0.25), transparent);
+	color: white;
+	text-shadow: 1px 1px 1px #333;
+	font-size: 12px !important;
+}
+
 .ui-dt-c{
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size: 13px;	

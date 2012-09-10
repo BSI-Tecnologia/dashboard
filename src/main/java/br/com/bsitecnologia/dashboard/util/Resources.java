@@ -4,6 +4,7 @@ import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.PersistenceUnit;
 
 /**
@@ -22,7 +23,7 @@ import javax.persistence.PersistenceUnit;
 public class Resources {
 	@Produces
 	@DashboardDB
-	@PersistenceContext
+	@PersistenceContext(type=PersistenceContextType.EXTENDED)
 	EntityManager entityManager;
 	
 	@Produces

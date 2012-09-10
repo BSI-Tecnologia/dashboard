@@ -27,47 +27,57 @@ public class CargoBean extends BaseBean implements Serializable {
 	
 	private static final long serialVersionUID = -563351669224686839L;
 	
-	@Inject
-	Conversation conversation;
+	@Inject Conversation conversation;
 	
-	@Inject
-    private CargoDao cargoDao;
+	@Inject private CargoDao cargoDao;
 	
-	@Inject
-	@New
-	private Cargo cargoForm;
+	@Inject @New private Cargo cargoForm;
 	
 	private List<Cargo> cargosList;
 	
-	@Inject
-	private CargoDataModel dataModel;
+	@Inject private CargoDataModel dataModel;
 	
-	@Named
-	@Produces
-	private final String title = "Cargo"; //TITULO DO CONTENT HEADER !!! 
+	private String saveButtonLabel = "Salvar";
 	
-	@Named
-	@Produces
-	private final Breadcrumb[] breadcrumb = {Breadcrumb.HOME, Breadcrumb.CARGO}; //SERA O BREADCRUMB? nao sei ...
+	private boolean showDeleteButton = false;
+	
+	@Named	@Produces private final String title = "Cargo"; //TITULO DO CONTENT HEADER !!! 
+	
+	@Named	@Produces private final Breadcrumb[] breadcrumb = {Breadcrumb.HOME, 
+															   Breadcrumb.CARGO}; //SERA O BREADCRUMB? nao sei ...
 	
 	@PostConstruct
 	public void init(){
 		loadCargosList();
-		dataModel.setCargoList(cargosList);
 	}
 	
 	private void loadCargosList(){
 		cargosList = cargoDao.findAll();
+		dataModel.setCargoList(cargosList);
 	}
 
 	public void salvar(){
 		cargoDao.save(cargoForm);
 		loadCargosList();
 		addMessage(FacesMessage.SEVERITY_INFO, String.format("Cargo: %s", cargoForm.getNome()), "Cargo salvo com sucesso.");
+		saveButtonLabel = "Salvar";
+		showDeleteButton = false;
+		cargoForm = new Cargo();
 	}
 	
-	public void onRowSelect(SelectEvent event) {  
-        cargoForm = ((Cargo) event.getObject());  
+	public void deletar(){
+		cargoDao.delete(cargoForm);
+		loadCargosList();
+		addMessage(FacesMessage.SEVERITY_INFO, String.format("Cargo: %s", cargoForm.getNome()), "Cargo deletado com sucesso.");
+		saveButtonLabel = "Salvar";
+		showDeleteButton = false;
+		cargoForm = new Cargo();
+	}
+	
+	public void onRowSelect(SelectEvent event) {
+		saveButtonLabel = "Editar";
+		showDeleteButton = true;
+        cargoForm = (Cargo) event.getObject();  
     }  
 	
 	/* get&set */
@@ -86,6 +96,14 @@ public class CargoBean extends BaseBean implements Serializable {
 	
 	public CargoDataModel getDataModel() {
 		return dataModel;
+	}
+	
+	public String getSaveButtonLabel() {
+		return saveButtonLabel;
+	}
+	
+	public boolean isShowDeleteButton() {
+		return showDeleteButton;
 	}
 	
 }
