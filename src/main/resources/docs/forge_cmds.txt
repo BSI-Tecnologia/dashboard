@@ -21,3 +21,16 @@ Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/co
 Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Projeto.java
 Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/AtorExterno.java
 Generated 18 java files.
+
+From Hibernate configuration docs:
+
+hibernate.hbm2ddl.auto
+
+    Automatically validates or exports schema DDL to the database when the SessionFactory is created.
+    With create-drop, the database schema will be dropped when the SessionFactory is closed explicitly.
+
+    e.g. validate | update | create | create-drop
+
+So, you can set it to validate and it will verify if everything in your hibernate mappings is present in the database.
+If you set it to update, then every time you add a mapped class or property, the underlying db schema will be updated
+to reflect that change.
