@@ -6,35 +6,39 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<ui:composition>
 		<div id="sidebar">
-			<a href="./Unicorn Admin_files/Unicorn Admin.html" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
+			<a href="#{request.contextPath}/index.jsf" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
 			<ul style="display: block; ">
-				<li class="active"><a href="http://wbpreview.com/previews/WB0F35928/index.html"><i class="icon icon-home"></i> <span>Dashboard</span></a></li>
+				<li class="active"><a href="#{request.contextPath}/index.jsf"><i class="icon icon-home"></i> <span>Dashboard</span></a></li>
 				<li class="submenu">
-					<a href="./Unicorn Admin_files/Unicorn Admin.html"><i class="icon icon-th-list"></i> <span>Form elements</span> <span class="label">3</span></a>
+					<a href="#"><i class="icon icon-user"></i> <span>Colaborador</span> <span class="label">3</span></a>
 					<ul>
-						<li><a href="http://wbpreview.com/previews/WB0F35928/form-common.html">Common elements</a></li>
-						<li><a href="http://wbpreview.com/previews/WB0F35928/form-validation.html">Validation</a></li>
-						<li><a href="http://wbpreview.com/previews/WB0F35928/form-wizard.html">Wizard</a></li>
+						<li><a href="#">Equipe</a></li>
+						<li><a href="#{request.contextPath}/admin/cargo/cargo.jsf">Cargo</a></li>
+						<li><a href="#">Colaborador</a></li>
 					</ul>
 				</li>
-				<li><a href="http://wbpreview.com/previews/WB0F35928/buttons.html"><i class="icon icon-tint"></i> <span>Buttons &amp; icons</span></a></li>
-				<li><a href="http://wbpreview.com/previews/WB0F35928/interface.html"><i class="icon icon-pencil"></i> <span>Interface elements</span></a></li>
-				<li><a href="http://wbpreview.com/previews/WB0F35928/tables.html"><i class="icon icon-th"></i> <span>Tables</span></a></li>
-				<li><a href="http://wbpreview.com/previews/WB0F35928/grid.html"><i class="icon icon-th-list"></i> <span>Grid Layout</span></a></li>
 				<li class="submenu">
-					<a href="./Unicorn Admin_files/Unicorn Admin.html"><i class="icon icon-file"></i> <span>Sample pages</span> <span class="label">4</span></a>
+					<a href="#"><i class="icon icon-th-list"></i> <span>Projeto</span> <span class="label">2</span></a>
 					<ul>
-						<li><a href="http://wbpreview.com/previews/WB0F35928/invoice.html">Invoice</a></li>
-						<li><a href="http://wbpreview.com/previews/WB0F35928/chat.html">Support chat</a></li>
-						<li><a href="http://wbpreview.com/previews/WB0F35928/calendar.html">Calendar</a></li>
-						<li><a href="http://wbpreview.com/previews/WB0F35928/gallery.html">Gallery</a></li>
+						<li><a href="#">Projeto</a></li>
+						<li><a href="#">Historico</a></li>
 					</ul>
 				</li>
-				<li>
-					<a href="http://wbpreview.com/previews/WB0F35928/charts.html"><i class="icon icon-signal"></i> <span>Charts &amp; graphs</span></a>
+				<li class="submenu">
+					<a href="#"><i class="icon icon-road"></i> <span>Status</span> <span class="label">2</span></a>
+					<ul>
+						<li><a href="#">Status</a></li>
+						<li><a href="#">Transição de status</a></li>
+					</ul>
 				</li>
-				<li>
-					<a href="http://wbpreview.com/previews/WB0F35928/widgets.html"><i class="icon icon-inbox"></i> <span>Widgets</span></a>
+				<li><a href="#"><i class="icon icon-random"></i> <span>Ator externo</span></a></li>
+				<li><a href="#"><i class="icon icon-ban-circle"></i> <span>Impedimento</span></a></li>
+				<li class="submenu">
+					<a href="#"><i class="icon icon-bell"></i> <span>Alerta</span> <span class="label">2</span></a>
+					<ul>
+						<li><a href="#">Alerta</a></li>
+						<li><a href="#">Template de email</a></li>
+					</ul>
 				</li>
 			</ul>
 		</div>
