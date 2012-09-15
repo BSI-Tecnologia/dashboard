@@ -1,9 +1,10 @@
 package br.com.bsitecnologia.dashboard.model;
 
-// Generated 01/09/2012 15:14:43 by Hibernate Tools 3.4.0.CR1
+// Generated 15/09/2012 10:17:48 by Hibernate Tools 3.4.0.CR1
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -25,10 +25,10 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "Colaborador", catalog = "dashboard", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
-public class Colaborador implements java.io.Serializable {
-
-	private static final long serialVersionUID = 3878132230598112519L;
+public class Colaborador implements Serializable {
 	
+	private static final long serialVersionUID = -703435632161132437L;
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
@@ -38,7 +38,7 @@ public class Colaborador implements java.io.Serializable {
 	@JoinColumn(name = "equipe", nullable = false)
 	private Equipe equipe;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "colaboradorPai")
 	private Colaborador colaboradorPai;
 	
@@ -61,27 +61,34 @@ public class Colaborador implements java.io.Serializable {
 	@Column(name = "remuneracao", precision = 8)
 	private BigDecimal remuneracao;
 	
-	@Column(name = "senha", nullable = false, length = 32)
+	@Column(name = "senha", length = 20)
 	private String senha;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaborador")
+	private List<HistoricoRiscoProjeto> historicoRiscoProjetos = new ArrayList<HistoricoRiscoProjeto>(0);
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaboradorPai")
+	private List<Colaborador> colaboradoresFilhos = new ArrayList<Colaborador>(0);
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaborador")
 	private List<ColaboradorProjeto> colaboradorProjetos = new ArrayList<ColaboradorProjeto>(0);
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaborador")
-	private List<EmailTemplateColaboradores> emailTemplateColaboradoreses = new ArrayList<EmailTemplateColaboradores>(0);
+	private List<EmailTemplateColaboradores> emailTemplateColaboradores = new ArrayList<EmailTemplateColaboradores>(0);
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaboradorRelacionadoImpedimento")
-	private List<Impedimento> impedimentosRelacionados = new ArrayList<Impedimento>(0);
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaboradorAtribuido")
+	private List<Impedimento> impedimentosAtribuidos = new ArrayList<Impedimento>(0);
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaborador")
 	private List<HistoricoProjeto> historicoProjetos = new ArrayList<HistoricoProjeto>(0);
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaboradorAutor")
-	private List<Impedimento> impedimentosAutor = new ArrayList<Impedimento>(0);
+	private List<Impedimento> impedimentosCriados = new ArrayList<Impedimento>(0);
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaborador")
 	private List<Comentario> comentarios = new ArrayList<Comentario>(0);
 
+	
 	public Colaborador() {
 	}
 
@@ -92,15 +99,18 @@ public class Colaborador implements java.io.Serializable {
 		this.senha = senha;
 	}
 
-	public Colaborador(Equipe equipe, Colaborador colaboradorPai, Cargo cargo,
-			String nome, String localAlocacao, String telefone, String email,
-			BigDecimal remuneracao, String senha,
+	public Colaborador(Integer id, Equipe equipe, Colaborador colaboradorPai,
+			Cargo cargo, String nome, String localAlocacao, String telefone,
+			String email, BigDecimal remuneracao, String senha,
+			List<HistoricoRiscoProjeto> historicoRiscoProjetos,
+			List<Colaborador> colaboradoresFilhos,
 			List<ColaboradorProjeto> colaboradorProjetos,
-			List<EmailTemplateColaboradores> emailTemplateColaboradoreses,
-			List<Impedimento> impedimentosRelacionados,
+			List<EmailTemplateColaboradores> emailTemplateColaboradores,
+			List<Impedimento> impedimentosAtribuidos,
 			List<HistoricoProjeto> historicoProjetos,
-			List<Impedimento> impedimentosForColaboradorAutor,
-			List<Comentario> comentarios) {
+			List<Impedimento> impedimentosCriados, List<Comentario> comentarios) {
+		super();
+		this.id = id;
 		this.equipe = equipe;
 		this.colaboradorPai = colaboradorPai;
 		this.cargo = cargo;
@@ -110,16 +120,18 @@ public class Colaborador implements java.io.Serializable {
 		this.email = email;
 		this.remuneracao = remuneracao;
 		this.senha = senha;
+		this.historicoRiscoProjetos = historicoRiscoProjetos;
+		this.colaboradoresFilhos = colaboradoresFilhos;
 		this.colaboradorProjetos = colaboradorProjetos;
-		this.emailTemplateColaboradoreses = emailTemplateColaboradoreses;
-		this.impedimentosRelacionados = impedimentosRelacionados;
+		this.emailTemplateColaboradores = emailTemplateColaboradores;
+		this.impedimentosAtribuidos = impedimentosAtribuidos;
 		this.historicoProjetos = historicoProjetos;
-		this.impedimentosAutor = impedimentosForColaboradorAutor;
+		this.impedimentosCriados = impedimentosCriados;
 		this.comentarios = comentarios;
 	}
 
 	public Integer getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(Integer id) {
@@ -127,7 +139,7 @@ public class Colaborador implements java.io.Serializable {
 	}
 
 	public Equipe getEquipe() {
-		return this.equipe;
+		return equipe;
 	}
 
 	public void setEquipe(Equipe equipe) {
@@ -135,7 +147,7 @@ public class Colaborador implements java.io.Serializable {
 	}
 
 	public Colaborador getColaboradorPai() {
-		return this.colaboradorPai;
+		return colaboradorPai;
 	}
 
 	public void setColaboradorPai(Colaborador colaboradorPai) {
@@ -143,7 +155,7 @@ public class Colaborador implements java.io.Serializable {
 	}
 
 	public Cargo getCargo() {
-		return this.cargo;
+		return cargo;
 	}
 
 	public void setCargo(Cargo cargo) {
@@ -151,7 +163,7 @@ public class Colaborador implements java.io.Serializable {
 	}
 
 	public String getNome() {
-		return this.nome;
+		return nome;
 	}
 
 	public void setNome(String nome) {
@@ -159,7 +171,7 @@ public class Colaborador implements java.io.Serializable {
 	}
 
 	public String getLocalAlocacao() {
-		return this.localAlocacao;
+		return localAlocacao;
 	}
 
 	public void setLocalAlocacao(String localAlocacao) {
@@ -167,7 +179,7 @@ public class Colaborador implements java.io.Serializable {
 	}
 
 	public String getTelefone() {
-		return this.telefone;
+		return telefone;
 	}
 
 	public void setTelefone(String telefone) {
@@ -175,7 +187,7 @@ public class Colaborador implements java.io.Serializable {
 	}
 
 	public String getEmail() {
-		return this.email;
+		return email;
 	}
 
 	public void setEmail(String email) {
@@ -183,7 +195,7 @@ public class Colaborador implements java.io.Serializable {
 	}
 
 	public BigDecimal getRemuneracao() {
-		return this.remuneracao;
+		return remuneracao;
 	}
 
 	public void setRemuneracao(BigDecimal remuneracao) {
@@ -191,60 +203,77 @@ public class Colaborador implements java.io.Serializable {
 	}
 
 	public String getSenha() {
-		return this.senha;
+		return senha;
 	}
 
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
 
-	public List<ColaboradorProjeto> getColaboradorProjetos() {
-		return this.colaboradorProjetos;
+	public List<HistoricoRiscoProjeto> getHistoricoRiscoProjetos() {
+		return historicoRiscoProjetos;
 	}
 
-	public void setColaboradorProjetos(
-			List<ColaboradorProjeto> colaboradorProjetos) {
+	public void setHistoricoRiscoProjetos(
+			List<HistoricoRiscoProjeto> historicoRiscoProjetos) {
+		this.historicoRiscoProjetos = historicoRiscoProjetos;
+	}
+
+	public List<Colaborador> getColaboradoresFilhos() {
+		return colaboradoresFilhos;
+	}
+
+	public void setColaboradoresFilhos(List<Colaborador> colaboradoresFilhos) {
+		this.colaboradoresFilhos = colaboradoresFilhos;
+	}
+
+	public List<ColaboradorProjeto> getColaboradorProjetos() {
+		return colaboradorProjetos;
+	}
+
+	public void setColaboradorProjetos(List<ColaboradorProjeto> colaboradorProjetos) {
 		this.colaboradorProjetos = colaboradorProjetos;
 	}
 
-	public List<EmailTemplateColaboradores> getEmailTemplateColaboradoreses() {
-		return this.emailTemplateColaboradoreses;
+	public List<EmailTemplateColaboradores> getEmailTemplateColaboradores() {
+		return emailTemplateColaboradores;
 	}
 
-	public void setEmailTemplateColaboradoreses(List<EmailTemplateColaboradores> emailTemplateColaboradoreses) {
-		this.emailTemplateColaboradoreses = emailTemplateColaboradoreses;
+	public void setEmailTemplateColaboradores(
+			List<EmailTemplateColaboradores> emailTemplateColaboradores) {
+		this.emailTemplateColaboradores = emailTemplateColaboradores;
 	}
 
-	public List<Impedimento> getImpedimentosRelacionados() {
-		return this.impedimentosRelacionados;
+	public List<Impedimento> getImpedimentosAtribuidos() {
+		return impedimentosAtribuidos;
 	}
 
-	public void setImpedimentosRelacionados(List<Impedimento> impedimentosRelacionados) {
-		this.impedimentosRelacionados = impedimentosRelacionados;
+	public void setImpedimentosAtribuidos(List<Impedimento> impedimentosAtribuidos) {
+		this.impedimentosAtribuidos = impedimentosAtribuidos;
 	}
-	
+
 	public List<HistoricoProjeto> getHistoricoProjetos() {
-		return this.historicoProjetos;
+		return historicoProjetos;
 	}
 
 	public void setHistoricoProjetos(List<HistoricoProjeto> historicoProjetos) {
 		this.historicoProjetos = historicoProjetos;
 	}
 
-	public List<Impedimento> getImpedimentosForColaboradorAutor() {
-		return this.impedimentosAutor;
+	public List<Impedimento> getImpedimentosCriados() {
+		return impedimentosCriados;
 	}
 
-	public void setImpedimentosForColaboradorAutor(List<Impedimento> impedimentosForColaboradorAutor) {
-		this.impedimentosAutor = impedimentosForColaboradorAutor;
+	public void setImpedimentosCriados(List<Impedimento> impedimentosCriados) {
+		this.impedimentosCriados = impedimentosCriados;
 	}
 
 	public List<Comentario> getComentarios() {
-		return this.comentarios;
+		return comentarios;
 	}
 
 	public void setComentarios(List<Comentario> comentarios) {
 		this.comentarios = comentarios;
 	}
-
+	
 }

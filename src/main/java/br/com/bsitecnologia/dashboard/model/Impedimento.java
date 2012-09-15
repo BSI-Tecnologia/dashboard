@@ -1,16 +1,22 @@
 package br.com.bsitecnologia.dashboard.model;
 
-// Generated 01/09/2012 15:14:43 by Hibernate Tools 3.4.0.CR1
+// Generated 15/09/2012 10:17:48 by Hibernate Tools 3.4.0.CR1
 
+import static javax.persistence.GenerationType.IDENTITY;
+
+import java.io.Serializable;
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,69 +26,66 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "Impedimento", catalog = "dashboard")
-public class Impedimento implements java.io.Serializable {
+public class Impedimento implements Serializable {
 
-	private static final long serialVersionUID = 1356611879944932216L;
-	
+	private static final long serialVersionUID = -7643301864424870162L;
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "colaboradorAutor", nullable = false)
 	private Colaborador colaboradorAutor;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "atorExterno")
 	private AtorExterno atorExterno;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "projeto", nullable = false)
 	private Projeto projeto;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "colaboradorImpedimento")
-	private Colaborador colaboradorRelacionadoImpedimento;
-	
+	private Colaborador colaboradorAtribuido;
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "comentario", nullable = false)
-	private Comentario comentario;
-	
+	@JoinColumn(name = "risco")
+	private Risco risco;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dataInicio", nullable = false, length = 19)
 	private Date dataInicio;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dataFim", length = 19)
 	private Date dataFim;
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "impedimento")
+	private List<ComentarioImpedimento> comentarioImpedimentos = new ArrayList<ComentarioImpedimento>(0);
+
 	public Impedimento() {
 	}
-
-	public Impedimento(Colaborador colaboradorAutor,
-			Projeto projeto, Comentario comentario, Date dataInicio) {
-		this.colaboradorAutor = colaboradorAutor;
-		this.projeto = projeto;
-		this.comentario = comentario;
-		this.dataInicio = dataInicio;
-	}
-
-	public Impedimento(Colaborador colaboradorAutor,
+	
+	public Impedimento(Integer id, Colaborador colaboradorAutor,
 			AtorExterno atorExterno, Projeto projeto,
-			Colaborador colaboradorRelacionadoImpedimento,
-			Comentario comentario, Date dataInicio, Date dataFim) {
+			Colaborador colaboradorAtribuido, Risco risco, Date dataInicio,
+			Date dataFim, List<ComentarioImpedimento> comentarioImpedimentos) {
+		this.id = id;
 		this.colaboradorAutor = colaboradorAutor;
 		this.atorExterno = atorExterno;
 		this.projeto = projeto;
-		this.colaboradorRelacionadoImpedimento = colaboradorRelacionadoImpedimento;
-		this.comentario = comentario;
+		this.colaboradorAtribuido = colaboradorAtribuido;
+		this.risco = risco;
 		this.dataInicio = dataInicio;
 		this.dataFim = dataFim;
+		this.comentarioImpedimentos = comentarioImpedimentos;
 	}
 
 	public Integer getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(Integer id) {
@@ -90,16 +93,15 @@ public class Impedimento implements java.io.Serializable {
 	}
 
 	public Colaborador getColaboradorAutor() {
-		return this.colaboradorAutor;
+		return colaboradorAutor;
 	}
 
-	public void setColaboradorAutor(
-			Colaborador colaboradorAutor) {
+	public void setColaboradorAutor(Colaborador colaboradorAutor) {
 		this.colaboradorAutor = colaboradorAutor;
 	}
 
 	public AtorExterno getAtorExterno() {
-		return this.atorExterno;
+		return atorExterno;
 	}
 
 	public void setAtorExterno(AtorExterno atorExterno) {
@@ -107,32 +109,31 @@ public class Impedimento implements java.io.Serializable {
 	}
 
 	public Projeto getProjeto() {
-		return this.projeto;
+		return projeto;
 	}
 
 	public void setProjeto(Projeto projeto) {
 		this.projeto = projeto;
 	}
 
-	public Colaborador getColaboradorRelacionadoImpedimento() {
-		return this.colaboradorRelacionadoImpedimento;
+	public Colaborador getColaboradorAtribuido() {
+		return colaboradorAtribuido;
 	}
 
-	public void setColaboradorRelacionadoImpedimento(
-			Colaborador colaboradorRelacionadoImpedimento) {
-		this.colaboradorRelacionadoImpedimento = colaboradorRelacionadoImpedimento;
+	public void setColaboradorAtribuido(Colaborador colaboradorAtribuido) {
+		this.colaboradorAtribuido = colaboradorAtribuido;
 	}
 
-	public Comentario getComentario() {
-		return this.comentario;
+	public Risco getRisco() {
+		return risco;
 	}
 
-	public void setComentario(Comentario comentario) {
-		this.comentario = comentario;
+	public void setRisco(Risco risco) {
+		this.risco = risco;
 	}
 
 	public Date getDataInicio() {
-		return this.dataInicio;
+		return dataInicio;
 	}
 
 	public void setDataInicio(Date dataInicio) {
@@ -140,11 +141,20 @@ public class Impedimento implements java.io.Serializable {
 	}
 
 	public Date getDataFim() {
-		return this.dataFim;
+		return dataFim;
 	}
 
 	public void setDataFim(Date dataFim) {
 		this.dataFim = dataFim;
 	}
+
+	public List<ComentarioImpedimento> getComentarioImpedimentos() {
+		return comentarioImpedimentos;
+	}
+
+	public void setComentarioImpedimentos(List<ComentarioImpedimento> comentarioImpedimentos) {
+		this.comentarioImpedimentos = comentarioImpedimentos;
+	}
+
 
 }

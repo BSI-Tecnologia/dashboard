@@ -1,9 +1,10 @@
 package br.com.bsitecnologia.dashboard.model;
 
-// Generated 01/09/2012 15:14:43 by Hibernate Tools 3.4.0.CR1
+// Generated 15/09/2012 10:17:48 by Hibernate Tools 3.4.0.CR1
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,9 +26,9 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "AtorExternoTransicaoStatus", catalog = "dashboard")
-public class AtorExternoTransicaoStatus implements java.io.Serializable {
+public class AtorExternoTransicaoStatus implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8401824379434401340L;
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)

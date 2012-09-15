@@ -1,15 +1,18 @@
 package br.com.bsitecnologia.dashboard.model;
 
-// Generated 01/09/2012 15:14:43 by Hibernate Tools 3.4.0.CR1
+// Generated 15/09/2012 10:17:48 by Hibernate Tools 3.4.0.CR1
 
-import java.util.Date;
+import static javax.persistence.GenerationType.IDENTITY;
+
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,9 +26,9 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "ColaboradorProjeto", catalog = "dashboard")
-public class ColaboradorProjeto implements java.io.Serializable {
-
-	private static final long serialVersionUID = -1108991637533934517L;
+public class ColaboradorProjeto implements Serializable {
+	
+	private static final long serialVersionUID = 309778551406872589L;
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -51,14 +54,15 @@ public class ColaboradorProjeto implements java.io.Serializable {
 	@Column(name = "dataFim", length = 10)
 	private Date dataFim;
 	
-	@Column(name = "quantidadeHoras")
+	@Column
 	private Integer quantidadeHoras;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaboradorAtualizacao")
-	private List<Artefato> artefatosColaboradorAtualizacao = new ArrayList<Artefato>(0);
+	private List<Artefato> artefatosAtualizados = new ArrayList<Artefato>(0);
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaboradorCriacao")
-	private List<Artefato> artefatosColaboradorCriacao = new ArrayList<Artefato>(0);
+	private List<Artefato> artefatosCriados = new ArrayList<Artefato>(0);
+
 
 	public ColaboradorProjeto() {
 	}
@@ -67,24 +71,25 @@ public class ColaboradorProjeto implements java.io.Serializable {
 		this.projeto = projeto;
 		this.colaborador = colaborador;
 	}
-
-	public ColaboradorProjeto(Projeto projeto, Colaborador colaborador,
-			Integer cargaHoraria, Date dataInicio, Date dataFim,
-			Integer quantidadeHoras,
-			List<Artefato> artefatosColaboradorAtualizacao,
-			List<Artefato> artefatosColaboradorCriacao) {
+	
+	public ColaboradorProjeto(Integer id, Projeto projeto,
+			Colaborador colaborador, Integer cargaHoraria, Date dataInicio,
+			Date dataFim, Integer quantidadeHoras,
+			List<Artefato> artefatosAtualizados, List<Artefato> artefatosCriados) {
+		super();
+		this.id = id;
 		this.projeto = projeto;
 		this.colaborador = colaborador;
 		this.cargaHoraria = cargaHoraria;
 		this.dataInicio = dataInicio;
 		this.dataFim = dataFim;
 		this.quantidadeHoras = quantidadeHoras;
-		this.artefatosColaboradorAtualizacao = artefatosColaboradorAtualizacao;
-		this.artefatosColaboradorCriacao = artefatosColaboradorCriacao;
+		this.artefatosAtualizados = artefatosAtualizados;
+		this.artefatosCriados = artefatosCriados;
 	}
 
 	public Integer getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(Integer id) {
@@ -92,7 +97,7 @@ public class ColaboradorProjeto implements java.io.Serializable {
 	}
 
 	public Projeto getProjeto() {
-		return this.projeto;
+		return projeto;
 	}
 
 	public void setProjeto(Projeto projeto) {
@@ -100,7 +105,7 @@ public class ColaboradorProjeto implements java.io.Serializable {
 	}
 
 	public Colaborador getColaborador() {
-		return this.colaborador;
+		return colaborador;
 	}
 
 	public void setColaborador(Colaborador colaborador) {
@@ -108,7 +113,7 @@ public class ColaboradorProjeto implements java.io.Serializable {
 	}
 
 	public Integer getCargaHoraria() {
-		return this.cargaHoraria;
+		return cargaHoraria;
 	}
 
 	public void setCargaHoraria(Integer cargaHoraria) {
@@ -116,7 +121,7 @@ public class ColaboradorProjeto implements java.io.Serializable {
 	}
 
 	public Date getDataInicio() {
-		return this.dataInicio;
+		return dataInicio;
 	}
 
 	public void setDataInicio(Date dataInicio) {
@@ -124,7 +129,7 @@ public class ColaboradorProjeto implements java.io.Serializable {
 	}
 
 	public Date getDataFim() {
-		return this.dataFim;
+		return dataFim;
 	}
 
 	public void setDataFim(Date dataFim) {
@@ -132,27 +137,27 @@ public class ColaboradorProjeto implements java.io.Serializable {
 	}
 
 	public Integer getQuantidadeHoras() {
-		return this.quantidadeHoras;
+		return quantidadeHoras;
 	}
 
 	public void setQuantidadeHoras(Integer quantidadeHoras) {
 		this.quantidadeHoras = quantidadeHoras;
 	}
 
-	public List<Artefato> getArtefatosForColaboradorAtualizacao() {
-		return this.artefatosColaboradorAtualizacao;
+	public List<Artefato> getArtefatosAtualizados() {
+		return artefatosAtualizados;
 	}
 
-	public void setArtefatosForColaboradorAtualizacao(List<Artefato> artefatosForColaboradorAtualizacao) {
-		this.artefatosColaboradorAtualizacao = artefatosForColaboradorAtualizacao;
+	public void setArtefatosAtualizados(List<Artefato> artefatosAtualizados) {
+		this.artefatosAtualizados = artefatosAtualizados;
 	}
 
-	public List<Artefato> getArtefatosForColaboradorCriacao() {
-		return this.artefatosColaboradorCriacao;
+	public List<Artefato> getArtefatosCriados() {
+		return artefatosCriados;
 	}
 
-	public void setArtefatosForColaboradorCriacao(List<Artefato> artefatosForColaboradorCriacao) {
-		this.artefatosColaboradorCriacao = artefatosForColaboradorCriacao;
+	public void setArtefatosCriados(List<Artefato> artefatosCriados) {
+		this.artefatosCriados = artefatosCriados;
 	}
 
 }

@@ -1,9 +1,10 @@
 package br.com.bsitecnologia.dashboard.model;
 
-// Generated 01/09/2012 15:14:43 by Hibernate Tools 3.4.0.CR1
+// Generated 15/09/2012 10:17:48 by Hibernate Tools 3.4.0.CR1
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +23,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Alerta", catalog = "dashboard")
-public class Alerta implements java.io.Serializable {
+public class Alerta implements Serializable {
 
-	private static final long serialVersionUID = 4497726783203383623L;
-	
+	private static final long serialVersionUID = -8715694833906788752L;
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
@@ -39,16 +40,16 @@ public class Alerta implements java.io.Serializable {
 	@JoinColumn(name = "transicaoStatus")
 	private TransicaoStatus transicaoStatus;
 	
-	@Column(name = "minutosDuracaoStatus")
+	@Column
 	private Integer minutosDuracaoStatus;
 	
-	@Column(name = "minutosAntesDataPrevisaoConclusao")
+	@Column
 	private Integer minutosAntesDataPrevisaoConclusao;
 	
-	@Column(name = "minutosAntesDataFim")
+	@Column
 	private Integer minutosAntesDataFim;
 	
-	@Column(name = "corProjetoDashboard")
+	@Column
 	private Integer corProjetoDashboard;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "alerta")
@@ -57,6 +58,7 @@ public class Alerta implements java.io.Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "alerta")
 	private List<AlertaProjeto> alertaProjetos = new ArrayList<AlertaProjeto>(0);
 
+	
 	public Alerta() {
 	}
 
@@ -64,7 +66,8 @@ public class Alerta implements java.io.Serializable {
 			Integer minutosDuracaoStatus,
 			Integer minutosAntesDataPrevisaoConclusao,
 			Integer minutosAntesDataFim, Integer corProjetoDashboard,
-			List<EmailTemplate> emailTemplates, List<AlertaProjeto> alertaProjetos) {
+			List<EmailTemplate> emailTemplates,
+			List<AlertaProjeto> alertaProjetos) {
 		this.status = status;
 		this.transicaoStatus = transicaoStatus;
 		this.minutosDuracaoStatus = minutosDuracaoStatus;

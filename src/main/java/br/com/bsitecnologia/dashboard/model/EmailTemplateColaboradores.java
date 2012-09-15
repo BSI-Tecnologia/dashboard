@@ -1,12 +1,15 @@
 package br.com.bsitecnologia.dashboard.model;
 
-// Generated 01/09/2012 15:14:43 by Hibernate Tools 3.4.0.CR1
+// Generated 15/09/2012 10:17:48 by Hibernate Tools 3.4.0.CR1
+
+import static javax.persistence.GenerationType.IDENTITY;
+
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,7 +20,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "EmailTemplateColaboradores", catalog = "dashboard")
-public class EmailTemplateColaboradores implements java.io.Serializable {
+public class EmailTemplateColaboradores implements Serializable {
 
 	private static final long serialVersionUID = -8986513113064296858L;
 
@@ -57,6 +60,7 @@ public class EmailTemplateColaboradores implements java.io.Serializable {
 		this.colaborador = colaborador;
 	}
 
+	
 	public Integer getId() {
 		return this.id;
 	}

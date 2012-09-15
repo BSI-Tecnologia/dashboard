@@ -1,9 +1,10 @@
 package br.com.bsitecnologia.dashboard.model;
 
-// Generated 01/09/2012 15:14:43 by Hibernate Tools 3.4.0.CR1
+// Generated 15/09/2012 10:17:48 by Hibernate Tools 3.4.0.CR1
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,10 +28,10 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "Projeto", catalog = "dashboard", uniqueConstraints = @UniqueConstraint(columnNames = "nome"))
-public class Projeto implements java.io.Serializable {
-
-	private static final long serialVersionUID = 3277714575988445344L;
+public class Projeto implements Serializable {
 	
+	private static final long serialVersionUID = -322801059633037259L;
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
@@ -69,13 +70,16 @@ public class Projeto implements java.io.Serializable {
 	private List<HistoricoProjeto> historicoProjetos = new ArrayList<HistoricoProjeto>(0);
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projeto")
-	private List<AtorExternoTransicaoStatus> atorExternoTransicaoStatus = new ArrayList<AtorExternoTransicaoStatus>(0);
+	private List<AtorExternoTransicaoStatus> atorExternoTransicaoStatuses = new ArrayList<AtorExternoTransicaoStatus>(0);
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projeto")
+	private List<ComentarioProjeto> comentarioProjetos = new ArrayList<ComentarioProjeto>(0);
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projeto")
 	private List<ColaboradorProjeto> colaboradorProjetos = new ArrayList<ColaboradorProjeto>(0);
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projeto")
-	private List<Comentario> comentarios = new ArrayList<Comentario>(0);
+	private List<RiscoProjeto> riscoProjetos = new ArrayList<RiscoProjeto>(0);
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projeto")
 	private List<EquipeProjeto> equipeProjetos = new ArrayList<EquipeProjeto>(0);
@@ -92,6 +96,7 @@ public class Projeto implements java.io.Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projeto")
 	private List<Impedimento> impedimentos = new ArrayList<Impedimento>(0);
 
+	
 	public Projeto() {
 	}
 
@@ -99,16 +104,18 @@ public class Projeto implements java.io.Serializable {
 		this.status = status;
 		this.nome = nome;
 	}
-
-	public Projeto(Projeto projetoPai, Status status, String nome,
+	
+	public Projeto(Integer id, Projeto projetoPai, Status status, String nome,
 			Date dataInicio, Date dataFim, Date dataPrevisaoConclusao,
 			BigDecimal orcamento, BigDecimal custo,
 			List<HistoricoProjeto> historicoProjetos,
-			List<AtorExternoTransicaoStatus> atorExternoTransicaoStatus,
+			List<AtorExternoTransicaoStatus> atorExternoTransicaoStatuses,
+			List<ComentarioProjeto> comentarioProjetos,
 			List<ColaboradorProjeto> colaboradorProjetos,
-			List<Comentario> comentarios, List<EquipeProjeto> equipeProjetos,
+			List<RiscoProjeto> riscoProjetos, List<EquipeProjeto> equipeProjetos,
 			List<AlertaProjeto> alertaProjetos, List<Artefato> artefatos,
 			List<Projeto> projetosFilhos, List<Impedimento> impedimentos) {
+		this.id = id;
 		this.projetoPai = projetoPai;
 		this.status = status;
 		this.nome = nome;
@@ -118,9 +125,10 @@ public class Projeto implements java.io.Serializable {
 		this.orcamento = orcamento;
 		this.custo = custo;
 		this.historicoProjetos = historicoProjetos;
-		this.atorExternoTransicaoStatus = atorExternoTransicaoStatus;
+		this.atorExternoTransicaoStatuses = atorExternoTransicaoStatuses;
+		this.comentarioProjetos = comentarioProjetos;
 		this.colaboradorProjetos = colaboradorProjetos;
-		this.comentarios = comentarios;
+		this.riscoProjetos = riscoProjetos;
 		this.equipeProjetos = equipeProjetos;
 		this.alertaProjetos = alertaProjetos;
 		this.artefatos = artefatos;
@@ -129,7 +137,7 @@ public class Projeto implements java.io.Serializable {
 	}
 
 	public Integer getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(Integer id) {
@@ -137,7 +145,7 @@ public class Projeto implements java.io.Serializable {
 	}
 
 	public Projeto getProjetoPai() {
-		return this.projetoPai;
+		return projetoPai;
 	}
 
 	public void setProjetoPai(Projeto projetoPai) {
@@ -145,7 +153,7 @@ public class Projeto implements java.io.Serializable {
 	}
 
 	public Status getStatus() {
-		return this.status;
+		return status;
 	}
 
 	public void setStatus(Status status) {
@@ -153,7 +161,7 @@ public class Projeto implements java.io.Serializable {
 	}
 
 	public String getNome() {
-		return this.nome;
+		return nome;
 	}
 
 	public void setNome(String nome) {
@@ -161,7 +169,7 @@ public class Projeto implements java.io.Serializable {
 	}
 
 	public Date getDataInicio() {
-		return this.dataInicio;
+		return dataInicio;
 	}
 
 	public void setDataInicio(Date dataInicio) {
@@ -169,7 +177,7 @@ public class Projeto implements java.io.Serializable {
 	}
 
 	public Date getDataFim() {
-		return this.dataFim;
+		return dataFim;
 	}
 
 	public void setDataFim(Date dataFim) {
@@ -177,7 +185,7 @@ public class Projeto implements java.io.Serializable {
 	}
 
 	public Date getDataPrevisaoConclusao() {
-		return this.dataPrevisaoConclusao;
+		return dataPrevisaoConclusao;
 	}
 
 	public void setDataPrevisaoConclusao(Date dataPrevisaoConclusao) {
@@ -185,7 +193,7 @@ public class Projeto implements java.io.Serializable {
 	}
 
 	public BigDecimal getOrcamento() {
-		return this.orcamento;
+		return orcamento;
 	}
 
 	public void setOrcamento(BigDecimal orcamento) {
@@ -193,7 +201,7 @@ public class Projeto implements java.io.Serializable {
 	}
 
 	public BigDecimal getCusto() {
-		return this.custo;
+		return custo;
 	}
 
 	public void setCusto(BigDecimal custo) {
@@ -201,40 +209,48 @@ public class Projeto implements java.io.Serializable {
 	}
 
 	public List<HistoricoProjeto> getHistoricoProjetos() {
-		return this.historicoProjetos;
+		return historicoProjetos;
 	}
 
 	public void setHistoricoProjetos(List<HistoricoProjeto> historicoProjetos) {
 		this.historicoProjetos = historicoProjetos;
 	}
 
-	public List<AtorExternoTransicaoStatus> getAtorExternoTransicaoStatus() {
-		return this.atorExternoTransicaoStatus;
+	public List<AtorExternoTransicaoStatus> getAtorExternoTransicaoStatuses() {
+		return atorExternoTransicaoStatuses;
 	}
 
-	public void setAtorExternoTransicaoStatus(List<AtorExternoTransicaoStatus> atorExternoTransicaoStatus) {
-		this.atorExternoTransicaoStatus = atorExternoTransicaoStatus;
+	public void setAtorExternoTransicaoStatuses(
+			List<AtorExternoTransicaoStatus> atorExternoTransicaoStatuses) {
+		this.atorExternoTransicaoStatuses = atorExternoTransicaoStatuses;
+	}
+
+	public List<ComentarioProjeto> getComentarioProjetos() {
+		return comentarioProjetos;
+	}
+
+	public void setComentarioProjetos(List<ComentarioProjeto> comentarioProjetos) {
+		this.comentarioProjetos = comentarioProjetos;
 	}
 
 	public List<ColaboradorProjeto> getColaboradorProjetos() {
-		return this.colaboradorProjetos;
+		return colaboradorProjetos;
 	}
 
-	public void setColaboradorProjetos(
-			List<ColaboradorProjeto> colaboradorProjetos) {
+	public void setColaboradorProjetos(List<ColaboradorProjeto> colaboradorProjetos) {
 		this.colaboradorProjetos = colaboradorProjetos;
 	}
 
-	public List<Comentario> getComentarios() {
-		return this.comentarios;
+	public List<RiscoProjeto> getRiscoProjetos() {
+		return riscoProjetos;
 	}
 
-	public void setComentarios(List<Comentario> comentarios) {
-		this.comentarios = comentarios;
+	public void setRiscoProjetos(List<RiscoProjeto> riscoProjetos) {
+		this.riscoProjetos = riscoProjetos;
 	}
 
 	public List<EquipeProjeto> getEquipeProjetos() {
-		return this.equipeProjetos;
+		return equipeProjetos;
 	}
 
 	public void setEquipeProjetos(List<EquipeProjeto> equipeProjetos) {
@@ -242,7 +258,7 @@ public class Projeto implements java.io.Serializable {
 	}
 
 	public List<AlertaProjeto> getAlertaProjetos() {
-		return this.alertaProjetos;
+		return alertaProjetos;
 	}
 
 	public void setAlertaProjetos(List<AlertaProjeto> alertaProjetos) {
@@ -250,7 +266,7 @@ public class Projeto implements java.io.Serializable {
 	}
 
 	public List<Artefato> getArtefatos() {
-		return this.artefatos;
+		return artefatos;
 	}
 
 	public void setArtefatos(List<Artefato> artefatos) {
@@ -258,7 +274,7 @@ public class Projeto implements java.io.Serializable {
 	}
 
 	public List<Projeto> getProjetosFilhos() {
-		return this.projetosFilhos;
+		return projetosFilhos;
 	}
 
 	public void setProjetosFilhos(List<Projeto> projetosFilhos) {
@@ -266,7 +282,7 @@ public class Projeto implements java.io.Serializable {
 	}
 
 	public List<Impedimento> getImpedimentos() {
-		return this.impedimentos;
+		return impedimentos;
 	}
 
 	public void setImpedimentos(List<Impedimento> impedimentos) {

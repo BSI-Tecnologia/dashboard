@@ -1,9 +1,10 @@
 package br.com.bsitecnologia.dashboard.model;
 
-// Generated 01/09/2012 15:14:43 by Hibernate Tools 3.4.0.CR1
+// Generated 15/09/2012 10:17:48 by Hibernate Tools 3.4.0.CR1
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +21,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "AtorExterno", catalog = "dashboard")
-public class AtorExterno implements java.io.Serializable {
-
-	private static final long serialVersionUID = -5908530232760536332L;
+public class AtorExterno implements Serializable {
 	
+	private static final long serialVersionUID = -8428235569394644796L;
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
@@ -55,14 +56,14 @@ public class AtorExterno implements java.io.Serializable {
 
 	public AtorExterno(String nome, String email, String telefone,
 			String cargo, String empresa, List<Impedimento> impedimentos,
-			List<AtorExternoTransicaoStatus> atorExternoTransicaoStatuses) {
+			List<AtorExternoTransicaoStatus> atorExternoTransicaoStatus) {
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
 		this.cargo = cargo;
 		this.empresa = empresa;
 		this.impedimentos = impedimentos;
-		this.atorExternoTransicaoStatus = atorExternoTransicaoStatuses;
+		this.atorExternoTransicaoStatus = atorExternoTransicaoStatus;
 	}
 
 	public Integer getId() {
@@ -73,6 +74,7 @@ public class AtorExterno implements java.io.Serializable {
 		this.id = id;
 	}
 
+	
 	public String getNome() {
 		return this.nome;
 	}
@@ -125,7 +127,7 @@ public class AtorExterno implements java.io.Serializable {
 		return this.atorExternoTransicaoStatus;
 	}
 
-	public void setAtorExternoTransicaoStatus(List<AtorExternoTransicaoStatus> atorExternoTransicaoStatus) {
+	public void setAtorExternoTransicaoStatuses(List<AtorExternoTransicaoStatus> atorExternoTransicaoStatus) {
 		this.atorExternoTransicaoStatus = atorExternoTransicaoStatus;
 	}
 

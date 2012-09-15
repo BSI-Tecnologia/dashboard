@@ -1,14 +1,17 @@
 package br.com.bsitecnologia.dashboard.model;
 
-// Generated 01/09/2012 15:14:43 by Hibernate Tools 3.4.0.CR1
+// Generated 15/09/2012 10:17:48 by Hibernate Tools 3.4.0.CR1
 
+import static javax.persistence.GenerationType.IDENTITY;
+
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,10 +24,10 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "Equipe", catalog = "dashboard", uniqueConstraints = @UniqueConstraint(columnNames = "nome"))
-public class Equipe implements java.io.Serializable {
-
-	private static final long serialVersionUID = 6490219298510109730L;
+public class Equipe implements Serializable {
 	
+	private static final long serialVersionUID = 4149797338437888179L;
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
@@ -32,12 +35,12 @@ public class Equipe implements java.io.Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "equipePai")
-	private Equipe equipe;
+	private Equipe equipePai;
 	
 	@Column(name = "nome", unique = true, nullable = false, length = 45)
 	private String nome;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "equipe")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "equipePai")
 	private Set<Equipe> equipes = new HashSet<Equipe>(0);
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "equipe")
@@ -56,10 +59,12 @@ public class Equipe implements java.io.Serializable {
 		this.nome = nome;
 	}
 
-	public Equipe(Equipe equipe, String nome, Set<Equipe> equipes,
+	public Equipe(Integer id, Equipe equipePai, String nome,
+			Set<Equipe> equipes,
 			Set<EmailTemplateColaboradores> emailTemplateColaboradores,
 			Set<EquipeProjeto> equipeProjetos, Set<Colaborador> colaboradores) {
-		this.equipe = equipe;
+		this.id = id;
+		this.equipePai = equipePai;
 		this.nome = nome;
 		this.equipes = equipes;
 		this.emailTemplateColaboradores = emailTemplateColaboradores;
@@ -68,23 +73,23 @@ public class Equipe implements java.io.Serializable {
 	}
 
 	public Integer getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Equipe getEquipe() {
-		return this.equipe;
+	public Equipe getEquipePai() {
+		return equipePai;
 	}
 
-	public void setEquipe(Equipe equipe) {
-		this.equipe = equipe;
+	public void setEquipePai(Equipe equipePai) {
+		this.equipePai = equipePai;
 	}
 
 	public String getNome() {
-		return this.nome;
+		return nome;
 	}
 
 	public void setNome(String nome) {
@@ -92,24 +97,24 @@ public class Equipe implements java.io.Serializable {
 	}
 
 	public Set<Equipe> getEquipes() {
-		return this.equipes;
+		return equipes;
 	}
 
 	public void setEquipes(Set<Equipe> equipes) {
 		this.equipes = equipes;
 	}
 
-	public Set<EmailTemplateColaboradores> getEmailTemplateColaboradoreses() {
-		return this.emailTemplateColaboradores;
+	public Set<EmailTemplateColaboradores> getEmailTemplateColaboradores() {
+		return emailTemplateColaboradores;
 	}
 
-	public void setEmailTemplateColaboradoreses(
-			Set<EmailTemplateColaboradores> emailTemplateColaboradoreses) {
-		this.emailTemplateColaboradores = emailTemplateColaboradoreses;
+	public void setEmailTemplateColaboradores(
+			Set<EmailTemplateColaboradores> emailTemplateColaboradores) {
+		this.emailTemplateColaboradores = emailTemplateColaboradores;
 	}
 
 	public Set<EquipeProjeto> getEquipeProjetos() {
-		return this.equipeProjetos;
+		return equipeProjetos;
 	}
 
 	public void setEquipeProjetos(Set<EquipeProjeto> equipeProjetos) {
@@ -117,11 +122,11 @@ public class Equipe implements java.io.Serializable {
 	}
 
 	public Set<Colaborador> getColaboradores() {
-		return this.colaboradores;
+		return colaboradores;
 	}
 
 	public void setColaboradores(Set<Colaborador> colaboradores) {
 		this.colaboradores = colaboradores;
 	}
-
+	
 }

@@ -1,14 +1,17 @@
 package br.com.bsitecnologia.dashboard.model;
 
-// Generated 01/09/2012 15:14:43 by Hibernate Tools 3.4.0.CR1
+// Generated 15/09/2012 10:17:48 by Hibernate Tools 3.4.0.CR1
 
+import static javax.persistence.GenerationType.IDENTITY;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,8 +24,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "HistoricoProjeto", catalog = "dashboard")
-public class HistoricoProjeto implements java.io.Serializable {
-
+public class HistoricoProjeto implements Serializable {
+	
 	private static final long serialVersionUID = -6912670534509578891L;
 
 	@Id

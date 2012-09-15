@@ -1,8 +1,10 @@
 package br.com.bsitecnologia.dashboard.model;
 
-// Generated 01/09/2012 15:14:43 by Hibernate Tools 3.4.0.CR1
+// Generated 15/09/2012 10:17:48 by Hibernate Tools 3.4.0.CR1
 
 import static javax.persistence.GenerationType.IDENTITY;
+
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,15 +20,15 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "AlertaProjeto", catalog = "dashboard")
-public class AlertaProjeto implements java.io.Serializable {
+public class AlertaProjeto implements Serializable {
 
 	private static final long serialVersionUID = 7267286238320352135L;
-	
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "projeto", nullable = false)
 	private Projeto projeto;
@@ -43,7 +45,6 @@ public class AlertaProjeto implements java.io.Serializable {
 		this.alerta = alerta;
 	}
 
-	
 	public Integer getId() {
 		return this.id;
 	}
@@ -52,7 +53,6 @@ public class AlertaProjeto implements java.io.Serializable {
 		this.id = id;
 	}
 
-	
 	public Projeto getProjeto() {
 		return this.projeto;
 	}

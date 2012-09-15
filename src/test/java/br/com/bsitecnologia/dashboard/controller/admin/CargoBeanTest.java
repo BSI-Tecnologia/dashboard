@@ -1,51 +1,51 @@
 package br.com.bsitecnologia.dashboard.controller.admin;
 
-import static org.junit.Assert.fail;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
-import javax.inject.Inject;
-
-import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.Conversation;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Criterion;
+import org.jboss.arquillian.ajocado.Graphene;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.RunAsClient;
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.shrinkwrap.api.Filters;
+import org.jboss.shrinkwrap.api.GenericArchive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.jboss.solder.exception.control.ExceptionToCatch;
+import org.jboss.shrinkwrap.api.importer.ExplodedImporter;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.primefaces.event.SelectEvent;
-
-import br.com.bsitecnologia.dashboard.controller.BaseBean;
-import br.com.bsitecnologia.dashboard.controller.datamodel.CargoDataModel;
-import br.com.bsitecnologia.dashboard.dao.CargoDao;
-import br.com.bsitecnologia.dashboard.dao.base.GenericJpaRepository;
-import br.com.bsitecnologia.dashboard.dao.base.GenericRepository;
-import br.com.bsitecnologia.dashboard.model.Cargo;
-import br.com.bsitecnologia.dashboard.util.Breadcrumb;
 
 @RunWith(Arquillian.class)
 public class CargoBeanTest {
 	
-	@Inject
-	CargoBean cargoBean;
+	private static final String WEBAPP_SRC = "src/main/webapp";
+	
+	@Drone
+    GrapheneSelenium driver;
+	
+	@ArquillianResource
+	URL contextPath;
 	
 	@Deployment
-    public static JavaArchive createDeployment() {
-        return ShrinkWrap.create(JavaArchive.class)
-            .addClasses(Cargo.class, CargoBean.class, BaseBean.class, Severity.class, Criterion.class, ExceptionToCatch.class,Criteria.class,
-            		Conversation.class, FacesMessage.class, GenericRepository.class, 
-            		GenericJpaRepository.class, CargoDao.class, SelectEvent.class,
-            		CargoDataModel.class, Breadcrumb.class)
-            .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+    public static WebArchive createDeployment() {
+		WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war").addPackages(true, "br.com.bsitecnologia.dashboard");
+		war.merge(ShrinkWrap.create(GenericArchive.class).as(ExplodedImporter.class)
+			    .importDirectory(WEBAPP_SRC).as(GenericArchive.class),
+			    "/", Filters.includeAll());
+		war.addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
+        .setWebXML(new File("src/main/webapp/WEB-INF/web.xml")).addAsResource("WEB-INF/beans.xml", "WEB-INF/beans.xml");
+		return war;
     }
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	@RunAsClient
+	public void test() throws MalformedURLException {
+		driver.open(new URL(contextPath.toString()+"/admin/cargo/cargo.jsf"));
+		Graphene.waitModel.until(Graphene.elementPresent.locator(Graphene.id("formz:nome")));
 	}
 
 }

@@ -1,10 +1,13 @@
 package br.com.bsitecnologia.dashboard.model;
 
-// Generated 01/09/2012 15:14:43 by Hibernate Tools 3.4.0.CR1
+// Generated 15/09/2012 10:17:48 by Hibernate Tools 3.4.0.CR1
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,10 +26,10 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "Artefato", catalog = "dashboard")
-public class Artefato implements java.io.Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Artefato implements Serializable {
 	
+	private static final long serialVersionUID = -1109314046100437153L;
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
@@ -56,14 +60,17 @@ public class Artefato implements java.io.Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dataAlteracao", length = 19)
 	private Date dataAlteracao;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "artefato")
+	private List<ComentarioArtefato> comentarioArtefatos = new ArrayList<ComentarioArtefato>(0);
 
+	
 	public Artefato() {
 	}
 
 	public Artefato(
 			ColaboradorProjeto colaboradorAtualizacao,
-			Projeto projeto,
-			ColaboradorProjeto colaboradorCriacao) {
+			Projeto projeto, ColaboradorProjeto colaboradorCriacao) {
 		this.colaboradorAtualizacao = colaboradorAtualizacao;
 		this.projeto = projeto;
 		this.colaboradorCriacao = colaboradorCriacao;
@@ -71,9 +78,9 @@ public class Artefato implements java.io.Serializable {
 
 	public Artefato(
 			ColaboradorProjeto colaboradorAtualizacao,
-			Projeto projeto,
-			ColaboradorProjeto colaboradorCriacao,
-			String nome, String path, Date dataCriacao, Date dataAlteracao) {
+			Projeto projeto, ColaboradorProjeto colaboradorCriacao,
+			String nome, String path, Date dataCriacao, Date dataAlteracao,
+			List<ComentarioArtefato> comentarioArtefatos) {
 		this.colaboradorAtualizacao = colaboradorAtualizacao;
 		this.projeto = projeto;
 		this.colaboradorCriacao = colaboradorCriacao;
@@ -81,6 +88,7 @@ public class Artefato implements java.io.Serializable {
 		this.path = path;
 		this.dataCriacao = dataCriacao;
 		this.dataAlteracao = dataAlteracao;
+		this.comentarioArtefatos = comentarioArtefatos;
 	}
 
 	public Integer getId() {
@@ -107,12 +115,11 @@ public class Artefato implements java.io.Serializable {
 		this.projeto = projeto;
 	}
 
-	public ColaboradorProjeto getColaboradorCriacao() {
+	public ColaboradorProjeto getColaboradorProjetoByColaboradorCriacao() {
 		return this.colaboradorCriacao;
 	}
 
-	public void setColaboradorCriacao(
-			ColaboradorProjeto colaboradorCriacao) {
+	public void setColaboradorCriacao(ColaboradorProjeto colaboradorCriacao) {
 		this.colaboradorCriacao = colaboradorCriacao;
 	}
 
@@ -146,6 +153,14 @@ public class Artefato implements java.io.Serializable {
 
 	public void setDataAlteracao(Date dataAlteracao) {
 		this.dataAlteracao = dataAlteracao;
+	}
+
+	public List<ComentarioArtefato> getComentarioArtefatos() {
+		return this.comentarioArtefatos;
+	}
+
+	public void setComentarioArtefatos(List<ComentarioArtefato> comentarioArtefatos) {
+		this.comentarioArtefatos = comentarioArtefatos;
 	}
 
 }

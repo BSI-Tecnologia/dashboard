@@ -1,14 +1,17 @@
 package br.com.bsitecnologia.dashboard.model;
 
-// Generated 01/09/2012 15:14:43 by Hibernate Tools 3.4.0.CR1
+// Generated 15/09/2012 10:17:48 by Hibernate Tools 3.4.0.CR1
 
+import static javax.persistence.GenerationType.IDENTITY;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,9 +23,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "EmailTemplate", catalog = "dashboard")
-public class EmailTemplate implements java.io.Serializable {
-
-	private static final long serialVersionUID = -2933634350323057971L;
+public class EmailTemplate implements Serializable {
+	
+	private static final long serialVersionUID = 7668069799964210190L;
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -32,7 +35,7 @@ public class EmailTemplate implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "alerta", nullable = false)
 	private Alerta alerta;
-	
+
 	@Column(name = "conteudoEmail", nullable = false, length = 2000)
 	private String conteudoEmail;
 	
@@ -40,7 +43,7 @@ public class EmailTemplate implements java.io.Serializable {
 	private String tituloEmail;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "emailTemplate")
-	private List<EmailTemplateColaboradores> emailTemplateColaboradoreses = new ArrayList<EmailTemplateColaboradores>(0);
+	private List<EmailTemplateColaboradores> emailTemplateColaboradores = new ArrayList<EmailTemplateColaboradores>(0);
 
 	public EmailTemplate() {
 	}
@@ -51,17 +54,18 @@ public class EmailTemplate implements java.io.Serializable {
 		this.tituloEmail = tituloEmail;
 	}
 
-	public EmailTemplate(Alerta alerta, String conteudoEmail,
+	public EmailTemplate(Integer id, Alerta alerta, String conteudoEmail,
 			String tituloEmail,
-			List<EmailTemplateColaboradores> emailTemplateColaboradoreses) {
+			List<EmailTemplateColaboradores> emailTemplateColaboradores) {
+		this.id = id;
 		this.alerta = alerta;
 		this.conteudoEmail = conteudoEmail;
 		this.tituloEmail = tituloEmail;
-		this.emailTemplateColaboradoreses = emailTemplateColaboradoreses;
+		this.emailTemplateColaboradores = emailTemplateColaboradores;
 	}
 
 	public Integer getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(Integer id) {
@@ -69,7 +73,7 @@ public class EmailTemplate implements java.io.Serializable {
 	}
 
 	public Alerta getAlerta() {
-		return this.alerta;
+		return alerta;
 	}
 
 	public void setAlerta(Alerta alerta) {
@@ -77,7 +81,7 @@ public class EmailTemplate implements java.io.Serializable {
 	}
 
 	public String getConteudoEmail() {
-		return this.conteudoEmail;
+		return conteudoEmail;
 	}
 
 	public void setConteudoEmail(String conteudoEmail) {
@@ -85,19 +89,20 @@ public class EmailTemplate implements java.io.Serializable {
 	}
 
 	public String getTituloEmail() {
-		return this.tituloEmail;
+		return tituloEmail;
 	}
 
 	public void setTituloEmail(String tituloEmail) {
 		this.tituloEmail = tituloEmail;
 	}
 
-	public List<EmailTemplateColaboradores> getEmailTemplateColaboradoreses() {
-		return this.emailTemplateColaboradoreses;
+	public List<EmailTemplateColaboradores> getEmailTemplateColaboradores() {
+		return emailTemplateColaboradores;
 	}
 
-	public void setEmailTemplateColaboradoreses(List<EmailTemplateColaboradores> emailTemplateColaboradoreses) {
-		this.emailTemplateColaboradoreses = emailTemplateColaboradoreses;
+	public void setEmailTemplateColaboradores(
+			List<EmailTemplateColaboradores> emailTemplateColaboradores) {
+		this.emailTemplateColaboradores = emailTemplateColaboradores;
 	}
-
+	
 }
