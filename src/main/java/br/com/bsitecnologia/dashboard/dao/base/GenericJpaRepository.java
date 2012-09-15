@@ -17,7 +17,7 @@ import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Projections;
 import org.jboss.solder.exception.control.ExceptionToCatch;
 
-import br.com.bsitecnologia.dashboard.util.DashboardDB;
+import br.com.bsitecnologia.dashboard.resources.db.DashboardDB;
 
 
 /**

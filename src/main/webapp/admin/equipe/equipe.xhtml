@@ -7,7 +7,7 @@
 
 <ui:composition template="/templates/main.xhtml">
 
-	<ui:param name="bean" value="#{cargoBean}" />
+	<ui:param name="bean" value="#{equipeBean}" />
 
 	<ui:define name="content">
 
@@ -21,7 +21,7 @@
 						onclick="$('#formz').collapse('toggle')">
 						<span class="icon"> <i class="icon icon-pencil"></i>
 						</span>
-						<h5>Inserir cargo</h5>
+						<h5>Inserir equipe</h5>
 					</div>
 					
 					<h:form id="formz" styleClass="form-horizontal">
@@ -30,15 +30,15 @@
 							<label class="control-label">Nome :</label>
 							<div class="controls">
 								<p:inputText id="nome" required="true"
-									value="#{cargoBean.cargoForm.nome}" />
+									value="#{equipeBean.equipeForm.nome}" />
 							</div>
 						</div>
 	
 						<div class="form-actions">
-							<p:commandButton value="#{cargoBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse"
-								actionListener="#{cargoBean.salvar}" onclick="msgs.show();" />
-							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{cargoBean.showDeleteButton}"
-								actionListener="#{cargoBean.deletar}" onclick="msgs.show();" />
+							<p:commandButton value="#{equipeBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse"
+								actionListener="#{equipeBean.salvar}" onclick="msgs.show();" />
+							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{equipeBean.showDeleteButton}"
+								actionListener="#{equipeBean.deletar}" onclick="msgs.show();" />
 						</div>
 						
 					</h:form>
@@ -59,18 +59,18 @@
 						
 						<div class="widget-title">
 							<span class="icon"> <i class="icon-th"></i></span>
-							<h5>Lista de cargos</h5>
+							<h5>Lista de equipes</h5>
 						</div>
 						
 						<div class="widget-content">
 							
-							<p:dataTable id="table" var="cargo"
-								value="#{cargoBean.dataModel}"
+							<p:dataTable id="table" var="equipe"
+								value="#{equipeBean.dataModel}"
 								tableStyleClass="table table-bordered table-striped" paginator="true" paginatorPosition="bottom"
-								rows="10" selection="#{cargoBean.cargoForm}" selectionMode="single" emptyMessage="Nenhum cargo cadastrado">
-								<p:ajax event="rowSelect" listener="#{cargoBean.onRowSelect}" update=":formz" oncomplete="onSelectItemOpenForm('formz');"/>
+								rows="10" selection="#{equipeForm}" selectionMode="single" emptyMessage="Nenhuma equipe cadastrada">
+								<p:ajax event="rowSelect" listener="#{equipeBean.onRowSelect}" update=":formz" oncomplete="onSelectItemOpenForm('formz');"/>
 								<p:column headerText="Nome">
-									<h:outputText value="#{cargo.nome}" />
+									<h:outputText value="#{equipe.nome}" />
 								</p:column>
 							</p:dataTable>
 

@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.New;
-import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,11 +15,10 @@ import org.primefaces.event.SelectEvent;
 
 import br.com.bsitecnologia.dashboard.controller.BaseBean;
 import br.com.bsitecnologia.dashboard.controller.datamodel.CargoDataModel;
+import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.dao.CargoDao;
 import br.com.bsitecnologia.dashboard.model.Cargo;
-import br.com.bsitecnologia.dashboard.util.Breadcrumb;
 
-@SuppressWarnings("unused")
 @Named
 @ConversationScoped
 public class CargoBean extends BaseBean implements Serializable {
@@ -41,10 +39,9 @@ public class CargoBean extends BaseBean implements Serializable {
 	
 	private boolean showDeleteButton = false;
 	
-	@Named	@Produces private final String title = "Cargo"; //TITULO DO CONTENT HEADER !!! 
+	private final String title = "Cargo";
 	
-	@Named	@Produces private final Breadcrumb[] breadcrumb = {Breadcrumb.HOME, 
-															   Breadcrumb.CARGO}; //SERA O BREADCRUMB? nao sei ...
+	private final BreadcrumbEnum[] breadcrumb = {BreadcrumbEnum.HOME, BreadcrumbEnum.CARGO};
 	
 	@PostConstruct
 	public void init(){
@@ -106,4 +103,12 @@ public class CargoBean extends BaseBean implements Serializable {
 		return showDeleteButton;
 	}
 	
+	public BreadcrumbEnum[] getBreadcrumb() {
+		return breadcrumb;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+
 }

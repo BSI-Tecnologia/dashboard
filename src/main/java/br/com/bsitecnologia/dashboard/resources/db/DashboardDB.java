@@ -1,4 +1,4 @@
-package br.com.bsitecnologia.dashboard.util;
+package br.com.bsitecnologia.dashboard.resources.db;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.PARAMETER;

@@ -1,4 +1,4 @@
-package br.com.bsitecnologia.dashboard.util;
+package br.com.bsitecnologia.dashboard.resources.db;
 
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
@@ -20,7 +20,7 @@ import javax.persistence.PersistenceUnit;
  * private EntityManager entityManager;
  * </pre>
  */
-public class Resources {
+public class DataBaseResources {
 	@Produces
 	@DashboardDB
 	@PersistenceContext(type=PersistenceContextType.EXTENDED)

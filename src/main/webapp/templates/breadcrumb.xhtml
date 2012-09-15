@@ -6,7 +6,8 @@
 		xmlns:p="http://primefaces.org/ui"
 		xmlns:ui="http://java.sun.com/jsf/facelets">
 		<div id="breadcrumb">
-			<ui:repeat var="bc" value="#{breadcrumb}" varStatus="status">
+			<ui:param name="bean" value="#{bean}" />
+			<ui:repeat var="bc" value="#{bean.breadcrumb}" varStatus="status">
 				<ui:fragment rendered="#{!status.last}">
 					<a href="#{bc.url}" class="tip-bottom" data-original-title="#{bc.tooltip}"><i class="icon-home"></i> #{bc.name}</a>
 				</ui:fragment>

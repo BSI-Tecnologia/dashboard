@@ -17,9 +17,8 @@ public class ExceptionHandler {
 	}
 	
 	private void addMessage(String summary, String detail){
-		FacesContext context = FacesContext.getCurrentInstance();
 		FacesMessage fm =  new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail);
-        context.addMessage(null, fm);
+		FacesContext.getCurrentInstance().addMessage(null, fm);
 	}
 
 }
