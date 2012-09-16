@@ -36,9 +36,9 @@
 	
 						<div class="form-actions">
 							<p:commandButton value="#{cargoBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse"
-								actionListener="#{cargoBean.salvar}" onclick="msgs.show();" />
+								actionListener="#{cargoBean.save}" onclick="msgs.show();" />
 							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{cargoBean.showDeleteButton}"
-								actionListener="#{cargoBean.deletar}" onclick="msgs.show();" />
+								actionListener="#{cargoBean.delete}" onclick="msgs.show();" />
 						</div>
 						
 					</h:form>

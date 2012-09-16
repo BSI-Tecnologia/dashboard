@@ -18,6 +18,7 @@ import org.hibernate.criterion.Projections;
 import org.jboss.solder.exception.control.ExceptionToCatch;
 
 import br.com.bsitecnologia.dashboard.resources.db.DashboardDB;
+import br.com.bsitecnologia.dashboard.util.BaseEntity;
 
 
 /**
@@ -35,14 +36,11 @@ import br.com.bsitecnologia.dashboard.resources.db.DashboardDB;
  * @param <ID>
  *            The primary key type
  */
-public class GenericJpaRepository<T, ID extends Serializable> implements GenericRepository<T, ID>, Serializable {
+public class GenericJpaRepository<T extends BaseEntity, ID extends Serializable> implements GenericRepository<T, ID>, Serializable {
 
 	// ~ Instance fields
 	// --------------------------------------------------------
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private final Class<T> persistentClass;

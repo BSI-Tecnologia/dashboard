@@ -48,9 +48,9 @@
 	
 						<div class="form-actions">
 							<p:commandButton value="#{equipeBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse"
-								actionListener="#{equipeBean.salvar}" onclick="msgs.show();" />
+								actionListener="#{equipeBean.save}" onclick="msgs.show();" />
 							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{equipeBean.showDeleteButton}"
-								actionListener="#{equipeBean.deletar}" onclick="msgs.show();" />
+								actionListener="#{equipeBean.delete}" onclick="msgs.show();" />
 						</div>
 						
 					</h:form>
@@ -93,6 +93,27 @@
 			</div>
 
 		</div>
+
+		<div class="widget-content nopadding">
+			<form action="#" method="get" class="form-horizontal">
+				<div class="control-group">
+					<label class="control-label">Select input</label>
+					<div class="controls">
+						<select>
+							<option>First option</option>
+							<option>Second option</option>
+							<option>Third option</option>
+							<option>Fourth option</option>
+							<option>Fifth option</option>
+							<option>Sixth option</option>
+							<option>Seventh option</option>
+							<option>Eighth option</option>
+						</select>
+					</div>
+				</div>
+			</form>
+		</div>
+						
 
 	</ui:define>
 

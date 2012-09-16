@@ -5,9 +5,6 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<ui:composition>
-		<script type="text/javascript">
-			jQuery.noConflict();
-		</script>
 		<h:head>
 			
 			<title>Dashboard BSI</title>
@@ -80,8 +77,12 @@
 			
 			<!-- JS - inicio -->
 			<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
-			<h:outputScript name="dashboard.js" target="body" library="js"/>
+			<h:outputScript name="jquery.ui.custom.js" target="body" library="js"/>
 			<h:outputScript name="bootstrap.min.js" target="body" library="js"/>
+			<h:outputScript name="uniform.js" target="body" library="js"/>
+			<h:outputScript name="chosen.js" target="body" library="js"/>
+			<h:outputScript name="unicorn.js" target="body" library="js"/>
+			<h:outputScript name="dashboard.js" target="body" library="js"/>
 			<!-- JS - fim -->
 			
 		</h:body>

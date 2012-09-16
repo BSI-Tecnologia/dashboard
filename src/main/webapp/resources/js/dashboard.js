@@ -6,6 +6,13 @@ function onSelectItemOpenForm(formId){
 
 $(document).ready(function(){
 	
+	$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
+	
+	$('select').chosen();
+});
+
+$(document).ready(function(){
+	
 	// === Sidebar navigation === //
 	
 	$('.submenu > a').click(function(e)

@@ -2,7 +2,7 @@ package br.com.bsitecnologia.dashboard.controller.template;
 
 public enum Buttons {
 	
-	SALVAR("Salvar"), EDITAR("Editar"), DELETAR("Deletar");
+	SAVE("Salvar"), EDIT("Editar"), DELETE("Deletar");
 	
 	private Buttons(String label) {
 		this.label = label;
@@ -13,6 +13,5 @@ public enum Buttons {
 	public String getLabel(){
 		return this.label;
 	}
-
 
 }
