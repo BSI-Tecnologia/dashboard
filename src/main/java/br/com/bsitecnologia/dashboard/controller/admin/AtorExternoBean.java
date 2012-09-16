@@ -75,6 +75,11 @@ public class AtorExternoBean extends BaseBean<AtorExterno>{
 	protected void postLoad() {
 		return;
 	}
+	
+	@Override
+	protected void resetFormEntity() {
+		atorExternoForm = new AtorExterno();
+	}
 
 	/*gets&sets*/
 	

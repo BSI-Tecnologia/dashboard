@@ -37,6 +37,8 @@
 								actionListener="#{statusBean.save}" onclick="msgs.show();" />
 							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{statusBean.showDeleteButton}"
 								actionListener="#{statusBean.delete}" onclick="msgs.show();" />
+							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse"
+								actionListener="#{statusBean.cancel}" />
 						</div>
 						
 					</h:form>

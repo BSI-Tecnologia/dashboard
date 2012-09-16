@@ -78,6 +78,11 @@ public class CargoBean extends BaseBean<Cargo> implements Serializable {
 		return;
 	}
 	
+	@Override
+	protected void resetFormEntity() {
+		cargoForm = new Cargo();
+	}
+	
 	/* get&set */
 	
 	public Cargo getCargoForm() {

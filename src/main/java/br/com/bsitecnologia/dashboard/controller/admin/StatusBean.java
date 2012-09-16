@@ -75,6 +75,11 @@ public class StatusBean extends BaseBean<Status>{
 	protected void postLoad() {
 		return;
 	}
+	
+	@Override
+	protected void resetFormEntity() {
+		statusForm = new Status();
+	}	
 
 	/*gets&sets*/
 	

@@ -47,6 +47,8 @@
 								actionListener="#{equipeBean.save}" onclick="msgs.show();" />
 							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{equipeBean.showDeleteButton}"
 								actionListener="#{equipeBean.delete}" onclick="msgs.show();" />
+							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse"
+								actionListener="#{equipeBean.cancel}" />
 						</div>
 						
 					</h:form>

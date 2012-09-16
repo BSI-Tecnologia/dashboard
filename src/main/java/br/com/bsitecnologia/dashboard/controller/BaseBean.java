@@ -41,6 +41,8 @@ public abstract class BaseBean<T extends BaseEntity> implements Serializable{
 	public abstract String getEntityDescription();
 	protected abstract BreadcrumbEnum[] setBreadcrumbArray();
 	protected abstract void postRowSelect();
+	protected abstract void resetFormEntity();
+	
 	
 	
 	/*Ações comuns a serem herdadas*/
@@ -73,6 +75,12 @@ public abstract class BaseBean<T extends BaseEntity> implements Serializable{
 		saveButtonLabel = Buttons.SAVE.getLabel();
 		showDeleteButton = false;
 		postPersist();
+	}
+	
+	public void cancel(){
+		showDeleteButton = false;
+		saveButtonLabel = Buttons.SAVE.getLabel();
+		resetFormEntity();
 	}
 	
 	public void onRowSelect(SelectEvent event) {

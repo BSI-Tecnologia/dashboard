@@ -103,6 +103,12 @@ public class EquipeBean extends BaseBean<Equipe>{
 		fillComboEquipePai();
 	}
 	
+	@Override
+	protected void resetFormEntity() {
+		equipeForm = new Equipe();
+		comboEquipePaiSelectedItem = null;
+	}
+	
 	/*gets&sets*/
 	
 	public Equipe getEquipeForm() {

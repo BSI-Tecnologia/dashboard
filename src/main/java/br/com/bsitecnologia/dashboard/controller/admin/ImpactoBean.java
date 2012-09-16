@@ -75,6 +75,11 @@ public class ImpactoBean extends BaseBean<Impacto>{
 	protected void postLoad() {
 		return;
 	}
+	
+	@Override
+	protected void resetFormEntity() {
+		impactoForm = new Impacto();
+	}	
 
 	/*gets&sets*/
 	

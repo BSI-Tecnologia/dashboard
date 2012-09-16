@@ -37,6 +37,8 @@
 								actionListener="#{impactoBean.save}" onclick="msgs.show();" />
 							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{impactoBean.showDeleteButton}"
 								actionListener="#{impactoBean.delete}" onclick="msgs.show();" />
+							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse"
+								actionListener="#{impactoBean.cancel}" />
 						</div>
 						
 					</h:form>
