@@ -69,7 +69,7 @@ public abstract class BaseBean<T extends BaseEntity> implements Serializable{
 		prePersist();
 		getDao().delete(getFormEntity());
 		loadList();
-		addMessage(FacesMessage.SEVERITY_INFO,  String.format("%s: %s", title, getEntityDescription()), String.format("%s salvo(a) com sucesso.", title));
+		addMessage(FacesMessage.SEVERITY_INFO,  String.format("%s: %s", title, getEntityDescription()), String.format("%s deletado(a) com sucesso.", title));
 		saveButtonLabel = Buttons.SAVE.getLabel();
 		showDeleteButton = false;
 		postPersist();

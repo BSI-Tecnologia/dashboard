@@ -3,7 +3,9 @@ package br.com.bsitecnologia.dashboard.controller.template;
 public enum BreadcrumbEnum {
 	
 	HOME("Home", "/index.jsf", "Ir para a página inicial"), CARGO("Cargo", "/admin/cargo/cargo.jsf", "Administração de cargos"),
-	EQUIPE("Equipe", "/admin/equipe/equipe.jsf", "Administração de Equipes");
+	EQUIPE("Equipe", "/admin/equipe/equipe.jsf", "Administração de Equipes"), STATUS("Status", "/admin/status/status.jsf", "Administração de status"), 
+	ATOR_EXTERNO("Ator externo", "/admin/atorexterno/atorexterno.jsf", "Administração de atores externos"),
+	IMPACTO("Impacto", "/admin/impacto/impacto.jsf", "Administração de impactos");
 	
 	BreadcrumbEnum(String name, String url, String tooltip){
 		this.name = name;
