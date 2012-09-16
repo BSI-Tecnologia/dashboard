@@ -10,15 +10,14 @@
 	<ui:param name="bean" value="#{equipeBean}" />
 
 	<ui:define name="content">
-
+	
 		<div class="row-fluid">
 
 			<div class="span12">
 			
 				<div class="widget-box">
 
-					<div id="widget_title" class="widget-title"
-						onclick="$('#formz').collapse('toggle')">
+					<div id="widget_title" class="widget-title" onclick="$('#formz').collapse('toggle')">
 						<span class="icon"> <i class="icon icon-pencil"></i>
 						</span>
 						<h5>Inserir equipe</h5>
@@ -29,10 +28,23 @@
 						<div class="control-group">
 							<label class="control-label">Nome :</label>
 							<div class="controls">
-								<p:inputText id="nome" required="true"
-									value="#{equipeBean.equipeForm.nome}" />
+								<p:inputText id="nome" required="true" value="#{equipeBean.equipeForm.nome}" />
 							</div>
 						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Projeto pai :</label>
+							<div class="controls">
+								<p:selectOneMenu effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith" valueChangeListener="#{equipeBean.equipePaiValueChangeListener}" value="#{equipeBean.comboEquipePaiSelectedItem}" >  
+						            <f:selectItem itemLabel="Selecione ..." itemValue="" />  
+						            <f:selectItems value="#{equipeBean.comboEquipePai}" var="equipez" itemLabel="#{equipez.label}" itemValue="#{equipez.value}" />  
+						        </p:selectOneMenu>
+							</div>
+						</div>
+						
+						<!--  -->
+						
+						<!--  -->
 	
 						<div class="form-actions">
 							<p:commandButton value="#{equipeBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse"
@@ -64,10 +76,9 @@
 						
 						<div class="widget-content">
 							
-							<p:dataTable id="table" var="equipe"
-								value="#{equipeBean.dataModel}"
+							<p:dataTable id="table" var="equipe" value="#{equipeBean.dataModel}"
 								tableStyleClass="table table-bordered table-striped" paginator="true" paginatorPosition="bottom"
-								rows="10" selection="#{equipeForm}" selectionMode="single" emptyMessage="Nenhuma equipe cadastrada">
+								rows="10" selection="#{equipeBean.equipeForm}" selectionMode="single" emptyMessage="Nenhuma equipe cadastrada">
 								<p:ajax event="rowSelect" listener="#{equipeBean.onRowSelect}" update=":formz" oncomplete="onSelectItemOpenForm('formz');"/>
 								<p:column headerText="Nome">
 									<h:outputText value="#{equipe.nome}" />

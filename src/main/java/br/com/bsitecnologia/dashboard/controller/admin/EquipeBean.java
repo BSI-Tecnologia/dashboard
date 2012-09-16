@@ -1,10 +1,13 @@
 package br.com.bsitecnologia.dashboard.controller.admin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.New;
 import javax.faces.application.FacesMessage;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -42,11 +45,23 @@ public class EquipeBean extends BaseBean{
 	
 	private final BreadcrumbEnum[] breadcrumb = {BreadcrumbEnum.HOME, BreadcrumbEnum.EQUIPE};
 	
+	private List<SelectItem> comboEquipePai = new ArrayList<SelectItem>(0);
+	
+	private String comboEquipePaiSelectedItem;
+	
 	@PostConstruct
 	public void init(){
 		loadEquipesList();
+		fillComboEquipePai();
 	}
 	
+	private void fillComboEquipePai() {
+		for(Equipe equipe:equipesList){
+			comboEquipePai.add(new SelectItem(equipe.getId(), equipe.getNome()));
+		}
+		
+	}
+
 	private void loadEquipesList(){
 		equipesList = equipeDao.findAll();
 		dataModel.setEquipeList(equipesList);
@@ -55,8 +70,9 @@ public class EquipeBean extends BaseBean{
 	public void salvar(){
 		equipeDao.save(equipeForm);
 		loadEquipesList();
-		addMessage(FacesMessage.SEVERITY_INFO, String.format("Cargo: %s", equipeForm.getNome()), "Equipe salva com sucesso.");
+		addMessage(FacesMessage.SEVERITY_INFO, String.format("Equipe: %s", equipeForm.getNome()), "Equipe salva com sucesso.");
 		saveButtonLabel = "Salvar";
+		comboEquipePaiSelectedItem = null;
 		showDeleteButton = false;
 		equipeForm = new Equipe();
 	}
@@ -64,8 +80,9 @@ public class EquipeBean extends BaseBean{
 	public void deletar(){
 		equipeDao.delete(equipeForm);
 		loadEquipesList();
-		addMessage(FacesMessage.SEVERITY_INFO, String.format("Cargo: %s", equipeForm.getNome()), "Equipe deletada com sucesso.");
+		addMessage(FacesMessage.SEVERITY_INFO, String.format("Equipe: %s", equipeForm.getNome()), "Equipe deletada com sucesso.");
 		saveButtonLabel = "Salvar";
+		comboEquipePaiSelectedItem = null;
 		showDeleteButton = false;
 		equipeForm = new Equipe();
 	}
@@ -73,8 +90,17 @@ public class EquipeBean extends BaseBean{
 	public void onRowSelect(SelectEvent event) {
 		saveButtonLabel = "Editar";
 		showDeleteButton = true;
-        equipeForm = (Equipe) event.getObject();  
+        equipeForm = (Equipe) event.getObject();
+        comboEquipePaiSelectedItem = equipeForm.getEquipePai() != null? equipeForm.getEquipePai().getId().toString() : null;
     }
+	
+	public void equipePaiValueChangeListener(ValueChangeEvent event){
+		for (Equipe equipe : equipesList) {
+			if(event.getNewValue() != null && Integer.valueOf(event.getNewValue().toString()).equals(equipe.getId())){
+				equipeForm.setEquipePai(equipe);
+			}
+		}
+	}
 	
 	/*gets&sets*/
 	
@@ -113,5 +139,17 @@ public class EquipeBean extends BaseBean{
 	public boolean isShowDeleteButton() {
 		return showDeleteButton;
 	}
-	
+
+	public List<SelectItem> getComboEquipePai() {
+		return comboEquipePai;
+	}
+
+	public String getComboEquipePaiSelectedItem() {
+		return comboEquipePaiSelectedItem;
+	}
+
+	public void setComboEquipePaiSelectedItem(String comboEquipePaiSelectedItem) {
+		this.comboEquipePaiSelectedItem = comboEquipePaiSelectedItem;
+	}
+
 }

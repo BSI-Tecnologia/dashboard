@@ -5,6 +5,9 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<ui:composition>
+		<script type="text/javascript">
+			jQuery.noConflict();
+		</script>
 		<h:head>
 			
 			<title>Dashboard BSI</title>
@@ -33,7 +36,7 @@
 		
 		<h:body>
 		
-			<p:growl id="growl" widgetVar="msgs" showDetail="true" autoUpdate="true" showSummary="true" redisplay="true" life="3000"/>
+			<p:growl id="growl" widgetVar="msgs" showDetail="true" autoUpdate="true" showSummary="true" redisplay="true" sticky="true" />
 			
 			<div id="header">
 				<h1><a href="index">Dashboard</a></h1>		
@@ -76,16 +79,9 @@
 			</div>
 			
 			<!-- JS - inicio -->
-			<h:outputScript name="excanvas.min.js" target="body" library="js"/>
-			<h:outputScript name="jquery.min.js" target="body" library="js"/>
-			<h:outputScript name="jquery.ui.custom.js" target="body" library="js"/>
+			<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+			<h:outputScript name="dashboard.js" target="body" library="js"/>
 			<h:outputScript name="bootstrap.min.js" target="body" library="js"/>
-			<h:outputScript name="jquery.flot.min.js" target="body" library="js"/>
-			<h:outputScript name="jquery.flot.resize.min.js" target="body" library="js"/>
-			<h:outputScript name="jquery.peity.min.js" target="body" library="js"/>
-			<h:outputScript name="fullcalendar.min.js" target="body" library="js"/>
-			<h:outputScript name="unicorn.js" target="body" library="js"/>
-			<h:outputScript name="unicorn.dashboard.js" target="body" library="js"/>
 			<!-- JS - fim -->
 			
 		</h:body>

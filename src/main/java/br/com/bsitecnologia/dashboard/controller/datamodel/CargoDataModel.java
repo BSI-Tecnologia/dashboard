@@ -29,7 +29,13 @@ public class CargoDataModel extends ListDataModel<Cargo> implements SelectableDa
 
 	@Override
 	public Cargo getRowData(String rowKey) {
-		return cargoDao.findById(Integer.valueOf(rowKey));
+		List<Cargo> equipeList = (List<Cargo>) getWrappedData();
+		for (Cargo cargo : equipeList) {
+			if (cargo.getId().equals(Integer.valueOf(rowKey))) {
+				return cargo;
+			}
+		}
+		return null;
 	}
 
 }

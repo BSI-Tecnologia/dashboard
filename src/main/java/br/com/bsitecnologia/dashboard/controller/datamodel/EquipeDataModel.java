@@ -27,10 +27,9 @@ public class EquipeDataModel extends ListDataModel<Equipe> implements Selectable
 	public Equipe getRowData(String rowKey) {
 		List<Equipe> equipeList = (List<Equipe>) getWrappedData();
 		for (Equipe equipe : equipeList) {
-			if (equipe.getId().equals(rowKey)) {
+			if (equipe.getId().equals(Integer.valueOf(rowKey))) {
 				return equipe;
 			}
-
 		}
 		return null;
 	}
