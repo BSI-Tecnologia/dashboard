@@ -70,6 +70,7 @@ public abstract class BaseCrudBean<T extends BaseEntity> implements Serializable
 		saveButtonLabel = Buttons.SAVE.getLabel();
 		showDeleteButton = false;
 		postPersist();
+		resetFormEntity();
 	}
 	
 	public void delete(){
@@ -80,6 +81,7 @@ public abstract class BaseCrudBean<T extends BaseEntity> implements Serializable
 		saveButtonLabel = Buttons.SAVE.getLabel();
 		showDeleteButton = false;
 		postPersist();
+		resetFormEntity();
 	}
 	
 	public void cancel(){
