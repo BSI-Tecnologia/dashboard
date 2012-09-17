@@ -16,33 +16,38 @@ import br.com.bsitecnologia.dashboard.dao.base.GenericJpaRepository;
 import br.com.bsitecnologia.dashboard.util.BaseEntity;
 
 @SuppressWarnings("unchecked")
-public abstract class BaseBean<T extends BaseEntity> implements Serializable{
+public abstract class BaseCrudBean<T extends BaseEntity> implements Serializable{
 
 	private static final long serialVersionUID = 1906091377786784028L;
-	private final Class<T> persistentClass = (Class<T>)getClass();	
+	private final Class<T> entityClass = (Class<T>)getClass();	
+	
 	
 	/* Propriedades comuns a todos os beans - variaveis de layout e controle de tela */
 	
-	private String title = persistentClass.getSimpleName().replace("Bean", "");
+	private String title = entityClass.getSimpleName().replace("Bean", "");
 	private final BreadcrumbEnum[] breadcrumb = setBreadcrumbArray();
 	private String saveButtonLabel = Buttons.SAVE.getLabel();
 	private boolean showDeleteButton = false;
 	private List<T> list;
 
+	
 	/*Metodos a serem implementados pelos beans, operações comuns a todos*/
 	
 	protected abstract <X extends GenericJpaRepository<T, Serializable>> X getDao();
 	protected abstract T getFormEntity();
 	protected abstract void setFormEntity(T t);
-	protected abstract void postLoad();
 	protected abstract DashboardDataModel<T> getDataModel();
-	public abstract void prePersist();
-	public abstract void postPersist();
-	public abstract String getEntityDescription();
+	protected abstract String getEntityDescription();
 	protected abstract BreadcrumbEnum[] setBreadcrumbArray();
-	protected abstract void postRowSelect();
 	protected abstract void resetFormEntity();
 	
+	
+	/*Metodos a serem sobreescritos quando necessario*/
+	
+	protected void postRowSelect(){}
+	protected void postLoad(){}
+	protected void postPersist(){}
+	protected void prePersist(){}
 	
 	
 	/*Ações comuns a serem herdadas*/

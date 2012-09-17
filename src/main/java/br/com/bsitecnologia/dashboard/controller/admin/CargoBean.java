@@ -9,7 +9,7 @@ import javax.inject.Named;
 
 import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ConversationScoped;
 
-import br.com.bsitecnologia.dashboard.controller.BaseBean;
+import br.com.bsitecnologia.dashboard.controller.BaseCrudBean;
 import br.com.bsitecnologia.dashboard.controller.datamodel.DashboardDataModel;
 import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.dao.CargoDao;
@@ -18,7 +18,7 @@ import br.com.bsitecnologia.dashboard.model.Cargo;
 @Named
 @ConversationScoped
 @SuppressWarnings("unchecked")
-public class CargoBean extends BaseBean<Cargo> implements Serializable {
+public class CargoBean extends BaseCrudBean<Cargo> implements Serializable {
 	
 	private static final long serialVersionUID = -563351669224686839L;
 	
@@ -49,16 +49,6 @@ public class CargoBean extends BaseBean<Cargo> implements Serializable {
 	}
 
 	@Override
-	public void prePersist() {
-		return;
-	}
-
-	@Override
-	public void postPersist() {
-		cargoForm = new Cargo();
-	}
-
-	@Override
 	public String getEntityDescription() {
 		return cargoForm.getNome();
 	}
@@ -68,16 +58,6 @@ public class CargoBean extends BaseBean<Cargo> implements Serializable {
 		return new BreadcrumbEnum[]{BreadcrumbEnum.HOME, BreadcrumbEnum.CARGO};
 	}
 
-	@Override
-	protected void postRowSelect() {
-		return;
-	}
-	
-	@Override
-	protected void postLoad() {
-		return;
-	}
-	
 	@Override
 	protected void resetFormEntity() {
 		cargoForm = new Cargo();

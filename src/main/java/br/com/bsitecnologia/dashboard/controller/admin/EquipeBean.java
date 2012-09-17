@@ -12,7 +12,7 @@ import javax.inject.Named;
 
 import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ConversationScoped;
 
-import br.com.bsitecnologia.dashboard.controller.BaseBean;
+import br.com.bsitecnologia.dashboard.controller.BaseCrudBean;
 import br.com.bsitecnologia.dashboard.controller.datamodel.DashboardDataModel;
 import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.dao.EquipeDao;
@@ -21,7 +21,7 @@ import br.com.bsitecnologia.dashboard.model.Equipe;
 @Named
 @ConversationScoped
 @SuppressWarnings("unchecked")
-public class EquipeBean extends BaseBean<Equipe>{
+public class EquipeBean extends BaseCrudBean<Equipe>{
 
 	private static final long serialVersionUID = 1375567838606752462L;
 	
@@ -65,17 +65,6 @@ public class EquipeBean extends BaseBean<Equipe>{
 	@Override
 	protected void setFormEntity(Equipe equipe) {
 		equipeForm = equipe;
-	}
-
-	@Override
-	public void prePersist() {
-		return;
-	}
-
-	@Override
-	public void postPersist() {
-		equipeForm = new Equipe();
-		resetComboEquipePaiSelectedItem();
 	}
 
 	@Override

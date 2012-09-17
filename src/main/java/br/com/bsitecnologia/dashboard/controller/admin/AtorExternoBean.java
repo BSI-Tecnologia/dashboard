@@ -7,7 +7,7 @@ import javax.inject.Named;
 
 import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ConversationScoped;
 
-import br.com.bsitecnologia.dashboard.controller.BaseBean;
+import br.com.bsitecnologia.dashboard.controller.BaseCrudBean;
 import br.com.bsitecnologia.dashboard.controller.datamodel.DashboardDataModel;
 import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.dao.AtorExternoDao;
@@ -16,7 +16,7 @@ import br.com.bsitecnologia.dashboard.model.AtorExterno;
 @Named
 @ConversationScoped
 @SuppressWarnings("unchecked")
-public class AtorExternoBean extends BaseBean<AtorExterno>{
+public class AtorExternoBean extends BaseCrudBean<AtorExterno>{
 
 	private static final long serialVersionUID = 1375567838606752462L;
 	
@@ -27,6 +27,7 @@ public class AtorExternoBean extends BaseBean<AtorExterno>{
 	@PostConstruct
 	public void postConstruct(){
 		super.init();
+		super.setTitle(BreadcrumbEnum.ATOR_EXTERNO.getName());
 	}
 	
 	/*BASE BEAN ABSTRACT METHODS IMPLEMENTATION*/
@@ -42,23 +43,8 @@ public class AtorExternoBean extends BaseBean<AtorExterno>{
 	}
 
 	@Override
-	public void prePersist() {
-		return;
-	}
-
-	@Override
-	public void postPersist() {
-		atorExternoForm = new AtorExterno();
-	}
-
-	@Override
 	public String getEntityDescription() {
 		return atorExternoForm.getNome();
-	}
-
-	@Override
-	protected void postRowSelect() {
-		return;
 	}
 	
 	@Override
@@ -69,11 +55,6 @@ public class AtorExternoBean extends BaseBean<AtorExterno>{
 	@Override
 	protected BreadcrumbEnum[] setBreadcrumbArray() {
 		return new BreadcrumbEnum[] {BreadcrumbEnum.HOME, BreadcrumbEnum.ATOR_EXTERNO};
-	}
-	
-	@Override
-	protected void postLoad() {
-		return;
 	}
 	
 	@Override

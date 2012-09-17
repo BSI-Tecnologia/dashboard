@@ -7,7 +7,7 @@ import javax.inject.Named;
 
 import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ConversationScoped;
 
-import br.com.bsitecnologia.dashboard.controller.BaseBean;
+import br.com.bsitecnologia.dashboard.controller.BaseCrudBean;
 import br.com.bsitecnologia.dashboard.controller.datamodel.DashboardDataModel;
 import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.dao.ImpactoDao;
@@ -16,7 +16,7 @@ import br.com.bsitecnologia.dashboard.model.Impacto;
 @Named
 @ConversationScoped
 @SuppressWarnings("unchecked")
-public class ImpactoBean extends BaseBean<Impacto>{
+public class ImpactoBean extends BaseCrudBean<Impacto>{
 
 	private static final long serialVersionUID = 1375567838606752462L;
 	
@@ -42,25 +42,10 @@ public class ImpactoBean extends BaseBean<Impacto>{
 	}
 
 	@Override
-	public void prePersist() {
-		return;
-	}
-
-	@Override
-	public void postPersist() {
-		impactoForm = new Impacto();
-	}
-
-	@Override
 	public String getEntityDescription() {
 		return impactoForm.getDescricao();
 	}
 
-	@Override
-	protected void postRowSelect() {
-		return;
-	}
-	
 	@Override
 	protected Impacto getFormEntity() {
 		return impactoForm;
@@ -69,11 +54,6 @@ public class ImpactoBean extends BaseBean<Impacto>{
 	@Override
 	protected BreadcrumbEnum[] setBreadcrumbArray() {
 		return new BreadcrumbEnum[] {BreadcrumbEnum.HOME, BreadcrumbEnum.IMPACTO};
-	}
-	
-	@Override
-	protected void postLoad() {
-		return;
 	}
 	
 	@Override

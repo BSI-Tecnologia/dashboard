@@ -7,7 +7,7 @@ import javax.inject.Named;
 
 import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ConversationScoped;
 
-import br.com.bsitecnologia.dashboard.controller.BaseBean;
+import br.com.bsitecnologia.dashboard.controller.BaseCrudBean;
 import br.com.bsitecnologia.dashboard.controller.datamodel.DashboardDataModel;
 import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.dao.StatusDao;
@@ -16,7 +16,7 @@ import br.com.bsitecnologia.dashboard.model.Status;
 @Named
 @ConversationScoped
 @SuppressWarnings("unchecked")
-public class StatusBean extends BaseBean<Status>{
+public class StatusBean extends BaseCrudBean<Status>{
 
 	private static final long serialVersionUID = 1375567838606752462L;
 	
@@ -42,25 +42,10 @@ public class StatusBean extends BaseBean<Status>{
 	}
 
 	@Override
-	public void prePersist() {
-		return;
-	}
-
-	@Override
-	public void postPersist() {
-		statusForm = new Status();
-	}
-
-	@Override
 	public String getEntityDescription() {
 		return statusForm.getNome();
 	}
 
-	@Override
-	protected void postRowSelect() {
-		return;
-	}
-	
 	@Override
 	protected Status getFormEntity() {
 		return statusForm;
@@ -69,11 +54,6 @@ public class StatusBean extends BaseBean<Status>{
 	@Override
 	protected BreadcrumbEnum[] setBreadcrumbArray() {
 		return new BreadcrumbEnum[] {BreadcrumbEnum.HOME, BreadcrumbEnum.STATUS};
-	}
-	
-	@Override
-	protected void postLoad() {
-		return;
 	}
 	
 	@Override
