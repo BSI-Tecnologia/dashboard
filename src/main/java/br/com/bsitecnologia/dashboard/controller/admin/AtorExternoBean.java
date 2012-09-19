@@ -43,11 +43,6 @@ public class AtorExternoBean extends BaseCrudBean<AtorExterno>{
 	}
 
 	@Override
-	public String getEntityDescription() {
-		return atorExternoForm.getNome();
-	}
-	
-	@Override
 	protected AtorExterno getFormEntity() {
 		return atorExternoForm;
 	}

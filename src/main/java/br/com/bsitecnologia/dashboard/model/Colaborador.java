@@ -67,32 +67,25 @@ public class Colaborador implements Serializable, BaseEntity {
 	private String senha;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaborador")
-	private List<HistoricoRiscoProjeto> historicoRiscoProjetos = new ArrayList<HistoricoRiscoProjeto>(
-			0);
+	private List<HistoricoRiscoProjeto> historicoRiscoProjetos = new ArrayList<HistoricoRiscoProjeto>(0);
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaboradorPai")
-	private List<Colaborador> colaboradoresFilhos = new ArrayList<Colaborador>(
-			0);
+	private List<Colaborador> colaboradoresFilhos = new ArrayList<Colaborador>(0);
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaborador")
-	private List<ColaboradorProjeto> colaboradorProjetos = new ArrayList<ColaboradorProjeto>(
-			0);
+	private List<ColaboradorProjeto> colaboradorProjetos = new ArrayList<ColaboradorProjeto>(0);
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaborador")
-	private List<EmailTemplateColaboradores> emailTemplateColaboradores = new ArrayList<EmailTemplateColaboradores>(
-			0);
+	private List<EmailTemplateColaboradores> emailTemplateColaboradores = new ArrayList<EmailTemplateColaboradores>(0);
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaboradorAtribuido")
-	private List<Impedimento> impedimentosAtribuidos = new ArrayList<Impedimento>(
-			0);
+	private List<Impedimento> impedimentosAtribuidos = new ArrayList<Impedimento>(0);
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaborador")
-	private List<HistoricoProjeto> historicoProjetos = new ArrayList<HistoricoProjeto>(
-			0);
+	private List<HistoricoProjeto> historicoProjetos = new ArrayList<HistoricoProjeto>(0);
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaboradorAutor")
-	private List<Impedimento> impedimentosCriados = new ArrayList<Impedimento>(
-			0);
+	private List<Impedimento> impedimentosCriados = new ArrayList<Impedimento>(0);
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaborador")
 	private List<Comentario> comentarios = new ArrayList<Comentario>(0);
@@ -117,7 +110,6 @@ public class Colaborador implements Serializable, BaseEntity {
 			List<Impedimento> impedimentosAtribuidos,
 			List<HistoricoProjeto> historicoProjetos,
 			List<Impedimento> impedimentosCriados, List<Comentario> comentarios) {
-		super();
 		this.id = id;
 		this.equipe = equipe;
 		this.colaboradorPai = colaboradorPai;
@@ -222,8 +214,7 @@ public class Colaborador implements Serializable, BaseEntity {
 		return historicoRiscoProjetos;
 	}
 
-	public void setHistoricoRiscoProjetos(
-			List<HistoricoRiscoProjeto> historicoRiscoProjetos) {
+	public void setHistoricoRiscoProjetos(List<HistoricoRiscoProjeto> historicoRiscoProjetos) {
 		this.historicoRiscoProjetos = historicoRiscoProjetos;
 	}
 
@@ -239,8 +230,7 @@ public class Colaborador implements Serializable, BaseEntity {
 		return colaboradorProjetos;
 	}
 
-	public void setColaboradorProjetos(
-			List<ColaboradorProjeto> colaboradorProjetos) {
+	public void setColaboradorProjetos(List<ColaboradorProjeto> colaboradorProjetos) {
 		this.colaboradorProjetos = colaboradorProjetos;
 	}
 
@@ -248,8 +238,7 @@ public class Colaborador implements Serializable, BaseEntity {
 		return emailTemplateColaboradores;
 	}
 
-	public void setEmailTemplateColaboradores(
-			List<EmailTemplateColaboradores> emailTemplateColaboradores) {
+	public void setEmailTemplateColaboradores(List<EmailTemplateColaboradores> emailTemplateColaboradores) {
 		this.emailTemplateColaboradores = emailTemplateColaboradores;
 	}
 
@@ -257,8 +246,7 @@ public class Colaborador implements Serializable, BaseEntity {
 		return impedimentosAtribuidos;
 	}
 
-	public void setImpedimentosAtribuidos(
-			List<Impedimento> impedimentosAtribuidos) {
+	public void setImpedimentosAtribuidos(List<Impedimento> impedimentosAtribuidos) {
 		this.impedimentosAtribuidos = impedimentosAtribuidos;
 	}
 
@@ -284,6 +272,11 @@ public class Colaborador implements Serializable, BaseEntity {
 
 	public void setComentarios(List<Comentario> comentarios) {
 		this.comentarios = comentarios;
+	}
+
+	@Override
+	public String getEntityDescription() {
+		return nome;
 	}
 
 }

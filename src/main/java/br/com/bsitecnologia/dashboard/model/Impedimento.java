@@ -36,6 +36,9 @@ public class Impedimento implements Serializable, BaseEntity {
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
+	
+	@Column(length=100)
+	private String nome;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "colaboradorAutor", nullable = false)
@@ -92,6 +95,14 @@ public class Impedimento implements Serializable, BaseEntity {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public Colaborador getColaboradorAutor() {
@@ -158,5 +169,9 @@ public class Impedimento implements Serializable, BaseEntity {
 		this.comentarioImpedimentos = comentarioImpedimentos;
 	}
 
+	@Override
+	public String getEntityDescription() {
+		return nome;
+	}
 
 }

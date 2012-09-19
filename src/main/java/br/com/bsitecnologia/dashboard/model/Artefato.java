@@ -165,4 +165,9 @@ public class Artefato implements Serializable, BaseEntity {
 		this.comentarioArtefatos = comentarioArtefatos;
 	}
 
+	@Override
+	public String getEntityDescription() {
+		return getNome();
+	}
+	
 }

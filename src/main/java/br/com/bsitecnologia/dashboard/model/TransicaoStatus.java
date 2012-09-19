@@ -131,4 +131,9 @@ public class TransicaoStatus implements Serializable, BaseEntity {
 		this.historicoProjetos = historicoProjetos;
 	}
 
+	@Override
+	public String getEntityDescription() {
+		return nome;
+	}
+
 }

@@ -114,4 +114,9 @@ public class Status implements Serializable, BaseEntity {
 		this.transicaoStatusesForStatusFrom = transicaoStatusesForStatusFrom;
 	}
 
+	@Override
+	public String getEntityDescription() {
+		return nome;
+	}
+
 }

@@ -34,6 +34,9 @@ public class Risco implements Serializable, BaseEntity {
 	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
 
+	@Column
+	private String nome;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "impacto", nullable = false)
 	private Impacto impacto;
@@ -46,6 +49,7 @@ public class Risco implements Serializable, BaseEntity {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "risco")
 	private List<Impedimento> impedimentos = new ArrayList<Impedimento>(0);
+	
 
 	public Risco() {
 	}
@@ -101,6 +105,19 @@ public class Risco implements Serializable, BaseEntity {
 
 	public void setImpedimentos(List<Impedimento> impedimentos) {
 		this.impedimentos = impedimentos;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+	
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	@Override
+	public String getEntityDescription() {
+		return nome;
 	}
 
 }

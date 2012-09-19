@@ -42,11 +42,6 @@ public class StatusBean extends BaseCrudBean<Status>{
 	}
 
 	@Override
-	public String getEntityDescription() {
-		return statusForm.getNome();
-	}
-
-	@Override
 	protected Status getFormEntity() {
 		return statusForm;
 	}

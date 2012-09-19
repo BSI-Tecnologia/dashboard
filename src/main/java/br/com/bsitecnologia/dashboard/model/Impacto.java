@@ -83,4 +83,9 @@ public class Impacto implements Serializable, BaseEntity {
 		this.historicoRiscoProjetos = historicoRiscoProjetos;
 	}
 
+	@Override
+	public String getEntityDescription() {
+		return descricao;
+	}
+
 }

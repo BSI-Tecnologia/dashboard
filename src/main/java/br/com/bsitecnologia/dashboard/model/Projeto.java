@@ -291,4 +291,8 @@ public class Projeto implements Serializable, BaseEntity {
 		this.impedimentos = impedimentos;
 	}
 
+	@Override
+	public String getEntityDescription() {
+		return nome;
+	}
 }

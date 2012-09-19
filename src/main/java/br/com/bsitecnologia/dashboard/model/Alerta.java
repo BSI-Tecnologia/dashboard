@@ -34,6 +34,9 @@ public class Alerta implements Serializable, BaseEntity {
 	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
 	
+	@Column
+	private String nome;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "status")
 	private Status status;
@@ -79,11 +82,13 @@ public class Alerta implements Serializable, BaseEntity {
 		this.emailTemplates = emailTemplates;
 		this.alertaProjetos = alertaProjetos;
 	}
-
+	
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
 
+	@Override
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -152,5 +157,18 @@ public class Alerta implements Serializable, BaseEntity {
 	public void setAlertaProjetos(List<AlertaProjeto> alertaProjetos) {
 		this.alertaProjetos = alertaProjetos;
 	}
+	
+	public String getNome() {
+		return nome;
+	}
 
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	@Override
+	public String getEntityDescription() {
+		return nome;
+	}
+	
 }

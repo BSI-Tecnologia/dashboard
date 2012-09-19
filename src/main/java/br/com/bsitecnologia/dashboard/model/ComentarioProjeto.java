@@ -70,5 +70,10 @@ public class ComentarioProjeto implements Serializable, BaseEntity {
 	public void setComentario(Comentario comentario) {
 		this.comentario = comentario;
 	}
+	
+	@Override
+	public String getEntityDescription() {
+		return String.format("%s - %s", projeto.getNome(), projeto.getNome());
+	}
 
 }

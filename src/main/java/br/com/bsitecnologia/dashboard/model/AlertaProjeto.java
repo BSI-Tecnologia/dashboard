@@ -71,4 +71,9 @@ public class AlertaProjeto implements Serializable, BaseEntity {
 		this.alerta = alerta;
 	}
 
+	@Override
+	public String getEntityDescription() {
+		return String.format("%s - %s", alerta.getNome(), projeto.getNome());
+	}
+
 }

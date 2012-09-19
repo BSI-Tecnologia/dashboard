@@ -189,4 +189,9 @@ public class HistoricoProjeto implements Serializable, BaseEntity {
 		this.dataAlteracao = dataAlteracao;
 	}
 
+	@Override
+	public String getEntityDescription() {
+		return String.format("Historico projeto: %s", projeto.getNome());
+	}
+
 }

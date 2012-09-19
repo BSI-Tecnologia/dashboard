@@ -84,4 +84,9 @@ public class Cargo implements Serializable, BaseEntity {
 		this.emailTemplateColaboradores = emailTemplateColaboradores;
 	}
 
+	@Override
+	public String getEntityDescription() {
+		return nome;
+	}
+
 }

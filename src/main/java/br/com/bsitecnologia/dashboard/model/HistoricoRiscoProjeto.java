@@ -127,4 +127,9 @@ public class HistoricoRiscoProjeto implements Serializable, BaseEntity {
 		this.dataAlteracao = dataAlteracao;
 	}
 
+	@Override
+	public String getEntityDescription() {
+		return String.format("Histórico risco projeto: %s - %s", riscoProjeto.getRisco().getNome(), riscoProjeto.getProjeto().getNome());
+	}
+	
 }

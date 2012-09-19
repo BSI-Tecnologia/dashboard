@@ -1,11 +1,14 @@
 package br.com.bsitecnologia.dashboard.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.SelectItem;
 
 import org.primefaces.event.SelectEvent;
 
@@ -37,7 +40,6 @@ public abstract class BaseCrudBean<T extends BaseEntity> implements Serializable
 	protected abstract T getFormEntity();
 	protected abstract void setFormEntity(T t);
 	protected abstract DashboardDataModel<T> getDataModel();
-	protected abstract String getEntityDescription();
 	protected abstract BreadcrumbEnum[] setBreadcrumbArray();
 	protected abstract void resetFormEntity();
 	
@@ -54,19 +56,19 @@ public abstract class BaseCrudBean<T extends BaseEntity> implements Serializable
 	
 	public void init() {
 		loadList();
-		postLoad();
 	}
 	
 	protected void loadList(){
 		list = getDao().findAll();
 		getDataModel().setList(list);
+		postLoad();
 	}
 	
 	public void save(){
 		prePersist();
 		getDao().save(getFormEntity());
 		loadList();
-		addMessage(FacesMessage.SEVERITY_INFO, String.format("%s: %s", title, getEntityDescription()), String.format("%s salvo(a) com sucesso.", title));
+		addMessage(FacesMessage.SEVERITY_INFO, String.format("%s: %s", title, getFormEntity().getEntityDescription()), String.format("%s salvo(a) com sucesso.", title));
 		saveButtonLabel = Buttons.SAVE.getLabel();
 		showDeleteButton = false;
 		postPersist();
@@ -77,7 +79,7 @@ public abstract class BaseCrudBean<T extends BaseEntity> implements Serializable
 		prePersist();
 		getDao().delete(getFormEntity());
 		loadList();
-		addMessage(FacesMessage.SEVERITY_INFO,  String.format("%s: %s", title, getEntityDescription()), String.format("%s deletado(a) com sucesso.", title));
+		addMessage(FacesMessage.SEVERITY_INFO,  String.format("%s: %s", title, getFormEntity().getEntityDescription()), String.format("%s deletado(a) com sucesso.", title));
 		saveButtonLabel = Buttons.SAVE.getLabel();
 		showDeleteButton = false;
 		postPersist();
@@ -104,6 +106,25 @@ public abstract class BaseCrudBean<T extends BaseEntity> implements Serializable
         context.renderResponse();
 	}
 	
+	@SuppressWarnings("hiding")
+	protected <T extends BaseEntity> T getEntityFromValueChangeEvent(ValueChangeEvent event, Class<T> clazz, List<T> list){
+		if(event.getNewValue() != null){
+			for (T t : list) {
+				if(Integer.valueOf(event.getNewValue().toString()).equals(t.getId())){
+					return t;
+				}
+			}
+		}
+		return null;
+	}
+	
+	protected List<SelectItem> fillSelectItemList(List<? extends BaseEntity> list) {
+		List<SelectItem> selectItemList = new ArrayList<SelectItem>();
+		for(BaseEntity t: list){
+			selectItemList.add(new SelectItem(t.getId(), t.getEntityDescription()));
+		}
+		return selectItemList;
+	}
 	
 	/*get&set*/
 	

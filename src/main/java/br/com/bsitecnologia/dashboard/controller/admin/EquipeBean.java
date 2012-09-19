@@ -43,12 +43,7 @@ public class EquipeBean extends BaseCrudBean<Equipe>{
 	}
 	
 	public void equipePaiValueChangeListener(ValueChangeEvent event){
-		for (Equipe equipe : getList()) {
-			if(event.getNewValue() != null && Integer.valueOf(event.getNewValue().toString()).equals(equipe.getId())){
-				equipeForm.setEquipePai(equipe);
-				break;
-			}
-		}
+		equipeForm.setEquipePai(getEntityFromValueChangeEvent(event, Equipe.class, getList()));
 	}
 	
 	public void resetComboEquipePaiSelectedItem(){
@@ -65,11 +60,6 @@ public class EquipeBean extends BaseCrudBean<Equipe>{
 	@Override
 	protected void setFormEntity(Equipe equipe) {
 		equipeForm = equipe;
-	}
-
-	@Override
-	public String getEntityDescription() {
-		return equipeForm.getNome();
 	}
 
 	@Override

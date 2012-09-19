@@ -34,6 +34,9 @@ public class EmailTemplate implements Serializable, BaseEntity {
 	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
 	
+	@Column
+	private String nome;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "alerta", nullable = false)
 	private Alerta alerta;
@@ -105,6 +108,19 @@ public class EmailTemplate implements Serializable, BaseEntity {
 	public void setEmailTemplateColaboradores(
 			List<EmailTemplateColaboradores> emailTemplateColaboradores) {
 		this.emailTemplateColaboradores = emailTemplateColaboradores;
+	}
+	
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	@Override
+	public String getEntityDescription() {
+		return nome;
 	}
 	
 }

@@ -103,4 +103,9 @@ public class EmailTemplateColaboradores implements Serializable, BaseEntity{
 		this.colaborador = colaborador;
 	}
 
+	@Override
+	public String getEntityDescription() {
+		return String.format("Relacionamento template email colaborador - %s", id.toString());
+	}
+
 }

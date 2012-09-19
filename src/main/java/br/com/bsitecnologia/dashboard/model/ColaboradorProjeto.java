@@ -162,4 +162,9 @@ public class ColaboradorProjeto implements Serializable, BaseEntity {
 		this.artefatosCriados = artefatosCriados;
 	}
 
+	@Override
+	public String getEntityDescription() {
+		return String.format("%s - %s", colaborador.getNome(), projeto.getNome());
+	}
+	
 }

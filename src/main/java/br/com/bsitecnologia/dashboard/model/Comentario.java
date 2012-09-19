@@ -157,5 +157,10 @@ public class Comentario implements Serializable, BaseEntity {
 	public void setHistoricoRiscoProjetos(List<HistoricoRiscoProjeto> historicoRiscoProjetos) {
 		this.historicoRiscoProjetos = historicoRiscoProjetos;
 	}
+	
+	@Override
+	public String getEntityDescription() {
+		return texto.substring(0, 20);
+	}
 
 }

@@ -65,14 +65,7 @@ public class TransicaoStatusBean extends BaseCrudBean<TransicaoStatus>{
 	}
 	
 	private Status getStatusFromValueChangeEvent(ValueChangeEvent event){
-		if(event.getNewValue() != null){
-			for (Status status : allStatusFromDb) {
-				if(Integer.valueOf(event.getNewValue().toString()).equals(status.getId())){
-					return status;
-				}
-			}
-		}
-		return null;
+		return getEntityFromValueChangeEvent(event, Status.class, allStatusFromDb);
 	}
 	
 	/*BASE BEAN ABSTRACT METHODS IMPLEMENTATION*/
@@ -85,11 +78,6 @@ public class TransicaoStatusBean extends BaseCrudBean<TransicaoStatus>{
 	@Override
 	protected void setFormEntity(TransicaoStatus status) {
 		transicaoStatusForm = status;
-	}
-
-	@Override
-	public String getEntityDescription() {
-		return transicaoStatusForm.getNome();
 	}
 
 	@Override
@@ -112,7 +100,7 @@ public class TransicaoStatusBean extends BaseCrudBean<TransicaoStatus>{
 	@Override
 	protected void postLoad(){
 		allStatusFromDb = statusDao.findAll();
-		statusFromList = fillstatusSelectItemList(null);
+		statusFromList = fillSelectItemList(allStatusFromDb);
 	}
 	
 	@Override

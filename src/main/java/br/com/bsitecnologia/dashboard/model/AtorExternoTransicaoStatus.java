@@ -138,4 +138,9 @@ public class AtorExternoTransicaoStatus implements Serializable, BaseEntity {
 		this.historicoProjetos = historicoProjetos;
 	}
 
+	@Override
+	public String getEntityDescription() {
+		return String.format("%s - %s", atorExterno.getNome(), transicaoStatus.getNome());
+	}
+
 }

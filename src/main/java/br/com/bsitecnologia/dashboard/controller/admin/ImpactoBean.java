@@ -42,11 +42,6 @@ public class ImpactoBean extends BaseCrudBean<Impacto>{
 	}
 
 	@Override
-	public String getEntityDescription() {
-		return impactoForm.getDescricao();
-	}
-
-	@Override
 	protected Impacto getFormEntity() {
 		return impactoForm;
 	}

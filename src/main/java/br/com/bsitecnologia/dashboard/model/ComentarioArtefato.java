@@ -71,5 +71,9 @@ public class ComentarioArtefato implements Serializable, BaseEntity {
 	public void setComentario(Comentario comentario) {
 		this.comentario = comentario;
 	}
+	
+	public String getEntityDescription() {
+		return String.format("%s - %s", artefato.getNome(),  comentario.getTexto().substring(0, 20));
+	}
 
 }

@@ -71,4 +71,9 @@ public class EquipeProjeto implements Serializable, BaseEntity {
 		this.equipe = equipe;
 	}
 
+	@Override
+	public String getEntityDescription() {
+		return String.format("%s - %s", equipe.getNome(), projeto.getNome());
+	}
+
 }

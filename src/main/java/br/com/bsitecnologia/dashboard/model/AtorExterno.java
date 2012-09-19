@@ -133,4 +133,9 @@ public class AtorExterno implements Serializable, BaseEntity {
 		this.atorExternoTransicaoStatus = atorExternoTransicaoStatus;
 	}
 
+	@Override
+	public String getEntityDescription() {
+		return nome;
+	}
+	
 }

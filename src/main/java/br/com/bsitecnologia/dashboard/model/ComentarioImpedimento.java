@@ -54,7 +54,7 @@ public class ComentarioImpedimento implements Serializable, BaseEntity {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
+	
 	public Impedimento getImpedimento() {
 		return this.impedimento;
 	}
@@ -69,6 +69,10 @@ public class ComentarioImpedimento implements Serializable, BaseEntity {
 
 	public void setComentario(Comentario comentario) {
 		this.comentario = comentario;
+	}
+	
+	public String getEntityDescription() {
+		return String.format("%s - %s", impedimento.getNome(),  comentario.getTexto().substring(0, 20));
 	}
 
 }

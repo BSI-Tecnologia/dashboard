@@ -49,11 +49,6 @@ public class CargoBean extends BaseCrudBean<Cargo> implements Serializable {
 	}
 
 	@Override
-	public String getEntityDescription() {
-		return cargoForm.getNome();
-	}
-
-	@Override
 	protected BreadcrumbEnum[] setBreadcrumbArray() {
 		return new BreadcrumbEnum[]{BreadcrumbEnum.HOME, BreadcrumbEnum.CARGO};
 	}

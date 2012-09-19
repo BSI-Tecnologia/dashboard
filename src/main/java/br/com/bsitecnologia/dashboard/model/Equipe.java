@@ -130,5 +130,10 @@ public class Equipe implements Serializable, BaseEntity {
 	public void setColaboradores(Set<Colaborador> colaboradores) {
 		this.colaboradores = colaboradores;
 	}
-	
+
+	@Override
+	public String getEntityDescription() {
+		return nome;
+	}
+
 }
