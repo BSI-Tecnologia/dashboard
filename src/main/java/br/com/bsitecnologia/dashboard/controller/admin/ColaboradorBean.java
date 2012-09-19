@@ -35,8 +35,10 @@ public class ColaboradorBean extends BaseCrudBean<Colaborador>{
 	
 	private List<SelectItem> equipeList;
 	private List<SelectItem> cargoList;
+	private List<SelectItem> colaboradorPaiList;
 	private String equipeSelectedItemId;
 	private String cargoSelectedItemId;
+	private String colaboradorPaiSelectedItemId;
 	
 	@Inject private ColaboradorDao colaboradorDao;
 	@Inject @New private Colaborador colaboradorForm;
@@ -53,6 +55,10 @@ public class ColaboradorBean extends BaseCrudBean<Colaborador>{
 	
 	public void equipeValueChangeListener(ValueChangeEvent event){
 		colaboradorForm.setEquipe(getEntityFromValueChangeEvent(event, Equipe.class, allEquipeFromDb));
+	}
+	
+	public void colaboradorPaiValueChangeListener(ValueChangeEvent event){
+		colaboradorForm.setColaboradorPai(getEntityFromValueChangeEvent(event, Colaborador.class, getList()));
 	}
 	
 	/*BASE BEAN ABSTRACT METHODS IMPLEMENTATION*/
@@ -87,6 +93,7 @@ public class ColaboradorBean extends BaseCrudBean<Colaborador>{
 	protected void resetFormEntity() {
 		equipeSelectedItemId = null;
 		cargoSelectedItemId = null;
+		colaboradorPaiSelectedItemId = null;
 		colaboradorForm = new Colaborador();
 	}
 	
@@ -95,11 +102,35 @@ public class ColaboradorBean extends BaseCrudBean<Colaborador>{
 		allEquipeFromDb = equipeDao.findAll();
 		equipeList = fillSelectItemList(allEquipeFromDb);
 		allCargoFromDb = cargoDao.findAll();
-		cargoList = fillSelectItemList(allEquipeFromDb);
+		cargoList = fillSelectItemList(allCargoFromDb);
+		colaboradorPaiList = fillSelectItemList(getList());
 	}
 	
-
+	@Override
+	protected void postRowSelect() {
+		equipeSelectedItemId = colaboradorForm.getEquipe().getId().toString();
+		cargoSelectedItemId = colaboradorForm.getCargo().getId().toString();
+		colaboradorPaiSelectedItemId = colaboradorForm.getColaboradorPai() != null ? colaboradorForm.getColaboradorPai().getId().toString() : null;
+	}
+	
+	
 	/*gets&sets*/
+
+	public List<SelectItem> getColaboradorPaiList() {
+		return colaboradorPaiList;
+	}
+
+	public void setColaboradorPaiList(List<SelectItem> colaboradorPaiList) {
+		this.colaboradorPaiList = colaboradorPaiList;
+	}
+
+	public String getColaboradorPaiSelectedItemId() {
+		return colaboradorPaiSelectedItemId;
+	}
+
+	public void setColaboradorPaiSelectedItemId(String colaboradorPaiSelectedItemId) {
+		this.colaboradorPaiSelectedItemId = colaboradorPaiSelectedItemId;
+	}
 
 	public List<SelectItem> getEquipeList() {
 		return equipeList;
