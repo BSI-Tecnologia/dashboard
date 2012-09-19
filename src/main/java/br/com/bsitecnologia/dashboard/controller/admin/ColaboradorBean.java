@@ -50,15 +50,15 @@ public class ColaboradorBean extends BaseCrudBean<Colaborador>{
 	}
 	
 	public void cargoValueChangeListener(ValueChangeEvent event){
-		colaboradorForm.setCargo(getEntityFromValueChangeEvent(event, Cargo.class, allCargoFromDb));
+		colaboradorForm.setCargo(getEntityFromValueChangeEvent(event, allCargoFromDb));
 	}
 	
 	public void equipeValueChangeListener(ValueChangeEvent event){
-		colaboradorForm.setEquipe(getEntityFromValueChangeEvent(event, Equipe.class, allEquipeFromDb));
+		colaboradorForm.setEquipe(getEntityFromValueChangeEvent(event, allEquipeFromDb));
 	}
 	
 	public void colaboradorPaiValueChangeListener(ValueChangeEvent event){
-		colaboradorForm.setColaboradorPai(getEntityFromValueChangeEvent(event, Colaborador.class, getList()));
+		colaboradorForm.setColaboradorPai(getEntityFromValueChangeEvent(event, getList()));
 	}
 	
 	/*BASE BEAN ABSTRACT METHODS IMPLEMENTATION*/

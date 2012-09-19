@@ -135,6 +135,15 @@
 								<p:column headerText="Nome">
 									<h:outputText value="#{colaborador.nome}" />
 								</p:column>
+								<p:column headerText="Equipe">
+									<h:outputText value="#{colaborador.equipe.nome}" />
+								</p:column>
+								<p:column headerText="Cargo">
+									<h:outputText value="#{colaborador.cargo.nome}" />
+								</p:column>
+								<p:column headerText="Email">
+									<h:outputText value="#{colaborador.email}" />
+								</p:column>
 							</p:dataTable>
 
 						</div>

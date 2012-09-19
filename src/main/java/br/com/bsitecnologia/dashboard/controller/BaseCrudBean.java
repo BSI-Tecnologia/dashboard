@@ -106,12 +106,11 @@ public abstract class BaseCrudBean<T extends BaseEntity> implements Serializable
         context.renderResponse();
 	}
 	
-	@SuppressWarnings("hiding")
-	protected <T extends BaseEntity> T getEntityFromValueChangeEvent(ValueChangeEvent event, Class<T> clazz, List<T> list){
+	protected <A extends BaseEntity> A getEntityFromValueChangeEvent(ValueChangeEvent event, List<A> list){
 		if(event.getNewValue() != null){
-			for (T t : list) {
-				if(Integer.valueOf(event.getNewValue().toString()).equals(t.getId())){
-					return t;
+			for (A a : list) {
+				if(Integer.valueOf(event.getNewValue().toString()).equals(a.getId())){
+					return a;
 				}
 			}
 		}

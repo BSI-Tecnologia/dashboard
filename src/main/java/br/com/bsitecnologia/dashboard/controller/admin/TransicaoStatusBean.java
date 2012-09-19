@@ -65,7 +65,7 @@ public class TransicaoStatusBean extends BaseCrudBean<TransicaoStatus>{
 	}
 	
 	private Status getStatusFromValueChangeEvent(ValueChangeEvent event){
-		return getEntityFromValueChangeEvent(event, Status.class, allStatusFromDb);
+		return getEntityFromValueChangeEvent(event, allStatusFromDb);
 	}
 	
 	/*BASE BEAN ABSTRACT METHODS IMPLEMENTATION*/

@@ -9,7 +9,8 @@ public enum BreadcrumbEnum {
 	ATOR_EXTERNO("Ator externo", "/admin/atorexterno/atorexterno.jsf", "Administração de atores externos"),
 	IMPACTO("Impacto", "/admin/impacto/impacto.jsf", "Administração de impactos"),
 	TRANSICAO_STATUS("Transição de status", "/admin/transicaostatus/transicaostatus.jsf", "Administração transições de status"),
-	COLABORADOR("Colaborador", "/admin/colaborador/colaborador.jsf", "Administração colaboradores"); 
+	COLABORADOR("Colaborador", "/admin/colaborador/colaborador.jsf", "Administração de colaboradores"), 
+	PROJETO("Projeto", "/admin/projeto/projeto.jsf", "Administração de projetos"); 
 	
 	BreadcrumbEnum(String name, String url, String tooltip){
 		this.name = name;
