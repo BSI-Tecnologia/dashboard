@@ -28,69 +28,75 @@ import br.com.bsitecnologia.dashboard.util.BaseEntity;
 @Entity
 @Table(name = "Colaborador", catalog = "dashboard", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class Colaborador implements Serializable, BaseEntity {
-	
+
 	private static final long serialVersionUID = -703435632161132437L;
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "equipe", nullable = false)
 	private Equipe equipe;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "colaboradorPai")
 	private Colaborador colaboradorPai;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cargo", nullable = false)
 	private Cargo cargo;
-	
+
 	@Column(name = "nome", length = 100)
 	private String nome;
-	
+
 	@Column(name = "localAlocacao", length = 45)
 	private String localAlocacao;
-	
+
 	@Column(name = "telefone", length = 11)
 	private String telefone;
-	
+
 	@Column(name = "email", unique = true, nullable = false, length = 100)
 	private String email;
-	
+
 	@Column(name = "remuneracao", precision = 8)
 	private BigDecimal remuneracao;
-	
+
 	@Column(name = "senha", length = 20)
 	private String senha;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaborador")
-	private List<HistoricoRiscoProjeto> historicoRiscoProjetos = new ArrayList<HistoricoRiscoProjeto>(0);
-	
+	private List<HistoricoRiscoProjeto> historicoRiscoProjetos = new ArrayList<HistoricoRiscoProjeto>(
+			0);
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaboradorPai")
-	private List<Colaborador> colaboradoresFilhos = new ArrayList<Colaborador>(0);
-	
+	private List<Colaborador> colaboradoresFilhos = new ArrayList<Colaborador>(
+			0);
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaborador")
-	private List<ColaboradorProjeto> colaboradorProjetos = new ArrayList<ColaboradorProjeto>(0);
-	
+	private List<ColaboradorProjeto> colaboradorProjetos = new ArrayList<ColaboradorProjeto>(
+			0);
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaborador")
-	private List<EmailTemplateColaboradores> emailTemplateColaboradores = new ArrayList<EmailTemplateColaboradores>(0);
-	
+	private List<EmailTemplateColaboradores> emailTemplateColaboradores = new ArrayList<EmailTemplateColaboradores>(
+			0);
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaboradorAtribuido")
-	private List<Impedimento> impedimentosAtribuidos = new ArrayList<Impedimento>(0);
-	
+	private List<Impedimento> impedimentosAtribuidos = new ArrayList<Impedimento>(
+			0);
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaborador")
-	private List<HistoricoProjeto> historicoProjetos = new ArrayList<HistoricoProjeto>(0);
-	
+	private List<HistoricoProjeto> historicoProjetos = new ArrayList<HistoricoProjeto>(
+			0);
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaboradorAutor")
-	private List<Impedimento> impedimentosCriados = new ArrayList<Impedimento>(0);
-	
+	private List<Impedimento> impedimentosCriados = new ArrayList<Impedimento>(
+			0);
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaborador")
 	private List<Comentario> comentarios = new ArrayList<Comentario>(0);
 
-	
 	public Colaborador() {
 	}
 
@@ -233,7 +239,8 @@ public class Colaborador implements Serializable, BaseEntity {
 		return colaboradorProjetos;
 	}
 
-	public void setColaboradorProjetos(List<ColaboradorProjeto> colaboradorProjetos) {
+	public void setColaboradorProjetos(
+			List<ColaboradorProjeto> colaboradorProjetos) {
 		this.colaboradorProjetos = colaboradorProjetos;
 	}
 
@@ -250,7 +257,8 @@ public class Colaborador implements Serializable, BaseEntity {
 		return impedimentosAtribuidos;
 	}
 
-	public void setImpedimentosAtribuidos(List<Impedimento> impedimentosAtribuidos) {
+	public void setImpedimentosAtribuidos(
+			List<Impedimento> impedimentosAtribuidos) {
 		this.impedimentosAtribuidos = impedimentosAtribuidos;
 	}
 
@@ -277,5 +285,5 @@ public class Colaborador implements Serializable, BaseEntity {
 	public void setComentarios(List<Comentario> comentarios) {
 		this.comentarios = comentarios;
 	}
-	
+
 }
