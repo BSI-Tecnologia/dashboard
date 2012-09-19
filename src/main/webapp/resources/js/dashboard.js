@@ -1,15 +1,12 @@
+$('select').chosen();
+
+$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
+
 function onSelectItemOpenForm(formId){
 	if($('#'+formId).css('height') == '0px')	{
 		$('#'+formId).collapse('toggle');
 	}
 }
-
-$(document).ready(function(){
-	
-	$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
-	
-	$('select').chosen();
-});
 
 $(document).ready(function(){
 	

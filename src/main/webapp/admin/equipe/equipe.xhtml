@@ -35,10 +35,10 @@
 						<div class="control-group">
 							<label class="control-label">Projeto pai :</label>
 							<div class="controls">
-								<p:selectOneMenu effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith" valueChangeListener="#{equipeBean.equipePaiValueChangeListener}" value="#{equipeBean.comboEquipePaiSelectedItem}" >  
-						            <f:selectItem itemLabel="Selecione ..." itemValue="" />  
+						        <h:selectOneMenu id="projetoPai" effect="fade" valueChangeListener="#{equipeBean.equipePaiValueChangeListener}" value="#{equipeBean.comboEquipePaiSelectedItem}" >
+		                             <f:selectItem itemLabel="Selecione ..." itemValue="" />  
 						            <f:selectItems value="#{equipeBean.comboEquipePai}" var="equipez" itemLabel="#{equipez.label}" itemValue="#{equipez.value}" />  
-						        </p:selectOneMenu>
+								</h:selectOneMenu>
 							</div>
 						</div>
 						
@@ -48,7 +48,7 @@
 							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{equipeBean.showDeleteButton}"
 								actionListener="#{equipeBean.delete}" onclick="msgs.show();" />
 							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse"
-								actionListener="#{equipeBean.cancel}" />
+								actionListener="#{equipeBean.cancel}" oncomplete="$('select').chosen();"/>
 						</div>
 						
 					</h:form>
@@ -77,7 +77,7 @@
 							<p:dataTable id="table" var="equipe" value="#{equipeBean.dataModel}"
 								tableStyleClass="table table-bordered table-striped" paginator="true" paginatorPosition="bottom"
 								rows="10" selection="#{equipeBean.equipeForm}" selectionMode="single" emptyMessage="Nenhuma equipe cadastrada">
-								<p:ajax event="rowSelect" listener="#{equipeBean.onRowSelect}" update=":formz" oncomplete="onSelectItemOpenForm('formz');"/>
+								<p:ajax event="rowSelect" listener="#{equipeBean.onRowSelect}" update=":formz" onstart="$('#formz_projetoPai_chzn').remove();" oncomplete="onSelectItemOpenForm('formz'); $('select').chosen();"/>/>
 								<p:column headerText="Nome">
 									<h:outputText value="#{equipe.nome}" />
 								</p:column>

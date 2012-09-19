@@ -105,12 +105,21 @@ public class TransicaoStatusBean extends BaseCrudBean<TransicaoStatus>{
 	@Override
 	protected void resetFormEntity() {
 		transicaoStatusForm = new TransicaoStatus();
+		statusFromSelectedItemId = null;
+		statusToSelectedItemId = null;
 	}
 	
 	@Override
 	protected void postLoad(){
 		allStatusFromDb = statusDao.findAll();
 		statusFromList = fillstatusSelectItemList(null);
+	}
+	
+	@Override
+	protected void postRowSelect() {
+		statusFromSelectedItemId = transicaoStatusForm.getStatusFrom().getId().toString();
+		statusToList = fillstatusSelectItemList(transicaoStatusForm.getStatusFrom());
+		statusToSelectedItemId = transicaoStatusForm.getStatusTo().getId().toString();
 	}
 
 	/*gets&sets*/
