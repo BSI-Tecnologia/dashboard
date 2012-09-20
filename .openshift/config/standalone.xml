@@ -226,11 +226,13 @@
                 </replicated-cache>
             </cache-container>
         </subsystem>
+        <!-- 
         <subsystem xmlns="urn:jboss:domain:jacorb:1.1">
             <orb>
             	<initializers transactions="spec" security="on"/>
             </orb>
         </subsystem>
+        -->
         <subsystem xmlns="urn:jboss:domain:jaxr:1.0">
             <connection-factory jndi-name="java:jboss/jaxr/ConnectionFactory"/>
             <juddi-server publish-url="http://${env.OPENSHIFT_INTERNAL_IP}:8080/juddi/publish" query-url="http://${env.OPENSHIFT_INTERNAL_IP}:8080/juddi/query"/>
@@ -513,8 +515,10 @@
     <socket-binding-group name="standard-sockets" default-interface="public" port-offset="0">
         <socket-binding name="http" port="8080"/>
         <socket-binding name="https" port="8443"/>
+        <!--
         <socket-binding name="jacorb" interface="unsecure" port="3528"/>
         <socket-binding name="jacorb-ssl" interface="unsecure" port="3529"/>
+        -->
         <socket-binding name="jgroups-tcp" port="7600"/>
         <socket-binding name="management-native" interface="management" port="9999"/>
         <socket-binding name="management-http" interface="management" port="9990"/>
