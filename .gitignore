@@ -5,6 +5,5 @@ target
 .project
 .classpath
 .externalToolBuilders
-.project
 
 .settings/.jsdtscope

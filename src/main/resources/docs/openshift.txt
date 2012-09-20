@@ -1,16 +1,7 @@
-mysql-5.1
----------------------------------
-Added mysql-5.1 to application devdashboard
 MySQL 5.1 database added.  Please make note of these credentials:
 
    Root User: admin
-   Root Password: hKdXmYgXFTBT
-   Database Name: devdashboard
+   Root Password: n-uaQRch8H3y
+   Database Name: dashboard
 
-Connection URL: mysql://127.6.121.1:3306/
-
-You can manage your new MySQL database by also embedding phpmyadmin-3.4.
-Connection URL: mysql://127.6.121.1:3306/
-
-
-curl -k -X POST https://openshift.redhat.com/broker/rest/domains/devdashboard/applications/Devdashboard/events --user "x:123" --data "event=stop"
+Connection URL: mysql://127.9.68.129:3306/
