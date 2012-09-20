@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 target/
 target
 .settings/*
@@ -5,4 +6,8 @@ target
 .project
 .classpath
 .externalToolBuilders
+
 .settings/.jsdtscope
+=======
+target
+>>>>>>> fff3c217102135ddd37ae9becaa84d6bcb5a965b

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.0" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
   <display-name>dashboard</display-name>
@@ -9,14 +10,6 @@
       <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
       <load-on-startup>1</load-on-startup>
    </servlet>
-   <servlet>
-          <servlet-name>health</servlet-name>
-          <jsp-file>/health.jsp</jsp-file>
-      </servlet>
-      <servlet-mapping>
-          <servlet-name>health</servlet-name>
-          <url-pattern>/health</url-pattern>
-   </servlet-mapping>
    <servlet-mapping>
       <servlet-name>Faces Servlet</servlet-name>
       <url-pattern>*.jsf</url-pattern>
@@ -55,3 +48,24 @@
     <mime-type>image/x-icon</mime-type>
   </mime-mapping>
 </web-app>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app version="3.0"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         metadata-complete="false">
+
+         <servlet>
+                  <servlet-name>health</servlet-name>
+                  <jsp-file>/health.jsp</jsp-file>
+         </servlet>
+         <servlet-mapping>
+                  <servlet-name>health</servlet-name>
+                  <url-pattern>/health</url-pattern>
+         </servlet-mapping>
+         
+</web-app>
+
+>>>>>>> fff3c217102135ddd37ae9becaa84d6bcb5a965b
