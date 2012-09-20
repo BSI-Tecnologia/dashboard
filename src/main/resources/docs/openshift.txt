@@ -5,3 +5,743 @@ MySQL 5.1 database added.  Please make note of these credentials:
    Database Name: dashboard
 
 Connection URL: mysql://127.9.68.129:3306/
+
+
+
+##################################################
+##########SCRIPT RODADO NO OPENSHIFT##############
+##################################################
+
+
+CREATE SCHEMA IF NOT EXISTS `dashboard` DEFAULT CHARACTER SET utf8 ;
+USE `dashboard` ;
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`Status`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`Status` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`Status` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `nome` VARCHAR(45) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `nome_UNIQUE` (`nome` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`TransicaoStatus`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`TransicaoStatus` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`TransicaoStatus` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `statusFrom` INT(11) NOT NULL ,
+  `statusTo` INT(11) NOT NULL ,
+  `nome` VARCHAR(45) NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `nome_UNIQUE` (`nome` ASC) ,
+  INDEX `fk_TransicaoStatus_Status1_idx` (`statusFrom` ASC) ,
+  INDEX `fk_TransicaoStatus_Status2_idx` (`statusTo` ASC) ,
+  CONSTRAINT `fk_TransicaoStatus_Status1`
+    FOREIGN KEY (`statusFrom` )
+    REFERENCES `dashboard`.`Status` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_TransicaoStatus_Status2`
+    FOREIGN KEY (`statusTo` )
+    REFERENCES `dashboard`.`Status` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`Alerta`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`Alerta` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`Alerta` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `nome` VARCHAR(45) NULL ,
+  `transicaoStatus` INT(11) NULL DEFAULT NULL ,
+  `status` INT(11) NULL DEFAULT NULL ,
+  `minutosDuracaoStatus` INT(11) NULL DEFAULT NULL ,
+  `minutosAntesDataPrevisaoConclusao` INT(11) NULL DEFAULT NULL ,
+  `minutosAntesDataFim` INT(11) NULL DEFAULT NULL ,
+  `corProjetoDashboard` INT(11) NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_Alerta_Status1_idx` (`status` ASC) ,
+  INDEX `fk_Alerta_TransicaoStatus1` (`transicaoStatus` ASC) ,
+  CONSTRAINT `fk_Alerta_Status1`
+    FOREIGN KEY (`status` )
+    REFERENCES `dashboard`.`Status` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Alerta_TransicaoStatus1`
+    FOREIGN KEY (`transicaoStatus` )
+    REFERENCES `dashboard`.`TransicaoStatus` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`Projeto`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`Projeto` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`Projeto` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `projetoPai` INT(11) NULL DEFAULT NULL ,
+  `status` INT(11) NOT NULL ,
+  `nome` VARCHAR(45) NOT NULL ,
+  `dataInicio` DATE NULL DEFAULT NULL ,
+  `dataFim` DATE NULL DEFAULT NULL ,
+  `dataPrevisaoConclusao` DATE NULL DEFAULT NULL ,
+  `orcamento` DECIMAL(11,2) NULL DEFAULT NULL ,
+  `custo` DECIMAL(11,2) NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `nome_UNIQUE` (`nome` ASC) ,
+  INDEX `fk_Projeto_Status1_idx` (`status` ASC) ,
+  INDEX `fk_Projeto_Projeto1_idx` (`projetoPai` ASC) ,
+  CONSTRAINT `fk_Projeto_Projeto1`
+    FOREIGN KEY (`projetoPai` )
+    REFERENCES `dashboard`.`Projeto` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Projeto_Status1`
+    FOREIGN KEY (`status` )
+    REFERENCES `dashboard`.`Status` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`AlertaProjeto`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`AlertaProjeto` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`AlertaProjeto` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `alerta` INT(11) NOT NULL ,
+  `projeto` INT(11) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_table1_Alerta1` (`alerta` ASC) ,
+  INDEX `fk_table1_Projeto1` (`projeto` ASC) ,
+  CONSTRAINT `fk_table1_Alerta1`
+    FOREIGN KEY (`alerta` )
+    REFERENCES `dashboard`.`Alerta` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_table1_Projeto1`
+    FOREIGN KEY (`projeto` )
+    REFERENCES `dashboard`.`Projeto` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`Cargo`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`Cargo` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`Cargo` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `nome` VARCHAR(45) NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `nome_UNIQUE` (`nome` ASC) )
+ENGINE = InnoDB
+AUTO_INCREMENT = 195
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`Equipe`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`Equipe` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`Equipe` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `equipePai` INT(11) NULL DEFAULT NULL ,
+  `nome` VARCHAR(45) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `nome_UNIQUE` (`nome` ASC) ,
+  INDEX `fk_Equipe_Equipe1_idx` (`equipePai` ASC) ,
+  CONSTRAINT `fk_Equipe_Equipe1`
+    FOREIGN KEY (`equipePai` )
+    REFERENCES `dashboard`.`Equipe` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`Colaborador`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`Colaborador` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`Colaborador` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `equipe` INT(11) NOT NULL ,
+  `cargo` INT(11) NOT NULL ,
+  `colaboradorPai` INT(11) NULL DEFAULT NULL ,
+  `nome` VARCHAR(100) NULL DEFAULT NULL ,
+  `localAlocacao` VARCHAR(45) NULL DEFAULT NULL ,
+  `telefone` VARCHAR(11) NULL DEFAULT NULL ,
+  `email` VARCHAR(100) NOT NULL ,
+  `remuneracao` DECIMAL(8,2) NULL DEFAULT NULL ,
+  `senha` VARCHAR(20) NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) ,
+  INDEX `fk_Colaborador_Equipe1_idx` (`equipe` ASC) ,
+  INDEX `fk_Colaborador_Cargo1_idx` (`cargo` ASC) ,
+  INDEX `fk_Colaborador_Colaborador1_idx` (`colaboradorPai` ASC) ,
+  CONSTRAINT `fk_Colaborador_Cargo1`
+    FOREIGN KEY (`cargo` )
+    REFERENCES `dashboard`.`Cargo` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Colaborador_Colaborador1`
+    FOREIGN KEY (`colaboradorPai` )
+    REFERENCES `dashboard`.`Colaborador` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Colaborador_Equipe1`
+    FOREIGN KEY (`equipe` )
+    REFERENCES `dashboard`.`Equipe` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`ColaboradorProjeto`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`ColaboradorProjeto` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`ColaboradorProjeto` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `colaborador` INT(11) NOT NULL ,
+  `projeto` INT(11) NOT NULL ,
+  `cargaHoraria` INT(11) NULL DEFAULT NULL ,
+  `dataInicio` DATE NULL DEFAULT NULL ,
+  `dataFim` DATE NULL DEFAULT NULL ,
+  `quantidadeHoras` INT(11) NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_RelacionamentoColaboradorProjeto_Colaborador1_idx` (`colaborador` ASC) ,
+  INDEX `fk_RelacionamentoColaboradorProjeto_Projeto1_idx` (`projeto` ASC) ,
+  CONSTRAINT `fk_RelacionamentoColaboradorProjeto_Colaborador1`
+    FOREIGN KEY (`colaborador` )
+    REFERENCES `dashboard`.`Colaborador` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RelacionamentoColaboradorProjeto_Projeto1`
+    FOREIGN KEY (`projeto` )
+    REFERENCES `dashboard`.`Projeto` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`Artefato`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`Artefato` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`Artefato` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `projeto` INT(11) NOT NULL ,
+  `colaboradorCriacao` INT(11) NOT NULL ,
+  `colaboradorAtualizacao` INT(11) NOT NULL ,
+  `nome` VARCHAR(100) NULL DEFAULT NULL ,
+  `path` VARCHAR(255) NULL DEFAULT NULL ,
+  `dataCriacao` DATETIME NULL DEFAULT NULL ,
+  `dataAlteracao` DATETIME NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_Documentos_Projeto1_idx` (`projeto` ASC) ,
+  INDEX `fk_Documentos_ColaboradorProjeto1` (`colaboradorCriacao` ASC) ,
+  INDEX `fk_Documentos_ColaboradorProjeto2` (`colaboradorAtualizacao` ASC) ,
+  CONSTRAINT `fk_Documentos_ColaboradorProjeto1`
+    FOREIGN KEY (`colaboradorCriacao` )
+    REFERENCES `dashboard`.`ColaboradorProjeto` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Documentos_ColaboradorProjeto2`
+    FOREIGN KEY (`colaboradorAtualizacao` )
+    REFERENCES `dashboard`.`ColaboradorProjeto` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Documentos_Projeto1`
+    FOREIGN KEY (`projeto` )
+    REFERENCES `dashboard`.`Projeto` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`AtorExterno`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`AtorExterno` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`AtorExterno` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `nome` VARCHAR(127) NULL DEFAULT NULL ,
+  `email` VARCHAR(127) NULL DEFAULT NULL ,
+  `telefone` VARCHAR(11) NULL DEFAULT NULL ,
+  `cargo` VARCHAR(45) NULL DEFAULT NULL ,
+  `empresa` VARCHAR(45) NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`AtorExternoTransicaoStatus`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`AtorExternoTransicaoStatus` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`AtorExternoTransicaoStatus` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `projeto` INT(11) NOT NULL ,
+  `atorExterno` INT(11) NOT NULL ,
+  `transicaoStatus` INT(11) NOT NULL ,
+  `dataInicio` DATETIME NOT NULL ,
+  `dataFim` DATETIME NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_AtorExternoTransicaoStatus_TransicaoStatus1_idx` (`transicaoStatus` ASC) ,
+  INDEX `fk_AtorExternoTransicaoStatus_Projeto1_idx` (`projeto` ASC) ,
+  INDEX `fk_AtorExternoTransicaoStatus_AtorExterno1_idx` (`atorExterno` ASC) ,
+  CONSTRAINT `fk_AtorExternoTransicaoStatus_AtorExterno1`
+    FOREIGN KEY (`atorExterno` )
+    REFERENCES `dashboard`.`AtorExterno` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_AtorExternoTransicaoStatus_Projeto1`
+    FOREIGN KEY (`projeto` )
+    REFERENCES `dashboard`.`Projeto` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_AtorExternoTransicaoStatus_TransicaoStatus1`
+    FOREIGN KEY (`transicaoStatus` )
+    REFERENCES `dashboard`.`TransicaoStatus` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`Comentario`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`Comentario` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`Comentario` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `colaborador` INT(11) NOT NULL ,
+  `texto` VARCHAR(2000) NULL DEFAULT NULL ,
+  `data` DATETIME NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_Comentario_Colaborador1_idx` (`colaborador` ASC) ,
+  CONSTRAINT `fk_Comentario_Colaborador1`
+    FOREIGN KEY (`colaborador` )
+    REFERENCES `dashboard`.`Colaborador` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`EmailTemplate`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`EmailTemplate` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`EmailTemplate` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `nome` VARCHAR(45) NULL ,
+  `alerta` INT(11) NOT NULL ,
+  `conteudoEmail` VARCHAR(2000) NOT NULL ,
+  `tituloEmail` VARCHAR(50) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_EmailTemplateAlerta_Alerta1` (`alerta` ASC) ,
+  CONSTRAINT `fk_EmailTemplateAlerta_Alerta1`
+    FOREIGN KEY (`alerta` )
+    REFERENCES `dashboard`.`Alerta` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`EmailTemplateColaboradores`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`EmailTemplateColaboradores` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`EmailTemplateColaboradores` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `emailTemplate` INT(11) NOT NULL ,
+  `colaborador` INT(11) NULL DEFAULT NULL ,
+  `cargo` INT(11) NULL DEFAULT NULL ,
+  `equipe` INT(11) NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_EmailTemplateColaboradores_EmailTemplateAlerta1` (`emailTemplate` ASC) ,
+  INDEX `fk_EmailTemplateColaboradores_Cargo1` (`cargo` ASC) ,
+  INDEX `fk_EmailTemplateColaboradores_Colaborador1` (`colaborador` ASC) ,
+  INDEX `fk_EmailTemplateColaboradores_Equipe1` (`equipe` ASC) ,
+  CONSTRAINT `fk_EmailTemplateColaboradores_Cargo1`
+    FOREIGN KEY (`cargo` )
+    REFERENCES `dashboard`.`Cargo` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_EmailTemplateColaboradores_Colaborador1`
+    FOREIGN KEY (`colaborador` )
+    REFERENCES `dashboard`.`Colaborador` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_EmailTemplateColaboradores_EmailTemplateAlerta1`
+    FOREIGN KEY (`emailTemplate` )
+    REFERENCES `dashboard`.`EmailTemplate` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_EmailTemplateColaboradores_Equipe1`
+    FOREIGN KEY (`equipe` )
+    REFERENCES `dashboard`.`Equipe` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`EquipeProjeto`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`EquipeProjeto` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`EquipeProjeto` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `equipe` INT(11) NOT NULL ,
+  `projeto` INT(11) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_RelacionamentoEquipeProjeto_Equipe1_idx` (`equipe` ASC) ,
+  INDEX `fk_RelacionamentoEquipeProjeto_Projeto1_idx` (`projeto` ASC) ,
+  CONSTRAINT `fk_RelacionamentoEquipeProjeto_Equipe1`
+    FOREIGN KEY (`equipe` )
+    REFERENCES `dashboard`.`Equipe` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RelacionamentoEquipeProjeto_Projeto1`
+    FOREIGN KEY (`projeto` )
+    REFERENCES `dashboard`.`Projeto` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`HistoricoProjeto`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`HistoricoProjeto` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`HistoricoProjeto` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `projeto` INT(11) NOT NULL ,
+  `colaborador` INT(11) NOT NULL ,
+  `transicaoStatus` INT(11) NOT NULL ,
+  `atorExternoTransicaoStatus` INT(11) NULL DEFAULT NULL ,
+  `dataInicio` DATE NULL DEFAULT NULL ,
+  `dataFim` DATE NULL DEFAULT NULL ,
+  `dataPrevisaoConclusao` DATE NULL DEFAULT NULL ,
+  `orcamento` DECIMAL(11,2) NULL DEFAULT NULL ,
+  `custo` DECIMAL(11,2) NULL DEFAULT NULL ,
+  `dataAlteracao` DATETIME NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_HistoricoProjeto_Projeto1_idx` (`projeto` ASC) ,
+  INDEX `fk_HistoricoProjeto_Colaborador1_idx` (`colaborador` ASC) ,
+  INDEX `fk_HistoricoProjeto_TransicaoStatus1_idx` (`transicaoStatus` ASC) ,
+  INDEX `fk_HistoricoProjeto_AtorExternoTransicaoStatus1_idx` (`atorExternoTransicaoStatus` ASC) ,
+  CONSTRAINT `fk_HistoricoProjeto_AtorExternoTransicaoStatus1`
+    FOREIGN KEY (`atorExternoTransicaoStatus` )
+    REFERENCES `dashboard`.`AtorExternoTransicaoStatus` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_HistoricoProjeto_Colaborador1`
+    FOREIGN KEY (`colaborador` )
+    REFERENCES `dashboard`.`Colaborador` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_HistoricoProjeto_Projeto1`
+    FOREIGN KEY (`projeto` )
+    REFERENCES `dashboard`.`Projeto` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_HistoricoProjeto_TransicaoStatus1`
+    FOREIGN KEY (`transicaoStatus` )
+    REFERENCES `dashboard`.`TransicaoStatus` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`Impacto`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`Impacto` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`Impacto` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `descricao` VARCHAR(128) NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`Risco`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`Risco` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`Risco` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `nome` VARCHAR(45) NULL ,
+  `impacto` INT NOT NULL ,
+  `probabilidade` INT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_Risco_Impacto1` (`impacto` ASC) ,
+  CONSTRAINT `fk_Risco_Impacto1`
+    FOREIGN KEY (`impacto` )
+    REFERENCES `dashboard`.`Impacto` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`Impedimento`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`Impedimento` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`Impedimento` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `nome` VARCHAR(100) NULL ,
+  `projeto` INT(11) NOT NULL ,
+  `colaboradorAutor` INT(11) NOT NULL ,
+  `risco` INT NULL ,
+  `atorExterno` INT(11) NULL DEFAULT NULL ,
+  `colaboradorImpedimento` INT(11) NULL DEFAULT NULL ,
+  `dataInicio` DATETIME NOT NULL ,
+  `dataFim` DATETIME NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_Impedimento_Projeto1` (`projeto` ASC) ,
+  INDEX `fk_Impedimento_Colaborador1` (`colaboradorAutor` ASC) ,
+  INDEX `fk_Impedimento_AtorExterno1` (`atorExterno` ASC) ,
+  INDEX `fk_Impedimento_Colaborador2` (`colaboradorImpedimento` ASC) ,
+  INDEX `fk_Impedimento_Risco1` (`risco` ASC) ,
+  CONSTRAINT `fk_Impedimento_AtorExterno1`
+    FOREIGN KEY (`atorExterno` )
+    REFERENCES `dashboard`.`AtorExterno` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Impedimento_Colaborador1`
+    FOREIGN KEY (`colaboradorAutor` )
+    REFERENCES `dashboard`.`Colaborador` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Impedimento_Colaborador2`
+    FOREIGN KEY (`colaboradorImpedimento` )
+    REFERENCES `dashboard`.`Colaborador` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Impedimento_Projeto1`
+    FOREIGN KEY (`projeto` )
+    REFERENCES `dashboard`.`Projeto` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Impedimento_Risco1`
+    FOREIGN KEY (`risco` )
+    REFERENCES `dashboard`.`Risco` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`RiscoProjeto`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`RiscoProjeto` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`RiscoProjeto` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `projeto` INT(11) NOT NULL ,
+  `risco` INT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_RiscoProjeto_Projeto1` (`projeto` ASC) ,
+  INDEX `fk_RiscoProjeto_Risco1` (`risco` ASC) ,
+  CONSTRAINT `fk_RiscoProjeto_Projeto1`
+    FOREIGN KEY (`projeto` )
+    REFERENCES `dashboard`.`Projeto` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RiscoProjeto_Risco1`
+    FOREIGN KEY (`risco` )
+    REFERENCES `dashboard`.`Risco` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`HistoricoRiscoProjeto`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`HistoricoRiscoProjeto` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`HistoricoRiscoProjeto` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `riscoProjeto` INT NOT NULL ,
+  `colaborador` INT(11) NOT NULL ,
+  `comentario` INT(11) NOT NULL ,
+  `impacto` INT NOT NULL ,
+  `probabilidade` VARCHAR(45) NOT NULL ,
+  `dataAlteracao` DATETIME NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_HistoricoRiscoProjeto_RiscoProjeto1` (`riscoProjeto` ASC) ,
+  INDEX `fk_HistoricoRiscoProjeto_Colaborador1` (`colaborador` ASC) ,
+  INDEX `fk_HistoricoRiscoProjeto_Comentario1` (`comentario` ASC) ,
+  INDEX `fk_HistoricoRiscoProjeto_Impacto1` (`impacto` ASC) ,
+  CONSTRAINT `fk_HistoricoRiscoProjeto_RiscoProjeto1`
+    FOREIGN KEY (`riscoProjeto` )
+    REFERENCES `dashboard`.`RiscoProjeto` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_HistoricoRiscoProjeto_Colaborador1`
+    FOREIGN KEY (`colaborador` )
+    REFERENCES `dashboard`.`Colaborador` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_HistoricoRiscoProjeto_Comentario1`
+    FOREIGN KEY (`comentario` )
+    REFERENCES `dashboard`.`Comentario` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_HistoricoRiscoProjeto_Impacto1`
+    FOREIGN KEY (`impacto` )
+    REFERENCES `dashboard`.`Impacto` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`ComentarioProjeto`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`ComentarioProjeto` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`ComentarioProjeto` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `projeto` INT(11) NOT NULL ,
+  `comentario` INT(11) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_ComentarioProjeto_Projeto1` (`projeto` ASC) ,
+  INDEX `fk_ComentarioProjeto_Comentario1` (`comentario` ASC) ,
+  CONSTRAINT `fk_ComentarioProjeto_Projeto1`
+    FOREIGN KEY (`projeto` )
+    REFERENCES `dashboard`.`Projeto` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ComentarioProjeto_Comentario1`
+    FOREIGN KEY (`comentario` )
+    REFERENCES `dashboard`.`Comentario` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`ComentarioArtefato`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`ComentarioArtefato` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`ComentarioArtefato` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `artefato` INT(11) NOT NULL ,
+  `comentario` INT(11) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_ComentarioArtefato_Artefato1` (`artefato` ASC) ,
+  INDEX `fk_ComentarioArtefato_Comentario1` (`comentario` ASC) ,
+  CONSTRAINT `fk_ComentarioArtefato_Artefato1`
+    FOREIGN KEY (`artefato` )
+    REFERENCES `dashboard`.`Artefato` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ComentarioArtefato_Comentario1`
+    FOREIGN KEY (`comentario` )
+    REFERENCES `dashboard`.`Comentario` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`ComentarioRiscoProjeto`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`ComentarioRiscoProjeto` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`ComentarioRiscoProjeto` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `riscoProjeto` INT NOT NULL ,
+  `comentario` INT(11) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_RiscoProjetoComentario_RiscoProjeto1` (`riscoProjeto` ASC) ,
+  INDEX `fk_RiscoProjetoComentario_Comentario1` (`comentario` ASC) ,
+  CONSTRAINT `fk_RiscoProjetoComentario_RiscoProjeto1`
+    FOREIGN KEY (`riscoProjeto` )
+    REFERENCES `dashboard`.`RiscoProjeto` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RiscoProjetoComentario_Comentario1`
+    FOREIGN KEY (`comentario` )
+    REFERENCES `dashboard`.`Comentario` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dashboard`.`ComentarioImpedimento`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dashboard`.`ComentarioImpedimento` ;
+
+CREATE  TABLE IF NOT EXISTS `dashboard`.`ComentarioImpedimento` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `impedimento` INT(11) NOT NULL ,
+  `comentario` INT(11) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_ComentarioImpedimento_Impedimento1` (`impedimento` ASC) ,
+  INDEX `fk_ComentarioImpedimento_Comentario1` (`comentario` ASC) ,
+  CONSTRAINT `fk_ComentarioImpedimento_Impedimento1`
+    FOREIGN KEY (`impedimento` )
+    REFERENCES `dashboard`.`Impedimento` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ComentarioImpedimento_Comentario1`
+    FOREIGN KEY (`comentario` )
+    REFERENCES `dashboard`.`Comentario` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
