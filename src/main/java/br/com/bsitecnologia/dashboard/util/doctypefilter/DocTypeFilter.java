@@ -23,6 +23,7 @@ public class DocTypeFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		if(request.getContentType() == null){
+			System.out.println("########### entrou no filtro content type == null");
 			PrintWriter out = response.getWriter();
 			CharResponseWrapper wrapper = new CharResponseWrapper((HttpServletResponse) response);
 			chain.doFilter(request, wrapper);
@@ -31,6 +32,7 @@ public class DocTypeFilter implements Filter {
 			out.write(modifiedHtml);
 			out.close();
 		}else{
+			System.out.println("########### entrou no filtro content type == null");
 			chain.doFilter(request, response);
 		}
 	}
