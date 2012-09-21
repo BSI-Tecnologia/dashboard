@@ -27,7 +27,9 @@ public class DocTypeFilter implements Filter {
 			CharResponseWrapper wrapper = new CharResponseWrapper((HttpServletResponse) response);
 			chain.doFilter(request, wrapper);
 			String modifiedHtml = "<!DOCTYPE html>"+wrapper.toString();
-			response.setContentType("text/html; charset=UTF-8");
+			request.setCharacterEncoding("UTF-8");
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("text/html");
 			response.setContentLength(modifiedHtml.getBytes().length);
 			out.write(modifiedHtml);
 			out.close();
