@@ -11,7 +11,8 @@ public enum BreadcrumbEnum {
 	TRANSICAO_STATUS("Transição de status", "/admin/transicaostatus/transicaostatus.jsf", "Administração transições de status"),
 	COLABORADOR("Colaborador", "/admin/colaborador/colaborador.jsf", "Administração de colaboradores"), 
 	PROJETO("Projeto", "/admin/projeto/projeto.jsf", "Administração de projetos"), 
-	IMPEDIMENTO("Impedimento", "/admin/impedimento/impedimento.jsf", "Administração de impedimentos"); 
+	IMPEDIMENTO("Impedimento", "/admin/impedimento/impedimento.jsf", "Administração de impedimentos"), 
+	RISCO("Risco", "/admin/risco/risco.jsf", "Administração de riscos"); 
 	
 	BreadcrumbEnum(String name, String url, String tooltip){
 		this.name = name;
