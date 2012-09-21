@@ -23,13 +23,13 @@ public class DocTypeFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		if(request.getContentType() == null){
+			request.setCharacterEncoding("UTF-8");
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			CharResponseWrapper wrapper = new CharResponseWrapper((HttpServletResponse) response);
 			chain.doFilter(request, wrapper);
 			String modifiedHtml = "<!DOCTYPE html>"+wrapper.toString();
-			request.setCharacterEncoding("UTF-8");
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("text/html");
 			response.setContentLength(modifiedHtml.getBytes().length);
 			out.write(modifiedHtml);
 			out.close();
