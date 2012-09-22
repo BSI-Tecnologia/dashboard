@@ -78,17 +78,23 @@
 						
 						<div class="widget-title">
 							<span class="icon"> <i class="icon-th"></i></span>
-							<h5>Lista de equipes</h5>
+							<h5>Lista de riscos</h5>
 						</div>
 						
 						<div class="widget-content">
 							
-							<p:dataTable id="table" var="equipe" value="#{riscoBean.dataModel}"
+							<p:dataTable id="table" var="risco" value="#{riscoBean.dataModel}"
 								tableStyleClass="table table-bordered table-striped" paginator="true" paginatorPosition="bottom"
 								rows="10" selection="#{riscoBean.riscoForm}" selectionMode="single" emptyMessage="Nenhuma equipe cadastrada">
 								<p:ajax event="rowSelect" listener="#{riscoBean.onRowSelect}" update=":formz" onstart="$('#formz_projetoPai_chzn').remove();" oncomplete="onSelectItemOpenForm('formz'); $('select').chosen();"/>/>
 								<p:column headerText="Nome">
-									<h:outputText value="#{equipe.nome}" />
+									<h:outputText value="#{risco.nome}" />
+								</p:column>
+								<p:column headerText="Probabilidade">
+									<h:outputText value="#{riscoBean.getProbabilidadeRisco(risco.probabilidade)}" />
+								</p:column>
+								<p:column headerText="Impacto">
+									<h:outputText value="#{risco.impacto.descricao}" />
 								</p:column>
 							</p:dataTable>
 

@@ -149,5 +149,9 @@ public class RiscoBean extends BaseCrudBean<Risco>{
 	public void setProbabilidadeRiscoList(List<SelectItem> probabilidadeRiscoList) {
 		this.probabilidadeRiscoList = probabilidadeRiscoList;
 	}
+	
+	public String getProbabilidadeRisco(Integer probabilidade){
+		return ProbabilidadeRisco.getProbabilidadeRiscoByProbabilidade(probabilidade).getNome();
+	}
 
 }

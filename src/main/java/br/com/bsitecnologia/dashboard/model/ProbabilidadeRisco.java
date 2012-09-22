@@ -23,9 +23,9 @@ public enum ProbabilidadeRisco {
 		return probabilidade;
 	}
 	
-	public static ProbabilidadeRisco getProbabilidadeRiscoByProbabilidade(Integer probabibildade){
+	public static ProbabilidadeRisco getProbabilidadeRiscoByProbabilidade(Integer probabilidade){
 		for (ProbabilidadeRisco probabilidadeRisco : ProbabilidadeRisco.values()) {
-			if(probabibildade.equals(probabilidadeRisco.getProbabilidade())){
+			if(probabilidade.equals(probabilidadeRisco.getProbabilidade())){
 				return probabilidadeRisco;
 			}
 		}
