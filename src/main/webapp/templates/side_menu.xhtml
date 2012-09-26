@@ -4,41 +4,42 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<div id="sidebar">
-		<a href="#{request.contextPath}/index.jsf" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
-		<ul style="display: block; ">
-			<li class="active"><a href="#{request.contextPath}/index.jsf"><i class="icon icon-home"></i> <span>Dashboard</span></a></li>
-			<li class="submenu">
-				<a href="#"><i class="icon icon-user"></i> <span>Colaborador</span> <span class="label">3</span></a>
-				<ul>
-					<li><a href="#">Equipe</a></li>
-					<li><a href="#{request.contextPath}/admin/cargo/cargo.jsf">Cargo</a></li>
-					<li><a href="#">Colaborador</a></li>
-				</ul>
-			</li>
-			<li class="submenu">
-				<a href="#"><i class="icon icon-th-list"></i> <span>Projeto</span> <span class="label">2</span></a>
-				<ul>
-					<li><a href="#">Projeto</a></li>
-					<li><a href="#">Historico</a></li>
-				</ul>
-			</li>
-			<li class="submenu">
-				<a href="#"><i class="icon icon-road"></i> <span>Status</span> <span class="label">2</span></a>
-				<ul>
-					<li><a href="#">Status</a></li>
-					<li><a href="#">Transição de status</a></li>
-				</ul>
-			</li>
-			<li><a href="#"><i class="icon icon-random"></i> <span>Ator externo</span></a></li>
-			<li><a href="#"><i class="icon icon-ban-circle"></i> <span>Impedimento</span></a></li>
-			<li class="submenu">
-				<a href="#"><i class="icon icon-bell"></i> <span>Alerta</span> <span class="label">2</span></a>
-				<ul>
-					<li><a href="#">Alerta</a></li>
-					<li><a href="#">Template de email</a></li>
-				</ul>
-			</li>
-		</ul>
-	</div>
+	<h:form>
+		<div id="sidebar">
+			<ul style="display: block; ">
+				<li class="active"><a href="#{request.contextPath}/index.jsf"><i class="icon icon-home"></i> <span>Dashboard</span></a></li>
+				<li class="submenu">
+					<a href="#"><i class="icon icon-user"></i> <span>Colaborador</span> <span class="label">3</span></a>
+					<ul>
+						<li><a href="#">Equipe</a></li>
+						<li><h:commandLink value="Cargo" action="/admin/cargo/cargo?faces-redirect=true"/></li>
+						<li><a href="#">Colaborador</a></li>
+					</ul>
+				</li>
+				<li class="submenu">
+					<a href="#"><i class="icon icon-th-list"></i> <span>Projeto</span> <span class="label">2</span></a>
+					<ul>
+						<li><a href="#">Projeto</a></li>
+						<li><a href="#">Historico</a></li>
+					</ul>
+				</li>
+				<li class="submenu">
+					<a href="#"><i class="icon icon-road"></i> <span>Status</span> <span class="label">2</span></a>
+					<ul>
+						<li><a href="#">Status</a></li>
+						<li><a href="#">Transição de status</a></li>
+					</ul>
+				</li>
+				<li><a href="#"><i class="icon icon-random"></i> <span>Ator externo</span></a></li>
+				<li><a href="#"><i class="icon icon-ban-circle"></i> <span>Impedimento</span></a></li>
+				<li class="submenu">
+					<a href="#"><i class="icon icon-bell"></i> <span>Alerta</span> <span class="label">2</span></a>
+					<ul>
+						<li><a href="#">Alerta</a></li>
+						<li><a href="#">Template de email</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</h:form>
 </ui:composition>

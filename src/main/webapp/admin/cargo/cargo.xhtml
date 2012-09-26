@@ -9,6 +9,11 @@
 	<ui:param name="bean" value="#{cargoBean}" />
 
 	<ui:define name="content">
+	
+		<div style="background-color: white;">
+	        <h1>#{usuarioLogado.login} - #{usuarioLogado.senha}</h1>            
+	        <h1>#{usuarioLogado}</h1>                    
+        </div>
 
 		<div class="row-fluid">
 
@@ -16,8 +21,7 @@
 			
 				<div class="widget-box">
 
-					<div id="widget_title" class="widget-title"
-						onclick="$('#formz').collapse('toggle')">
+					<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
 						<span class="icon"> <i class="icon icon-pencil"></i>
 						</span>
 						<h5>Inserir cargo</h5>

@@ -1,4 +1,4 @@
-package br.com.bsitecnologia.dashboard.util;
+package br.com.bsitecnologia.dashboard.infra.exceptions;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;

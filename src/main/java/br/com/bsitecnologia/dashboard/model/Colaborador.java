@@ -63,9 +63,6 @@ public class Colaborador implements Serializable, BaseEntity {
 	@Column(name = "remuneracao", precision = 8)
 	private BigDecimal remuneracao;
 
-	@Column(name = "senha", length = 20)
-	private String senha;
-
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaborador")
 	private List<HistoricoRiscoProjeto> historicoRiscoProjetos = new ArrayList<HistoricoRiscoProjeto>(0);
 
@@ -93,17 +90,15 @@ public class Colaborador implements Serializable, BaseEntity {
 	public Colaborador() {
 	}
 
-	public Colaborador(Equipe equipe, Cargo cargo, String email, String senha) {
+	public Colaborador(Equipe equipe, Cargo cargo, String email) {
 		this.equipe = equipe;
 		this.cargo = cargo;
 		this.email = email;
-		this.senha = senha;
 	}
 
 	public Colaborador(Integer id, Equipe equipe, Colaborador colaboradorPai,
 			Cargo cargo, String nome, String localAlocacao, String telefone,
-			String email, BigDecimal remuneracao, String senha,
-			List<HistoricoRiscoProjeto> historicoRiscoProjetos,
+			String email, BigDecimal remuneracao, List<HistoricoRiscoProjeto> historicoRiscoProjetos,
 			List<Colaborador> colaboradoresFilhos,
 			List<ColaboradorProjeto> colaboradorProjetos,
 			List<EmailTemplateColaboradores> emailTemplateColaboradores,
@@ -119,7 +114,6 @@ public class Colaborador implements Serializable, BaseEntity {
 		this.telefone = telefone;
 		this.email = email;
 		this.remuneracao = remuneracao;
-		this.senha = senha;
 		this.historicoRiscoProjetos = historicoRiscoProjetos;
 		this.colaboradoresFilhos = colaboradoresFilhos;
 		this.colaboradorProjetos = colaboradorProjetos;
@@ -200,14 +194,6 @@ public class Colaborador implements Serializable, BaseEntity {
 
 	public void setRemuneracao(BigDecimal remuneracao) {
 		this.remuneracao = remuneracao;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
 	}
 
 	public List<HistoricoRiscoProjeto> getHistoricoRiscoProjetos() {

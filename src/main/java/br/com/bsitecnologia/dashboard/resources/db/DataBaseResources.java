@@ -23,9 +23,9 @@ import javax.persistence.PersistenceUnit;
 public class DataBaseResources {
 	@Produces
 	@DashboardDB
-	@PersistenceContext(type=PersistenceContextType.EXTENDED)
+	@PersistenceContext(type = PersistenceContextType.EXTENDED)
 	EntityManager entityManager;
-	
+
 	@Produces
 	@DashboardDB
 	@PersistenceUnit

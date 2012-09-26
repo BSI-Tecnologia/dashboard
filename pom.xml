@@ -44,6 +44,11 @@
 	</dependencyManagement>
 	<dependencies>
 		<dependency>
+            <groupId>org.jboss.spec.javax.el</groupId>
+            <artifactId>jboss-el-api_2.2_spec</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+		<dependency>
 			<groupId>org.apache.myfaces.extensions.cdi.bundles</groupId>
 			<artifactId>myfaces-extcdi-bundle-jsf20</artifactId>
 			<version>1.0.5</version>

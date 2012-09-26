@@ -1,4 +1,4 @@
-package br.com.bsitecnologia.dashboard.util.doctypefilter;
+package br.com.bsitecnologia.dashboard.infra.filters.doctype;
 
 import java.io.CharArrayWriter;
 import java.io.PrintWriter;
