@@ -13,7 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import br.com.bsitecnologia.dashboard.util.BaseEntity;
@@ -31,6 +33,10 @@ public class AtorExterno implements Serializable, BaseEntity {
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
+	
+	@OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="usuario")
+	private Usuario usuario;
 	
 	@Column(name = "nome", length = 127)
 	private String nome;
@@ -76,7 +82,6 @@ public class AtorExterno implements Serializable, BaseEntity {
 		this.id = id;
 	}
 
-	
 	public String getNome() {
 		return this.nome;
 	}
@@ -130,6 +135,18 @@ public class AtorExterno implements Serializable, BaseEntity {
 	}
 
 	public void setAtorExternoTransicaoStatuses(List<AtorExternoTransicaoStatus> atorExternoTransicaoStatus) {
+		this.atorExternoTransicaoStatus = atorExternoTransicaoStatus;
+	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public void setAtorExternoTransicaoStatus(List<AtorExternoTransicaoStatus> atorExternoTransicaoStatus) {
 		this.atorExternoTransicaoStatus = atorExternoTransicaoStatus;
 	}
 

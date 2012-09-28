@@ -47,10 +47,10 @@ public class GenericJpaRepository<T extends BaseEntity, ID extends Serializable>
 	
 	@Inject
 	@DashboardDB
-	private EntityManager entityManager;
+	protected EntityManager entityManager;
 	
 	@Inject
-    Event<ExceptionToCatch> catchEvent;
+	protected Event<ExceptionToCatch> catchEvent;
 
 	// ~ Constructors
 	// -----------------------------------------------------------

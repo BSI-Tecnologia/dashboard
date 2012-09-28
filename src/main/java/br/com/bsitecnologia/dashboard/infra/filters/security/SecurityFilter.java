@@ -38,7 +38,7 @@ public class SecurityFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		if (ExcludeJsfResourcesFromFilter.shouldProcess(request)) {
 			facesContext = getFacesContext((HttpServletRequest)request, (HttpServletResponse)response);
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "OPA!!!", "Filtro login, é noiz, to de boa!"));
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Security filter test", "just checking..."));
 			chain.doFilter(request, response);
 		}else{
 			chain.doFilter(request, response);

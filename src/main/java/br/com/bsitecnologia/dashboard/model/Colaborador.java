@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -35,7 +36,11 @@ public class Colaborador implements Serializable, BaseEntity {
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
-
+	
+	@OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="usuario")
+	private Usuario usuario;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "equipe", nullable = false)
 	private Equipe equipe;
@@ -260,9 +265,18 @@ public class Colaborador implements Serializable, BaseEntity {
 		this.comentarios = comentarios;
 	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 	@Override
 	public String getEntityDescription() {
 		return nome;
 	}
+	
 
 }

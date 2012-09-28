@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.New;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -14,6 +15,8 @@ import br.com.bsitecnologia.dashboard.controller.datamodel.DashboardDataModel;
 import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.dao.CargoDao;
 import br.com.bsitecnologia.dashboard.model.Cargo;
+import br.com.bsitecnologia.dashboard.model.Usuario;
+import br.com.bsitecnologia.dashboard.resources.qualifiers.UsuarioLogado;
 
 @Named
 @ConversationScoped
@@ -22,6 +25,8 @@ public class CargoBean extends BaseCrudBean<Cargo> implements Serializable {
 	
 	private static final long serialVersionUID = -563351669224686839L;
 	
+	@Inject @UsuarioLogado Usuario usuario;
+	
 	@Inject private CargoDao cargoDao;
 	@Inject @New private Cargo cargoForm;
 	@Inject private DashboardDataModel<Cargo> dataModel;
@@ -29,6 +34,7 @@ public class CargoBean extends BaseCrudBean<Cargo> implements Serializable {
 	@PostConstruct
 	public void postConstruct(){
 		super.init();
+		addMessage(FacesMessage.SEVERITY_INFO, "Bem vindo!", usuario.getNomeUsuario()+", não faça besteiras!");
 	}
 	
 	/*BASE BEAN ABSTRACT METHODS IMPLEMENTATION*/
@@ -70,6 +76,14 @@ public class CargoBean extends BaseCrudBean<Cargo> implements Serializable {
 	
 	public DashboardDataModel<Cargo> getDataModel() {
 		return dataModel;
+	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }

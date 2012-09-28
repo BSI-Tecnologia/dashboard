@@ -3,6 +3,7 @@ package br.com.bsitecnologia.dashboard.controller.admin;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.inject.New;
 import javax.faces.application.FacesMessage;
 import javax.faces.event.ValueChangeEvent;
@@ -18,6 +19,7 @@ import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.dao.AtorExternoDao;
 import br.com.bsitecnologia.dashboard.dao.ColaboradorDao;
 import br.com.bsitecnologia.dashboard.dao.UsuarioDao;
+import br.com.bsitecnologia.dashboard.infra.cripto.Sha512Crypt;
 import br.com.bsitecnologia.dashboard.model.AtorExterno;
 import br.com.bsitecnologia.dashboard.model.Colaborador;
 import br.com.bsitecnologia.dashboard.model.Usuario;
@@ -34,7 +36,7 @@ public class UsuarioBean extends BaseCrudBean<Usuario>{
 	@Inject private DashboardDataModel<Usuario> dataModel;
 	
 	private String confirmacaoSenha;
-	private boolean usuarioColaboradorBSI;
+	private boolean resetarSenha;
 	
 	@Inject	private ColaboradorDao colaboradorDao;
 	private List<Colaborador> allColaboradorFromDb;
@@ -43,27 +45,59 @@ public class UsuarioBean extends BaseCrudBean<Usuario>{
 	
 	@Inject private AtorExternoDao atorExternoDao;
 	private List<AtorExterno> allAtorExternoFromDb;
-	private List<SelectItem> atorExternoItemList = new ArrayList<SelectItem>();
+	private List<SelectItem> atorExternoSelectItemList = new ArrayList<SelectItem>();
 	private String selectedAtorExternoItem;
 	
+
+	@PostConstruct
+	public void postConstruct(){
+		super.init();
+		usuarioForm.setUsuarioTipoColaborador(true);
+	}
 	
 	public void verificaSenhas(){
 		if(!confereIgualdadeSenha()){
-			addMessage(FacesMessage.SEVERITY_WARN, "Usuário: senha", "Senha e confirmação de senha são diferentes.");
+			msgSenhaNaoConfere(FacesMessage.SEVERITY_WARN);
+			return;
 		}
 	}
 	
+	public void msgSenhaNaoConfere(FacesMessage.Severity severity){
+		addMessage(severity, "Usuário: senha", "A senha e a confirmação de senha são diferentes.");
+	}
+	
 	private boolean confereIgualdadeSenha(){
-		if(confirmacaoSenha.equals(usuarioForm.getSenha())){
+		if(usuarioForm.getSenha() != null && confirmacaoSenha.equals(usuarioForm.getSenha())){
 			return true;
 		}
 		return false;
 	}
 	
 	public void renderCombos(ValueChangeEvent event){
-		System.out.println(event.getNewValue());
+		if(null != event.getNewValue()){
+			usuarioForm.setUsuarioTipoColaborador(Boolean.parseBoolean(event.getNewValue().toString()));
+		}
 	}
 	
+	public void colaboradorValueChangeListener(ValueChangeEvent event){
+		if(null != event.getNewValue()){
+			usuarioForm.setColaborador(getEntityFromValueChangeEvent(event, allColaboradorFromDb));
+			usuarioForm.getColaborador().setUsuario(usuarioForm);
+		}
+	}
+	
+	public void atorExternoValueChangeListener(ValueChangeEvent event){
+		if(null != event.getNewValue()){
+			usuarioForm.setAtorExterno(getEntityFromValueChangeEvent(event, allAtorExternoFromDb));
+			usuarioForm.getAtorExterno().setUsuario(usuarioForm);
+		}
+	}
+	
+	public void resetarSenha(){
+		resetarSenha = true;
+		usuarioForm.setSenha(null);
+		addMessage(FacesMessage.SEVERITY_INFO, "Usuário: senha", "Informe uma nova senha para o usuário");
+	}
 	
 	/*BASE BEAN ABSTRACT METHODS IMPLEMENTATION*/
 
@@ -97,14 +131,55 @@ public class UsuarioBean extends BaseCrudBean<Usuario>{
 		usuarioForm = new Usuario();
 		selectedColaboradorItem = null;
 		selectedAtorExternoItem = null;
+		resetarSenha = false;
 	}
 	
 	@Override
 	protected void postLoad() {
 		allColaboradorFromDb = colaboradorDao.findAll();
 		allAtorExternoFromDb = atorExternoDao.findAll();
-		atorExternoItemList = fillSelectItemList(allAtorExternoFromDb);
+		atorExternoSelectItemList = fillSelectItemList(allAtorExternoFromDb);
 		colaboradorSelectItemList = fillSelectItemList(allColaboradorFromDb);
+	}
+	
+	@Override
+	protected void postRowSelect() {
+		if (usuarioForm.isUsuarioTipoColaborador()) {
+			selectedColaboradorItem = usuarioForm.getColaborador().getId().toString();
+		}else{
+			selectedAtorExternoItem = usuarioForm.getAtorExterno().getId().toString();
+		}
+		resetarSenha = false;
+	}
+	
+	@Override
+	protected boolean persistValidation() {
+		if(confereIgualdadeSenha()){
+			return true;
+		}
+		msgSenhaNaoConfere(FacesMessage.SEVERITY_ERROR);
+		return false;
+	}
+	
+	@Override
+	protected boolean updateValidation() {
+		if(resetarSenha && !confereIgualdadeSenha()){
+			msgSenhaNaoConfere(FacesMessage.SEVERITY_ERROR);
+			return false;
+		}
+		return true;
+	}
+	
+	@Override
+	protected void prePersist() {
+		usuarioForm.setSenha(Sha512Crypt.Sha512_crypt(usuarioForm.getSenha()));
+	}
+	
+	@Override
+	protected void preUpdate() {
+		if(resetarSenha){
+			usuarioForm.setSenha(Sha512Crypt.Sha512_crypt(usuarioForm.getSenha()));
+		}
 	}
 	
 	/*get&set*/
@@ -126,12 +201,12 @@ public class UsuarioBean extends BaseCrudBean<Usuario>{
 		this.selectedColaboradorItem = selectedColaboradorItem;
 	}
 
-	public List<SelectItem> getAtorExternoItemList() {
-		return atorExternoItemList;
+	public List<SelectItem> getAtorExternoSelectItemList() {
+		return atorExternoSelectItemList;
 	}
 
-	public void setAtorExternoItemList(List<SelectItem> atorExternoItemList) {
-		this.atorExternoItemList = atorExternoItemList;
+	public void setAtorExternoSelectItemList(List<SelectItem> atorExternoSelectItemList) {
+		this.atorExternoSelectItemList = atorExternoSelectItemList;
 	}
 
 	public String getSelectedAtorExternoItem() {
@@ -158,12 +233,11 @@ public class UsuarioBean extends BaseCrudBean<Usuario>{
 		this.confirmacaoSenha = confirmacaoSenha;
 	}
 	
-	public boolean isUsuarioColaboradorBSI() {
-		return usuarioColaboradorBSI;
+	public boolean isResetarSenha() {
+		return resetarSenha;
 	}
 
-	public void setUsuarioColaboradorBSI(boolean usuarioColaboradorBSI) {
-		this.usuarioColaboradorBSI = usuarioColaboradorBSI;
+	public void setResetarSenha(boolean resetarSenha) {
+		this.resetarSenha = resetarSenha;
 	}
-
 }

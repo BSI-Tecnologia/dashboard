@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import br.com.bsitecnologia.dashboard.util.BaseEntity;
@@ -40,41 +42,78 @@ public class Usuario implements Serializable, BaseEntity {
 	private String senha;
 	
 	@Column(name = "isColaborador", nullable = false, columnDefinition = "BIT", length = 1)
-	private boolean isColaborador;
+	private boolean usuarioTipoColaborador;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-	private List<UsuarioAtorExterno> usuarioAtorExternos = new ArrayList<UsuarioAtorExterno>(0);
+	@Transient
+	private Colaborador colaborador;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-	private List<UsuarioColaborador> usuarioColaboradors = new ArrayList<UsuarioColaborador>(0);
+	@Transient
+	private AtorExterno atorExterno;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-	private List<AutorizacaoAtorExterno> autorizacaoAtorExternos = new ArrayList<AutorizacaoAtorExterno>(0);
+	@Transient
+	private boolean logado;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-	private List<AutorizacaoColaborador> autorizacaoColaboradors = new ArrayList<AutorizacaoColaborador>(0);
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="usuario",cascade={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	private List<AtorExterno> atoresExternos = new ArrayList<AtorExterno>();
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="usuario",cascade={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	private List<Colaborador> colaboradores = new ArrayList<Colaborador>();
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="usuario")
+	private List<AutorizacaoAtorExterno> autorizacaoAtorExternos = new ArrayList<AutorizacaoAtorExterno>();
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="usuario")
+    private List<AutorizacaoColaborador> autorizacaoColaboradores = new ArrayList<AutorizacaoColaborador>();
 
 	public Usuario() {
 	}
 
-	public Usuario(String login, String senha, boolean isColaborador) {
-		this.login = login;
-		this.senha = senha;
-		this.isColaborador = isColaborador;
+	public Colaborador getColaborador() {
+		if(colaborador == null && usuarioTipoColaborador && colaboradores.size() > 0){
+			this.colaborador = colaboradores.get(0);
+		}
+		return colaborador;
 	}
 
-	public Usuario(String login, String senha, boolean isColaborador,
-			List<UsuarioAtorExterno> usuarioAtorExternos,
-			List<UsuarioColaborador> usuarioColaboradors,
-			List<AutorizacaoAtorExterno> autorizacaoAtorExternos,
-			List<AutorizacaoColaborador> autorizacaoColaboradors) {
-		this.login = login;
-		this.senha = senha;
-		this.isColaborador = isColaborador;
-		this.usuarioAtorExternos = usuarioAtorExternos;
-		this.usuarioColaboradors = usuarioColaboradors;
-		this.autorizacaoAtorExternos = autorizacaoAtorExternos;
-		this.autorizacaoColaboradors = autorizacaoColaboradors;
+	public void setColaborador(Colaborador colaborador) {
+		this.colaborador = colaborador;
+		this.colaboradores.clear();
+		if(colaborador != null){
+			this.colaboradores.add(colaborador);
+			setAtorExterno(null);
+		}
+	}
+
+	public AtorExterno getAtorExterno() {
+		if(atorExterno == null && !usuarioTipoColaborador && atoresExternos.size() > 0){
+			this.atorExterno = atoresExternos.get(0);
+		}
+		return atorExterno;
+	}
+
+	public void setAtorExterno(AtorExterno atorExterno) {
+		this.atorExterno = atorExterno;
+		this.atoresExternos.clear();
+		if(atorExterno != null){
+			this.atoresExternos.add(atorExterno);
+			setColaborador(null);
+		}
+	}
+
+	public List<AtorExterno> getAtoresExternos() {
+		return atoresExternos;
+	}
+
+	public void setAtoresExternos(List<AtorExterno> atoresExternos) {
+		this.atoresExternos = atoresExternos;
+	}
+
+	public List<Colaborador> getColaboradores() {
+		return colaboradores;
+	}
+
+	public void setColaboradores(List<Colaborador> colaboradores) {
+		this.colaboradores = colaboradores;
 	}
 
 	public Integer getId() {
@@ -101,31 +140,6 @@ public class Usuario implements Serializable, BaseEntity {
 		this.senha = senha;
 	}
 
-	public boolean isIsColaborador() {
-		return this.isColaborador;
-	}
-
-	public void setIsColaborador(boolean isColaborador) {
-		this.isColaborador = isColaborador;
-	}
-
-	public List<UsuarioAtorExterno> getUsuarioAtorExternos() {
-		return this.usuarioAtorExternos;
-	}
-
-	public void setUsuarioAtorExternos(
-			List<UsuarioAtorExterno> usuarioAtorExternos) {
-		this.usuarioAtorExternos = usuarioAtorExternos;
-	}
-
-	public List<UsuarioColaborador> getUsuarioColaboradors() {
-		return this.usuarioColaboradors;
-	}
-
-	public void setUsuarioColaboradors(List<UsuarioColaborador> usuarioColaboradors) {
-		this.usuarioColaboradors = usuarioColaboradors;
-	}
-
 	public List<AutorizacaoAtorExterno> getAutorizacaoAtorExternos() {
 		return this.autorizacaoAtorExternos;
 	}
@@ -134,14 +148,38 @@ public class Usuario implements Serializable, BaseEntity {
 		this.autorizacaoAtorExternos = autorizacaoAtorExternos;
 	}
 
-	public List<AutorizacaoColaborador> getAutorizacaoColaboradors() {
-		return this.autorizacaoColaboradors;
+	public List<AutorizacaoColaborador> getAutorizacaoColaboradores() {
+		return this.autorizacaoColaboradores;
 	}
 
-	public void setAutorizacaoColaboradors(List<AutorizacaoColaborador> autorizacaoColaboradors) {
-		this.autorizacaoColaboradors = autorizacaoColaboradors;
+	public void setAutorizacaoColaboradores(List<AutorizacaoColaborador> autorizacaoColaboradors) {
+		this.autorizacaoColaboradores = autorizacaoColaboradors;
+	}
+	
+	public boolean isUsuarioTipoColaborador() {
+		return usuarioTipoColaborador;
 	}
 
+	public void setUsuarioTipoColaborador(boolean usuarioTipoColaborador) {
+		this.usuarioTipoColaborador = usuarioTipoColaborador;
+	}
+	
+	public boolean isLogado() {
+		return logado;
+	}
+
+	public void setLogado(boolean logado) {
+		this.logado = logado;
+	}
+	
+	public String getNomeUsuario(){
+		if(usuarioTipoColaborador){
+			return getColaborador() != null ? getColaborador().getNome() : null;
+		}else{
+			return getAtorExterno() != null ? getAtorExterno().getNome() : null;
+		}
+	}
+	
 	@Override
 	public String getEntityDescription() {
 		return login;

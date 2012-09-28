@@ -31,68 +31,69 @@
 						</div>
 						
 						<div class="control-group">
-							<label class="control-label">Senha :</label>
-							<div class="controls">
-								<p:password id="senha" value="#{usuarioBean.usuarioForm.senha}" />
-							</div>
-						</div>
-						
-						<div class="control-group">
-							<label class="control-label">Confirme a senha :</label>
-							<div class="controls">
-								<p:password id="confirmeSenha" value="#{usuarioBean.confirmacaoSenha}">
-									<p:ajax event="blur" listener="#{usuarioBean.verificaSenhas}" process="@form"></p:ajax>
-								</p:password>
-							</div>
-						</div>
-						
-						<div class="control-group">
 							<label class="control-label">O usuário é colaborador BSI?</label>
 							<div class="controls">
-								<p:selectBooleanButton value="#{usuarioBean.usuarioForm.isColaborador}" valueChangeListener="#{usuarioBean.renderCombos}" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close" >
-									<p:ajax event="change" />
-								</p:selectBooleanButton>  
+								<h:selectBooleanCheckbox id="cb" value="#{usuarioBean.usuarioForm.usuarioTipoColaborador}" valueChangeListener="#{usuarioBean.renderCombos}" >
+									<p:ajax event="change" process="@form" update="combos" onstart="$('#formz_atorExterno_chzn').remove();$('#formz_colaborador_chzn').remove();" oncomplete="$('select').chosen();$.uniform.update('#cb');"/>
+								</h:selectBooleanCheckbox>  
 							</div>
 						</div>
 						
+						<h:panelGroup id="combos" styleClass="control-group" layout="block">
 						
-						
-						
-						
-						<ui:remove>
-						<!-- 
-						<div class="control-group">
-							<label class="control-label">Colaborador autor :</label>
+						<h:panelGroup styleClass="control-group" layout="block" rendered="#{usuarioBean.usuarioForm.usuarioTipoColaborador}" id="colaboradorFragment">
+							<label class="control-label">Colaborador :</label>
 							<div class="controls">
-								<h:selectOneMenu id="colaboradorAutor" effect="fade" valueChangeListener="#{usuarioBean.colaboradorAutorValueChangeListener}" value="#{usuarioBean.selectedColaboradorAutorItem}">
-									<f:selectItem itemValue="" itemLabel="Selecione um projeto ..."/>
+								<h:selectOneMenu id="colaborador" effect="fade" valueChangeListener="#{usuarioBean.colaboradorValueChangeListener}" value="#{usuarioBean.selectedColaboradorItem}">
+									<f:selectItem itemValue="" itemLabel="Selecione um colaborador ..."/>
 									 <f:selectItems value="#{usuarioBean.colaboradorSelectItemList}" var="item" itemLabel="#{item.label}" itemValue="#{item.value}" />  
 								</h:selectOneMenu>
 							</div>
-						</div>
+						</h:panelGroup>
 						
-						
-						<div class="control-group">
+						<h:panelGroup styleClass="control-group" layout="block" rendered="#{!usuarioBean.usuarioForm.usuarioTipoColaborador}" id="atorExternoFragment">
 							<label class="control-label">Ator externo :</label>
 							<div class="controls">
 								<h:selectOneMenu id="atorExterno" effect="fade" valueChangeListener="#{usuarioBean.atorExternoValueChangeListener}" value="#{usuarioBean.selectedAtorExternoItem}">
-									<f:selectItem itemValue="" itemLabel="Selecione um projeto ..."/>
-									 <f:selectItems value="#{usuarioBean.atorExternoItemList}" var="item" itemLabel="#{item.label}" itemValue="#{item.value}" />  
+									<f:selectItem itemValue="" itemLabel="Selecione um ator externo ..."/>
+									 <f:selectItems value="#{usuarioBean.atorExternoSelectItemList}" var="item" itemLabel="#{item.label}" itemValue="#{item.value}" />  
 								</h:selectOneMenu>
 							</div>
-						</div>
+						</h:panelGroup>
 						
-						<div class="form-actions">
+						</h:panelGroup>
+						
+						<h:panelGroup id="camposSenha" styleClass="control-group" layout="block">
+						
+							<h:panelGroup styleClass="control-group" layout="block" rendered="#{!usuarioBean.showDeleteButton or usuarioBean.resetarSenha}">
+								<label class="control-label">Senha :</label>
+								<div class="controls">
+									<p:password id="senha" value="#{usuarioBean.usuarioForm.senha}" />
+								</div>
+							</h:panelGroup>
+							
+							<h:panelGroup styleClass="control-group" layout="block" rendered="#{usuarioBean.showDeleteButton eq false or usuarioBean.resetarSenha eq true}">
+								<label class="control-label">Confirme a senha :</label>
+								<div class="controls">
+									<p:password id="confirmeSenha" value="#{usuarioBean.confirmacaoSenha}">
+										<p:ajax event="blur" listener="#{usuarioBean.verificaSenhas}" process="@form" update="formz:buttons"></p:ajax>
+									</p:password>
+								</div>
+							</h:panelGroup>
+							
+						</h:panelGroup>
+						
+						<h:panelGroup id="buttons" styleClass="form-actions" layout="block">
 							<p:commandButton value="#{usuarioBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse"
-								actionListener="#{usuarioBean.save}" onclick="msgs.show();" oncomplete="$('select').chosen();"/>
+								action="#{usuarioBean.save}" onclick="msgs.show();" oncomplete="$('select').chosen();"/>
 							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{usuarioBean.showDeleteButton}"
-								actionListener="#{usuarioBean.delete}" onclick="msgs.show();" oncomplete="$('select').chosen();"/>
+								action="#{usuarioBean.delete}" onclick="msgs.show();" oncomplete="$('select').chosen();"/>
+							<p:commandButton styleClass="btn btn-inverse" value="Resetar senha" action="#{usuarioBean.resetarSenha}" rendered="#{usuarioBean.showDeleteButton}" 
+								update=":formz" oncomplete="$('select').chosen();"/>
 							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse"
-								actionListener="#{usuarioBean.cancel}" oncomplete="$('select').chosen();" />
-						</div>
+								action="#{usuarioBean.cancel}" oncomplete="$('select').chosen();" />
+						</h:panelGroup>
 						
-						 -->
-						</ui:remove>
 					</h:form>
 					
 				</div>
@@ -100,8 +101,6 @@
 			</div>
 		</div>
 		
-		<ui:remove>
-		<!-- 
 		<div class="row-fluid">
 			
 			<div class="span12">
@@ -112,32 +111,20 @@
 						
 						<div class="widget-title">
 							<span class="icon"> <i class="icon-th"></i></span>
-							<h5>Lista de impedimentos</h5>
+							<h5>Lista de usuários</h5>
 						</div>
 						
 						<div class="widget-content">
 							
-							<p:dataTable id="table" var="impedimento" value="#{usuarioBean.dataModel}"
+							<p:dataTable id="table" var="usuario" value="#{usuarioBean.dataModel}"
 								tableStyleClass="table table-bordered table-striped" paginator="true" paginatorPosition="bottom"
-								rows="10" selection="#{usuarioBean.usuarioForm}" selectionMode="single" emptyMessage="Nenhum projeto cadastrado">
+								rows="10" selection="#{usuarioBean.usuarioForm}" selectionMode="single" emptyMessage="Nenhum usuário cadastrado">
 								<p:ajax event="rowSelect" listener="#{usuarioBean.onRowSelect}" update=":formz" oncomplete="$('select').chosen(); onSelectItemOpenForm('formz');"/>
-								<p:column headerText="Nome">
-									<h:outputText value="#{impedimento.nome}" />
+								<p:column headerText="Login">
+									<h:outputText value="#{usuario.login}" />
 								</p:column>
-								<p:column headerText="Projeto">
-									<h:outputText value="#{impedimento.projeto.nome}" />
-								</p:column>
-								<p:column headerText="Autor">
-									<h:outputText value="#{impedimento.colaboradorAutor.nome}" />
-								</p:column>
-								<p:column headerText="Risco">
-									<h:outputText value="#{impedimento.nome}" />
-								</p:column>
-								<p:column headerText="Data inicio">
-									<h:outputText value="#{impedimento.dataInicio}" />
-								</p:column>
-								<p:column headerText="Data fim">
-									<h:outputText value="#{impedimento.dataFim}" />
+								<p:column headerText="É colaborador?">
+									<h:outputText value="#{usuario.usuarioTipoColaborador ? 'Sim':'Não'}" />
 								</p:column>
 							</p:dataTable>
 
@@ -149,9 +136,6 @@
 			</div>
 
 		</div>
-		
-		 -->
-		</ui:remove>
 	</ui:define>
 
 </ui:composition>

@@ -97,6 +97,12 @@ public class Projeto implements Serializable, BaseEntity {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projeto")
 	private List<Impedimento> impedimentos = new ArrayList<Impedimento>(0);
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="projeto")
+    private List<AutorizacaoColaborador> autorizacoesColaboradores = new ArrayList<AutorizacaoColaborador>(0);
+    
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="projeto")
+    private List<AutorizacaoAtorExterno> autorizacoesAtorExternos = new ArrayList<AutorizacaoAtorExterno>(0);
 
 	
 	public Projeto() {
@@ -289,6 +295,24 @@ public class Projeto implements Serializable, BaseEntity {
 
 	public void setImpedimentos(List<Impedimento> impedimentos) {
 		this.impedimentos = impedimentos;
+	}
+	
+	public List<AutorizacaoColaborador> getAutorizacoesColaboradores() {
+		return autorizacoesColaboradores;
+	}
+
+	public void setAutorizacoesColaboradores(
+			List<AutorizacaoColaborador> autorizacoesColaboradores) {
+		this.autorizacoesColaboradores = autorizacoesColaboradores;
+	}
+
+	public List<AutorizacaoAtorExterno> getAutorizacoesAtorExternos() {
+		return autorizacoesAtorExternos;
+	}
+
+	public void setAutorizacoesAtorExternos(
+			List<AutorizacaoAtorExterno> autorizacoesAtorExternos) {
+		this.autorizacoesAtorExternos = autorizacoesAtorExternos;
 	}
 
 	@Override

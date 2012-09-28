@@ -8,10 +8,13 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ConversationScoped;
+
+import br.com.bsitecnologia.dashboard.dao.UsuarioDao;
 import br.com.bsitecnologia.dashboard.model.Usuario;
 import br.com.bsitecnologia.dashboard.resources.qualifiers.UsuarioLogado;
 
-@SessionScoped
+@ConversationScoped
 @Named
 public class LoginBean implements Serializable {
 	
@@ -21,8 +24,22 @@ public class LoginBean implements Serializable {
 	@New
 	private Usuario usuario;
 	
+	@Inject UsuarioDao usuarioDao;
+	
 	public String login() {
-		return "/admin/cargo/cargo?faces-redirect=true";
+		usuario = usuarioDao.authenticateUser(usuario);
+		usuario.getAtoresExternos();
+		usuario.getAtorExterno();
+		usuario.getAutorizacaoAtorExternos();
+		usuario.getAutorizacaoColaboradores();
+		usuario.getColaborador();
+		usuario.getColaboradores();
+		System.out.println(usuario.getNomeUsuario());
+		if(usuario.isLogado()){
+			return "/admin/cargo/cargo?faces-redirect=true";
+		}else{
+			return "/login?faces-redirect=true";
+		}
 	}
 	
 	public Usuario getUsuario() {

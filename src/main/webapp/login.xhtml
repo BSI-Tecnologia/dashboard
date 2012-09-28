@@ -37,11 +37,6 @@
             <img src="#{resource['img/logoBSI_middle1.png']}" alt="BSI Tecnologia" />
         </div>
         
-        <div style="background-color: white;">
-	        <h1>#{usuarioLogado.login} - #{usuarioLogado.senha}</h1>            
-	        <h1>#{usuarioLogado}</h1>                    
-        </div>
-        
         <div id="loginbox">            
             <h:form id="loginform" class="form-vertical">
 				<p>Para continuar informe seu usuário e senha.</p>
@@ -63,7 +58,7 @@
                 </div>
                 <div class="form-actions">
                     <span class="pull-left"><a href="#" class="flip-link" id="fliptorecover">Esqueceu a senha?</a></span>
-                    <span class="pull-right"><p:commandButton styleClass="btn btn-inverse" value="Autenticar" action="#{loginBean.login()}" /></span>
+                    <span class="pull-right"><p:commandButton styleClass="btn btn-inverse" oncomplete="msgs.show();" value="Autenticar" action="#{loginBean.login()}" /></span>
                 </div>
             </h:form>
             
