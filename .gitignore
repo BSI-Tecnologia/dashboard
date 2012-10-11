@@ -6,3 +6,5 @@ target
 .classpath
 .externalToolBuilders
 .settings/.jsdtscope
+
+src/main/webapp/META-INF/MANIFEST.MF
